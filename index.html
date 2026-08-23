@@ -9,9 +9,9 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="#top" aria-label="MO Car Rent Phuket">
-        <img src="assets/logo.png" alt="MO Car Rent Phuket" />
+    <div class="container site-header__container">
+      <a class="brand" href="#main" aria-label="MO Car Rent Phuket - перейти к началу страницы">
+        <img src="assets/logo.png" alt="MO Car Rent Phuket" width="164" height="72" />
       </a>
 
       <nav class="main-nav" aria-label="Главное меню">
@@ -22,94 +22,124 @@
         <a href="#contacts">Контакты</a>
       </nav>
 
-      <div class="header-actions" aria-label="Контакты и соцсети">
-        <a class="social-link social-link--instagram" href="https://www.instagram.com/mocarrent_phuket" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener">
-          <img src="assets/icon-instagram.svg" alt="" aria-hidden="true" />
+      <div class="header-contacts" aria-label="Связаться с MO Car Rent Phuket">
+        <a class="header-contacts__icon" href="https://www.instagram.com/mocarrent_phuket" aria-label="Instagram" target="_blank" rel="noopener">
+          <img src="assets/icon-instagram.svg" alt="" aria-hidden="true" width="28" height="28" />
         </a>
-        <a class="social-link social-link--whatsapp" href="https://wa.me/66618396690" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">
-          <img src="assets/icon-whatsapp.svg" alt="" aria-hidden="true" />
+        <a class="header-contacts__icon" href="https://wa.me/66618396690" aria-label="WhatsApp" target="_blank" rel="noopener">
+          <img src="assets/icon-whatsapp.svg" alt="" aria-hidden="true" width="30" height="30" />
         </a>
-        <a class="phone-link" href="tel:+66618396690" aria-label="Позвонить +66 61 839 6690">
-          <img src="assets/icon-phone.svg" alt="" aria-hidden="true" />
+        <a class="header-contacts__phone" href="tel:+66618396690" aria-label="Позвонить +66 61 839 6690">
+          <img src="assets/icon-phone.svg" alt="" aria-hidden="true" width="28" height="28" />
           <span>+66 61 839 6690</span>
         </a>
       </div>
     </div>
   </header>
 
-  <main class="hero" id="top">
-    <div class="hero-content">
-      <div class="hero-copy">
-        <div class="eyebrow">MO CAR RENT · PHUKET</div>
-        <h1>Аренда авто<br>на Пхукете</h1>
-        <p>Выберите автомобиль и даты поездки.<br>Менеджер проверит доступность<br>и подтвердит бронь.</p>
-        <div class="hero-buttons">
-          <a class="btn btn-primary" href="#booking">Смотреть автомобили и цены <span>→</span></a>
-          <a class="btn btn-secondary" href="#booking">Подобрать другую модель</a>
+  <main class="main">
+    <section id="main" class="hero" aria-labelledby="hero-title">
+      <picture class="hero__media" aria-hidden="true">
+        <source media="(max-width: 1050px)" srcset="assets/hero-bg.jpg" />
+        <img src="assets/hero-bg-desktop.png" alt="" width="1672" height="941" decoding="async" fetchpriority="high" />
+      </picture>
+
+      <div class="hero__wash hero__wash--left" aria-hidden="true"></div>
+      <div class="hero__wash hero__wash--right" aria-hidden="true"></div>
+      <div class="hero__wash hero__wash--bottom" aria-hidden="true"></div>
+
+      <div class="container hero__container">
+        <div class="hero__layout">
+          <div class="hero__content">
+            <p class="hero__identity">MO CAR RENT · PHUKET</p>
+            <h1 class="hero__title" id="hero-title">Аренда авто на Пхукете</h1>
+            <p class="hero__lead">Выберите автомобиль и даты поездки. Менеджер проверит доступность и подтвердит бронь.</p>
+
+            <div class="hero__actions" aria-label="Основные действия">
+              <a class="button button--primary" href="#booking">
+                <span>Смотреть автомобили и цены</span>
+                <span class="button__arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="button button--secondary" href="#booking">Подобрать другую модель</a>
+            </div>
+
+            <dl class="hero__proof" aria-label="Информация о сервисе">
+              <div class="hero__proof-item">
+                <span class="hero__proof-icon hero__proof-icon--google" aria-hidden="true">G</span>
+                <div>
+                  <dt>5,0 в Google</dt>
+                  <dd>11 отзывов</dd>
+                </div>
+              </div>
+              <div class="hero__proof-item">
+                <svg class="hero__proof-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+                <div>
+                  <dt>Доставка</dt>
+                  <dd>по всему Пхукету</dd>
+                </div>
+              </div>
+              <div class="hero__proof-item">
+                <svg class="hero__proof-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/></svg>
+                <div>
+                  <dt>Получение</dt>
+                  <dd>в центре острова</dd>
+                </div>
+              </div>
+            </dl>
+          </div>
+
+          <div class="hero__booking" id="booking">
+            <form class="booking" action="#" method="get" aria-labelledby="booking-title" onsubmit="return false;">
+              <h2 class="visually-hidden" id="booking-title">Подобрать автомобиль по датам и месту получения</h2>
+
+              <label class="booking__field">
+                <span class="booking__label">Получение</span>
+                <span class="booking__control">
+                  <input type="text" name="pickup_date" placeholder="Дата получения" inputmode="none" readonly aria-label="Дата получения" />
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+                </span>
+              </label>
+
+              <label class="booking__field">
+                <span class="booking__label">Возврат</span>
+                <span class="booking__control">
+                  <input type="text" name="return_date" placeholder="Дата возврата" inputmode="none" readonly aria-label="Дата возврата" />
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+                </span>
+              </label>
+
+              <label class="booking__field booking__field--location">
+                <span class="booking__label">Место получения</span>
+                <span class="booking__control booking__control--select">
+                  <select name="pickup_location" aria-label="Место получения">
+                    <option value="">Выберите место</option>
+                    <option value="delivery">Доставка по Пхукету</option>
+                    <option value="office">Получение в офисе</option>
+                  </select>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+              </label>
+
+              <button class="booking__submit" type="submit">
+                <span>Показать автомобили</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </form>
+
+            <ul class="booking-notes" aria-label="Как проходит бронирование">
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg>
+                <span>Сначала проверим доступность.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg>
+                <span>Оплата после подтверждения автомобиля.</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <div class="trust-row" aria-label="Преимущества">
-        <div class="trust-item rating-item">
-          <div class="google-mark">G</div>
-          <div><strong>5,0 в Google</strong><span>11 отзывов</span></div>
-        </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
-          <div><strong>Доставка</strong><span>по всему Пхукету</span></div>
-        </div>
-        <div class="trust-item">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/></svg>
-          <div><strong>Получение</strong><span>в центре острова</span></div>
-        </div>
-      </div>
-
-      <form class="booking" id="booking" onsubmit="return false;">
-        <label class="booking-field">
-          <span class="field-label">Получение</span>
-          <span class="field-control">
-            <input type="text" id="pickup" placeholder="Дата получения" inputmode="none" readonly aria-label="Дата получения" />
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
-          </span>
-        </label>
-
-        <label class="booking-field">
-          <span class="field-label">Возврат</span>
-          <span class="field-control">
-            <input type="text" id="return" placeholder="Дата возврата" inputmode="none" readonly aria-label="Дата возврата" />
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
-          </span>
-        </label>
-
-        <label class="booking-field booking-location">
-          <span class="field-label">Место получения</span>
-          <span class="field-control select-control">
-            <select aria-label="Место получения">
-              <option>Выберите место</option>
-              <option>Доставка по Пхукету</option>
-              <option>Получение в офисе</option>
-            </select>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </span>
-        </label>
-
-        <button class="booking-submit" type="button">Показать автомобили <span>→</span></button>
-      </form>
-
-      <div class="booking-notes">
-        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg>Сначала проверим доступность.</span>
-        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></svg>Оплата после подтверждения автомобиля.</span>
-      </div>
-    </div>
+    </section>
   </main>
-
-  <script>
-    const dateInputs = [document.getElementById('pickup'), document.getElementById('return')];
-    dateInputs.forEach((el, index) => {
-      el.addEventListener('click', () => {
-        el.value = index === 0 ? 'Выберите дату получения' : 'Выберите дату возврата';
-      });
-    });
-  </script>
 </body>
 </html>
