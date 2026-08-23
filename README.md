@@ -1,72 +1,22 @@
-# Mo Car Rent Phuket — homepage prototype
+# MO Car Rent Phuket - hero prototype
 
-Адаптивный статический прототип главной страницы для GitHub Pages.
+## Frontend structure
+- Global `.container` is controlled by `--container` and `--container-gutter`.
+- Header navigation uses `nav > ul > li > a`.
+- Hero is a semantic `section` connected to its `h1` through `aria-labelledby`.
+- Decorative media lives inside the hero `.container` and is excluded from the accessibility tree.
+- Booking controls use real `label`, `input`, `select`, `fieldset` and `legend` elements.
+- No inline JavaScript handlers are used.
 
-## Что внутри
+## WordPress / ACF mapping
+Recommended editable fields:
+- hero identity;
+- hero title;
+- hero lead;
+- primary and secondary CTA labels/URLs;
+- hero proof items - Repeater;
+- scene image and foreground car image;
+- booking locations - Repeater or Options;
+- booking notes - Repeater.
 
-- `index.html` — главная страница.
-- `assets/css/style.css` — desktop / tablet / mobile адаптивы.
-- `assets/js/main.js` — мобильное меню, modal-заявка, demo quick-search, toast.
-- `robots.txt`, `sitemap.xml` — минимальные технические файлы для будущей структуры.
-
-## Утверждено и использовано
-
-- H1: **«Аренда авто на Пхукете»**.
-- Русскоязычная версия сайта.
-- Около 20 авто на старте.
-- Доставка автомобилей по всему Пхукету.
-- Получение автомобиля в центральной части острова.
-- Если нужной модели нет, компания может попробовать найти ее по запросу.
-- Гибридное бронирование: выбор → даты → место → контакты → проверка менеджером → подтверждение → оплата.
-
-## Намеренно не выдумано
-
-До подтверждения клиента в прототипе не указаны:
-
-- точные цены;
-- депозит;
-- конкретные условия страховки;
-- бесплатная доставка;
-- выдача в аэропорту;
-- возраст / стаж / список документов;
-- точные часы работы;
-- финальный адрес и телефон;
-- реальные тексты отзывов.
-
-## Что заменить перед production
-
-1. Реальными фотографиями автомобилей (в hero и карточках).
-2. Финальным логотипом и брендовой палитрой, если клиент их предоставит.
-3. Подтвержденными ценами и характеристиками.
-4. Контактами и Google Map.
-5. Реальными Google-отзывами после согласования использования.
-6. `href="#request"` карточек автомобилей — на реальные индексируемые URL `/cars/.../`.
-7. Demo-форму — на backend/CRM/email/Telegram обработчик.
-8. Подключить сохранение UTM, GCLID, landing page, выбранного автомобиля и дат.
-
-## GitHub Pages
-
-Архив можно распаковать в корень репозитория. Все пути относительные, поэтому сайт будет работать и в GitHub Pages project-site (`username.github.io/repository/`).
-
-## Адаптивы
-
-Контрольные ширины:
-
-- desktop: 1440 / 1280;
-- tablet: 1024 / 768;
-- mobile: 430 / 390 / 360.
-
-На мобильном есть sticky CTA и отдельное полноэкранное меню.
-
-## Обновление палитры по Instagram / аватару бренда
-
-В этой версии убрана мятно-зелёная палитра прототипа и заложена визуальная база, ближе к текущему образу Mo Car Rent Phuket:
-
-- graphite / почти чёрный: `#17191B`;
-- warm white: `#F7F5F0`;
-- white: `#FFFFFF`;
-- песочно-золотой акцент: `#A98532` / `#B79A55` по роли;
-- яркий жёлтый CTA: `#F3B400`;
-- вторичный текст: `#6F7375`.
-
-Жёлтый используется дозированно: основные CTA, active/focus-состояния, небольшие декоративные элементы. Тёмные секции переведены из зелёно-синего в нейтральный графит. В header/footer добавлен текущий Instagram-аватар компании как временный брендовый asset.
+`assets/main.js` uses data attributes instead of content-dependent selectors. A WordPress implementation can listen for the `mocar:booking-submit` custom event or replace the prototype submit handler with the real catalog/filter request.
