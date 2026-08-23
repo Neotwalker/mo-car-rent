@@ -20,9 +20,49 @@
     googleRating: '[data-google-rating]',
     googleRatingValue: '[data-google-rating-value]',
     googleRatingCount: '[data-google-rating-count]',
+    menuToggle: '[data-menu-toggle]',
+    mainNav: '[data-main-nav]',
   };
 
   const EVENT_BOOKING_SUBMIT = 'mocar:booking:submit';
+
+
+  const initMenu = () => {
+    const toggle = document.querySelector(SELECTORS.menuToggle);
+    const nav = document.querySelector(SELECTORS.mainNav);
+
+    if (!toggle || !nav) return;
+
+    const desktopQuery = window.matchMedia('(min-width: 1201px)');
+
+    const setOpen = (isOpen) => {
+      nav.classList.toggle('is-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+      document.body.classList.toggle('menu-open', isOpen);
+    };
+
+    const close = () => setOpen(false);
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a')) close();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        close();
+        toggle.focus({ preventScroll: true });
+      }
+    });
+
+    desktopQuery.addEventListener('change', (event) => {
+      if (event.matches) close();
+    });
+  };
 
   const toLocalIsoDate = (date) => {
     const timezoneOffset = date.getTimezoneOffset() * 60_000;
@@ -291,6 +331,7 @@
   };
 
   const init = () => {
+    initMenu();
     document.querySelectorAll(SELECTORS.form).forEach(initBookingForm);
     document.querySelectorAll(SELECTORS.googleRating).forEach(initGoogleRating);
   };

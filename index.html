@@ -18,7 +18,7 @@
           <img src="assets/logo.png" alt="MO Car Rent Phuket" width="164" height="72" decoding="async">
         </a>
 
-        <nav class="main-nav" aria-label="Основная навигация">
+        <nav class="main-nav" id="main-navigation" aria-label="Основная навигация" data-main-nav>
           <ul class="main-nav__list">
             <li><a class="main-nav__link" href="#cars">Автомобили</a></li>
             <li><a class="main-nav__link" href="#terms">Условия аренды</a></li>
@@ -27,6 +27,19 @@
             <li><a class="main-nav__link" href="#contacts">Контакты</a></li>
           </ul>
         </nav>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Открыть меню"
+          aria-controls="main-navigation"
+          aria-expanded="false"
+          data-menu-toggle
+        >
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+        </button>
 
         <ul class="header-contacts" aria-label="Контакты и социальные сети">
           <li>
@@ -71,6 +84,17 @@
             <p class="hero__identity">MO CAR RENT · PHUKET</p>
             <h1 class="hero__title" id="hero-title">Аренда авто на Пхукете</h1>
             <p class="hero__lead">Выберите автомобиль и даты поездки. Менеджер проверит доступность и подтвердит бронь.</p>
+
+            <figure class="hero__mobile-visual" aria-hidden="true">
+              <img
+                src="assets/hero-bg-mob.png"
+                alt=""
+                width="811"
+                height="402"
+                loading="eager"
+                decoding="async"
+              >
+            </figure>
 
             <div class="hero__actions">
               <a class="button button--primary" href="#booking">

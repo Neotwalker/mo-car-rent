@@ -19,3 +19,10 @@
 - исправлен clipping custom select: overflow остаётся у media-слоя, а не у всей hero-секции;
 - booking notes увеличены;
 - Google rating оставлен с server-rendered fallback и подготовлен к обновлению через WordPress REST endpoint.
+
+Обновление v4:
+- burger-menu при ширине меньше 1200px;
+- desktop hero media получает bleed через отрицательные container gutters на <=1050px;
+- mobile hero без desktop background;
+- mobile car image `hero-bg-mob.png` находится в HTML после lead;
+- устранён большой искусственный отступ перед hero proof на телефонах.

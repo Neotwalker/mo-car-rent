@@ -714,3 +714,64 @@ features
 5. Опциональный REST endpoint `/wp-json/mocar/v1/google-rating` может обновлять уже открытый интерфейс.
 6. При ошибке API сайт показывает последнее кэшированное значение, а не пустой блок.
 7. Не размещать unrestricted Google API key в frontend JS.
+
+
+---
+
+## 24. Header / burger navigation
+
+При ширине viewport меньше `1200px` desktop-навигация переключается в burger-menu.
+
+Эталон:
+
+```html
+<button
+  class="menu-toggle"
+  type="button"
+  aria-label="Открыть меню"
+  aria-controls="main-navigation"
+  aria-expanded="false"
+  data-menu-toggle
+>
+  ...
+</button>
+
+<nav id="main-navigation" data-main-nav>
+  ...
+</nav>
+```
+
+Правила:
+
+- используется тот же `<nav>`, а не второй дублирующий набор ссылок;
+- состояние хранится через `aria-expanded`;
+- открытое меню получает `.is-open`;
+- при открытии блокируется scroll `body`;
+- `Escape` закрывает меню;
+- переход по ссылке закрывает меню;
+- при возврате на desktop меню сбрасывается;
+- JS hook - только `data-*`, UI классы не используются как селекторы логики.
+
+---
+
+## 25. Mobile hero media
+
+На телефонах (`<=700px`) desktop scenic-background отключается полностью.
+
+Вместо фонового media-layer используется отдельное декоративное изображение внутри контентного потока:
+
+```html
+<figure class="hero__mobile-visual" aria-hidden="true">
+  <img src="assets/hero-bg-mob.png" alt="">
+</figure>
+```
+
+Правила:
+
+- изображение находится в DOM сразу после hero lead;
+- оно не является CSS background;
+- `alt=""`, так как смысл страницы не зависит от декоративной машины;
+- изображение можно выводить через WordPress attachment ID;
+- для выхода изображения до краёв viewport используется отрицательный margin, равный `--container-gutter`;
+- mobile hero не должен иметь фиксированный `min-height`, который создаёт пустое пространство;
+- `hero__proof` на телефоне остаётся в нормальном document flow без искусственных `margin-top: 200px+`.
