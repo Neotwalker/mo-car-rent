@@ -1,47 +1,75 @@
 (() => {
   'use strict';
 
-  const bookingForm = document.querySelector('[data-booking-form]');
-  if (!bookingForm) return;
-
-  const pickupDate = bookingForm.querySelector('[data-pickup-date]');
-  const returnDate = bookingForm.querySelector('[data-return-date]');
-  const status = bookingForm.querySelector('[data-booking-status]');
-
-  const toIsoDate = (date) => {
-    const offset = date.getTimezoneOffset();
-    return new Date(date.getTime() - offset * 60 * 1000).toISOString().slice(0, 10);
+  const SELECTORS = {
+    form: '[data-booking-form]',
+    pickupDate: '[data-pickup-date]',
+    returnDate: '[data-return-date]',
+    status: '[data-booking-status]',
   };
 
-  const today = toIsoDate(new Date());
-  pickupDate.min = today;
-  returnDate.min = today;
+  const EVENT_BOOKING_SUBMIT = 'mocar:booking:submit';
 
-  pickupDate.addEventListener('change', () => {
-    const minReturnDate = pickupDate.value || today;
+  const toLocalIsoDate = (date) => {
+    const timezoneOffset = date.getTimezoneOffset() * 60_000;
+    return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 10);
+  };
+
+  const syncReturnDate = (pickupDate, returnDate, fallbackMin) => {
+    if (!pickupDate || !returnDate) return;
+
+    const minReturnDate = pickupDate.value || fallbackMin;
     returnDate.min = minReturnDate;
 
     if (returnDate.value && returnDate.value < minReturnDate) {
       returnDate.value = '';
     }
-  });
+  };
 
-  bookingForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+  const initBookingForm = (form) => {
+    const pickupDate = form.querySelector(SELECTORS.pickupDate);
+    const returnDate = form.querySelector(SELECTORS.returnDate);
+    const status = form.querySelector(SELECTORS.status);
 
-    if (!bookingForm.checkValidity()) {
-      bookingForm.reportValidity();
-      return;
-    }
+    if (!pickupDate || !returnDate) return;
 
-    const bookingData = Object.fromEntries(new FormData(bookingForm).entries());
+    const today = toLocalIsoDate(new Date());
 
-    document.dispatchEvent(new CustomEvent('mocar:booking-submit', {
-      detail: bookingData
-    }));
+    pickupDate.min = today;
+    returnDate.min = today;
 
-    if (status) {
-      status.textContent = 'Параметры подбора автомобиля заполнены.';
-    }
-  });
+    pickupDate.addEventListener('change', () => {
+      syncReturnDate(pickupDate, returnDate, today);
+    });
+
+    form.addEventListener('submit', (event) => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+        return;
+      }
+
+      const detail = Object.fromEntries(new FormData(form).entries());
+
+      document.dispatchEvent(
+        new CustomEvent(EVENT_BOOKING_SUBMIT, {
+          detail,
+        }),
+      );
+
+      if (form.hasAttribute('data-demo')) {
+        event.preventDefault();
+
+        if (status) {
+          status.textContent = 'Параметры подбора автомобиля заполнены.';
+        }
+      }
+    });
+  };
+
+  const init = () => {
+    document.querySelectorAll(SELECTORS.form).forEach(initBookingForm);
+  };
+
+  init();
 })();

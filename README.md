@@ -1,22 +1,9 @@
 # MO Car Rent Phuket - hero prototype
 
-## Frontend structure
-- Global `.container` is controlled by `--container` and `--container-gutter`.
-- Header navigation uses `nav > ul > li > a`.
-- Hero is a semantic `section` connected to its `h1` through `aria-labelledby`.
-- Decorative media lives inside the hero `.container` and is excluded from the accessibility tree.
-- Booking controls use real `label`, `input`, `select`, `fieldset` and `legend` elements.
-- No inline JavaScript handlers are used.
+Файлы:
+- `index.html` - семантическая разметка hero/header.
+- `assets/style.css` - tokens, UI states, responsive layout.
+- `assets/main.js` - booking form progressive enhancement.
+- `FRONTEND-STANDARD.md` - эталонный frontend-стандарт для дальнейшей разработки и WordPress.
 
-## WordPress / ACF mapping
-Recommended editable fields:
-- hero identity;
-- hero title;
-- hero lead;
-- primary and secondary CTA labels/URLs;
-- hero proof items - Repeater;
-- scene image and foreground car image;
-- booking locations - Repeater or Options;
-- booking notes - Repeater.
-
-`assets/main.js` uses data attributes instead of content-dependent selectors. A WordPress implementation can listen for the `mocar:booking-submit` custom event or replace the prototype submit handler with the real catalog/filter request.
+Текущий `data-demo` на форме отключает фактический переход после submit. При интеграции с WordPress удалите `data-demo` и задайте реальный action/обработчик.
