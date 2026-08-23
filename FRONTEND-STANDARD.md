@@ -672,6 +672,9 @@ features
 
 ## 23. Типографика
 
+Шрифты через CDN в production запрещены. Базово используем системный sans-serif. Если позже утверждается фирменный web-font, файлы размещаются локально в теме WordPress и подключаются через `@font-face`.
+
+
 Базовый стек проекта должен быть sans-serif и не зависеть от внешней загрузки шрифта:
 
 ```css
@@ -686,3 +689,28 @@ features
 - LCP;
 - лицензии;
 - fallback metrics.
+
+
+---
+
+## 24. Overflow и выпадающие компоненты
+
+Секция не должна обрезать интерактивные popover/listbox элементы. Для hero визуальные слои обрезаются внутри `.hero__media`, а сама `.hero` сохраняет `overflow: visible`.
+
+Запрещено исправлять crop фоновых изображений через `overflow: hidden` на общем контейнере, если внутри него есть dropdown, tooltip, popover или modal trigger.
+
+---
+
+## 25. Динамический Google rating
+
+Текущие rating/review count должны иметь серверный fallback в HTML и возможность обновления.
+
+Рекомендуемая production-схема:
+
+1. WordPress хранит Google Place ID в options/ACF Options.
+2. Серверный код получает `rating` и `userRatingCount` из Google Places API.
+3. Ответ кэшируется через transient минимум на несколько часов, чтобы не делать API-запрос на каждый просмотр страницы.
+4. Шаблон hero рендерит последнее сохранённое значение сервером.
+5. Опциональный REST endpoint `/wp-json/mocar/v1/google-rating` может обновлять уже открытый интерфейс.
+6. При ошибке API сайт показывает последнее кэшированное значение, а не пустой блок.
+7. Не размещать unrestricted Google API key в frontend JS.

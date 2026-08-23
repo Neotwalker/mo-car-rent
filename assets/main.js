@@ -17,6 +17,9 @@
     selectText: '[data-select-text]',
     selectList: '[data-select-list]',
     selectOption: '[data-select-option]',
+    googleRating: '[data-google-rating]',
+    googleRatingValue: '[data-google-rating-value]',
+    googleRatingCount: '[data-google-rating-count]',
   };
 
   const EVENT_BOOKING_SUBMIT = 'mocar:booking:submit';
@@ -27,8 +30,6 @@
   };
 
   const syncReturnDate = (pickupDate, returnDate, fallbackMin) => {
-    if (!pickupDate || !returnDate) return;
-
     const minReturnDate = pickupDate.value || fallbackMin;
     returnDate.min = minReturnDate;
 
@@ -38,16 +39,14 @@
   };
 
   const openDatePicker = (input) => {
-    if (!input) return;
-
     input.focus({ preventScroll: true });
 
-    if (typeof input.showPicker === 'function') {
-      try {
-        input.showPicker();
-      } catch {
-        // The focused native date input remains usable as the fallback.
-      }
+    if (typeof input.showPicker !== 'function') return;
+
+    try {
+      input.showPicker();
+    } catch {
+      // Native focused date input remains the fallback.
     }
   };
 
@@ -57,9 +56,7 @@
 
     if (!input || !trigger) return;
 
-    trigger.addEventListener('click', () => {
-      openDatePicker(input);
-    });
+    trigger.addEventListener('click', () => openDatePicker(input));
   };
 
   const initCustomSelect = (root) => {
@@ -74,7 +71,7 @@
       return null;
     }
 
-    const wasRequired = nativeSelect.required;
+    const isRequired = nativeSelect.required;
     nativeSelect.required = false;
     nativeSelect.tabIndex = -1;
 
@@ -87,13 +84,12 @@
       options.findIndex((option) => option.dataset.value === nativeSelect.value);
 
     const setActiveIndex = (index, { focus = true } = {}) => {
-      if (!options.length) return;
-
       activeIndex = (index + options.length) % options.length;
 
       options.forEach((option, optionIndex) => {
-        option.classList.toggle('is-active', optionIndex === activeIndex);
-        option.tabIndex = optionIndex === activeIndex ? 0 : -1;
+        const isActive = optionIndex === activeIndex;
+        option.classList.toggle('is-active', isActive);
+        option.tabIndex = isActive ? 0 : -1;
       });
 
       if (focus) {
@@ -118,49 +114,38 @@
       }
     };
 
-    const open = ({ focusSelected = true } = {}) => {
+    const open = () => {
       ui.classList.add('is-open');
       list.hidden = false;
       trigger.setAttribute('aria-expanded', 'true');
 
       const selectedIndex = getSelectedIndex();
-      const firstIndex = selectedIndex >= 0 ? selectedIndex : 0;
-      setActiveIndex(firstIndex, { focus: focusSelected });
+      setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
     };
 
-    const selectOption = (option, { focusTrigger = true } = {}) => {
-      if (!option) return;
-
+    const selectOption = (option) => {
       nativeSelect.value = option.dataset.value || '';
       text.textContent = option.textContent.trim();
 
       options.forEach((item) => {
-        item.setAttribute(
-          'aria-selected',
-          item === option ? 'true' : 'false',
-        );
+        item.setAttribute('aria-selected', item === option ? 'true' : 'false');
       });
 
       root.classList.remove('has-error');
       trigger.removeAttribute('aria-invalid');
-
       nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
-      close({ focusTrigger });
+      close({ focusTrigger: true });
     };
 
     trigger.addEventListener('click', () => {
-      if (list.hidden) {
-        open();
-      } else {
-        close();
-      }
+      if (list.hidden) open();
+      else close();
     });
 
     trigger.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault();
-        open();
-      }
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      open();
     });
 
     list.addEventListener('keydown', (event) => {
@@ -200,34 +185,28 @@
         return;
       }
 
-      if (event.key === 'Tab') {
-        close();
-      }
+      if (event.key === 'Tab') close();
     });
 
     options.forEach((option) => {
-      option.addEventListener('click', () => {
-        selectOption(option);
-      });
+      option.addEventListener('click', () => selectOption(option));
     });
 
-    const onDocumentPointerDown = (event) => {
-      if (!root.contains(event.target)) {
-        close();
-      }
-    };
-
-    document.addEventListener('pointerdown', onDocumentPointerDown);
+    document.addEventListener('pointerdown', (event) => {
+      if (!root.contains(event.target)) close();
+    });
 
     return {
       isValid() {
-        if (!wasRequired || nativeSelect.value) {
-          root.classList.remove('has-error');
+        const isValid = !isRequired || Boolean(nativeSelect.value);
+
+        root.classList.toggle('has-error', !isValid);
+
+        if (isValid) {
           trigger.removeAttribute('aria-invalid');
           return true;
         }
 
-        root.classList.add('has-error');
         trigger.setAttribute('aria-invalid', 'true');
         trigger.focus({ preventScroll: true });
         return false;
@@ -239,16 +218,16 @@
     const pickupDate = form.querySelector(SELECTORS.pickupDate);
     const returnDate = form.querySelector(SELECTORS.returnDate);
     const status = form.querySelector(SELECTORS.status);
+
+    if (!pickupDate || !returnDate) return;
+
     const customSelects = [...form.querySelectorAll(SELECTORS.customSelect)]
       .map(initCustomSelect)
       .filter(Boolean);
 
     form.querySelectorAll(SELECTORS.dateControl).forEach(initDateControl);
 
-    if (!pickupDate || !returnDate) return;
-
     const today = toLocalIsoDate(new Date());
-
     pickupDate.min = today;
     returnDate.min = today;
 
@@ -261,11 +240,7 @@
 
       if (!customSelectsValid) {
         event.preventDefault();
-
-        if (status) {
-          status.textContent = 'Выберите место получения автомобиля.';
-        }
-
+        if (status) status.textContent = 'Выберите место получения автомобиля.';
         return;
       }
 
@@ -276,25 +251,48 @@
       }
 
       const detail = Object.fromEntries(new FormData(form).entries());
+      document.dispatchEvent(new CustomEvent(EVENT_BOOKING_SUBMIT, { detail }));
 
-      document.dispatchEvent(
-        new CustomEvent(EVENT_BOOKING_SUBMIT, {
-          detail,
-        }),
-      );
+      if (!form.hasAttribute('data-demo')) return;
 
-      if (form.hasAttribute('data-demo')) {
-        event.preventDefault();
-
-        if (status) {
-          status.textContent = 'Параметры подбора автомобиля заполнены.';
-        }
-      }
+      event.preventDefault();
+      if (status) status.textContent = 'Параметры подбора автомобиля заполнены.';
     });
+  };
+
+  const formatRating = (rating) =>
+    Number(rating).toLocaleString('ru-RU', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
+
+  const initGoogleRating = async (root) => {
+    const endpoint = root.dataset.ratingEndpoint;
+    if (!endpoint) return;
+
+    const value = root.querySelector(SELECTORS.googleRatingValue);
+    const count = root.querySelector(SELECTORS.googleRatingCount);
+    if (!value || !count) return;
+
+    try {
+      const response = await fetch(endpoint, {
+        headers: { Accept: 'application/json' },
+        credentials: 'same-origin',
+      });
+
+      if (!response.ok) return;
+
+      const data = await response.json();
+      if (typeof data.rating === 'number') value.textContent = formatRating(data.rating);
+      if (Number.isInteger(data.userRatingCount)) count.textContent = String(data.userRatingCount);
+    } catch {
+      // Keep the server-rendered/static fallback when the endpoint is unavailable.
+    }
   };
 
   const init = () => {
     document.querySelectorAll(SELECTORS.form).forEach(initBookingForm);
+    document.querySelectorAll(SELECTORS.googleRating).forEach(initGoogleRating);
   };
 
   init();

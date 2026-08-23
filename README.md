@@ -13,3 +13,9 @@
 - иконка телефона 22x22;
 - accessible custom select с native select fallback;
 - одна проектная иконка календаря поверх native date picker.
+
+Обновление v3:
+- удалены CDN-шрифты и исправлено наследование font-family;
+- исправлен clipping custom select: overflow остаётся у media-слоя, а не у всей hero-секции;
+- booking notes увеличены;
+- Google rating оставлен с server-rendered fallback и подготовлен к обновлению через WordPress REST endpoint.
