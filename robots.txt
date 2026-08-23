@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Для production заменить URL на реальный домен:
+# Sitemap: https://example.com/sitemap.xml
