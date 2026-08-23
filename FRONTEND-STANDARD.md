@@ -326,7 +326,16 @@ document.querySelector('[data-booking-form]')
 - `aria-live` для динамического результата;
 - `fieldset/legend`, когда поля составляют логическую группу.
 
-Нельзя делать fake-select или fake-input без реальной необходимости.
+Кастомный select допустим только как progressive enhancement:
+
+- в HTML остаётся настоящий `<select>` как no-JS fallback и источник `name/value`;
+- после инициализации JS появляется собственный trigger + `role="listbox"`;
+- выбор синхронизируется обратно в native `<select>`;
+- обязательны keyboard navigation, Escape, ArrowUp/ArrowDown, Home/End, Enter/Space, click outside;
+- обязательны `aria-expanded`, `aria-selected`, focus management и error-state;
+- CSS не должен полностью удалять native `<select>` до успешной инициализации JS.
+
+Такой подход разрешён, если визуально native `<select>` не позволяет реализовать согласованный UI.
 
 ### Состояние поля
 
@@ -517,6 +526,7 @@ features
 - тяжёлый UI framework;
 - большая animation library для простого hover;
 - несколько шрифтовых семейств;
+- внешний web-font без необходимости, если системный sans-serif решает задачу;
 - видео/анимация в hero без оценки LCP;
 - PNG/JPG в исходном многомегабайтном размере на production.
 
@@ -641,3 +651,38 @@ features
 10. одного визуального ревью перед push.
 
 Цель - доводить компонент до устойчивого состояния до коммита, а не исправлять фундаментальные ошибки серией из десяти push.
+
+
+---
+
+## 22. Date input и календарная иконка
+
+Для `input[type="date"]` используем нативный date picker, но визуально показываем только одну проектную иконку.
+
+Правила:
+
+- `type="date"` сохраняется ради мобильного UX и native picker;
+- браузерный `::-webkit-calendar-picker-indicator` скрывается;
+- рядом используется отдельный `button[type="button"]` с проектным SVG;
+- JS вызывает `HTMLInputElement.showPicker()` при наличии API;
+- при отсутствии `showPicker()` остаётся обычный нативный input как fallback;
+- не строить собственный календарь без отдельной продуктовой причины.
+
+---
+
+## 23. Типографика
+
+Базовый стек проекта должен быть sans-serif и не зависеть от внешней загрузки шрифта:
+
+```css
+--font-sans: "Segoe UI", Arial, Helvetica, sans-serif;
+```
+
+Если позже утверждается фирменный web-font, он добавляется отдельным решением после проверки:
+
+- веса файлов;
+- кириллицы;
+- CLS/FOUT;
+- LCP;
+- лицензии;
+- fallback metrics.

@@ -125,37 +125,70 @@
 
                 <div class="booking__field">
                   <label class="booking__label" for="pickup-date">Получение</label>
-                  <div class="booking__control">
+                  <div class="booking__control booking__control--date" data-date-control>
                     <input id="pickup-date" type="date" name="pickup_date" required data-pickup-date>
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                      <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                      <path d="M8 3v4M16 3v4M3 10h18"></path>
-                    </svg>
+                    <button class="booking__date-trigger" type="button" aria-label="Открыть календарь даты получения" data-date-trigger>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                        <path d="M8 3v4M16 3v4M3 10h18"></path>
+                      </svg>
+                    </button>
                   </div>
                 </div>
 
                 <div class="booking__field">
                   <label class="booking__label" for="return-date">Возврат</label>
-                  <div class="booking__control">
+                  <div class="booking__control booking__control--date" data-date-control>
                     <input id="return-date" type="date" name="return_date" required data-return-date>
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                      <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                      <path d="M8 3v4M16 3v4M3 10h18"></path>
-                    </svg>
+                    <button class="booking__date-trigger" type="button" aria-label="Открыть календарь даты возврата" data-date-trigger>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                        <path d="M8 3v4M16 3v4M3 10h18"></path>
+                      </svg>
+                    </button>
                   </div>
                 </div>
 
-                <div class="booking__field booking__field--location">
+                <div class="booking__field booking__field--location" data-custom-select>
                   <label class="booking__label" for="pickup-location">Место получения</label>
-                  <div class="booking__control booking__control--select">
-                    <select id="pickup-location" name="pickup_location" required>
-                      <option value="" selected disabled>Выберите место</option>
-                      <option value="delivery">Доставка по Пхукету</option>
-                      <option value="office">Получение в офисе</option>
-                    </select>
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
+
+                  <select class="booking__native-select" id="pickup-location" name="pickup_location" required data-select-native>
+                    <option value="" selected disabled>Выберите место</option>
+                    <option value="delivery">Доставка по Пхукету</option>
+                    <option value="office">Получение в офисе</option>
+                  </select>
+
+                  <div class="booking__custom-select" data-select-ui hidden>
+                    <button
+                      class="booking__select-trigger"
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                      aria-controls="pickup-location-listbox"
+                      data-select-trigger
+                    >
+                      <span data-select-text>Выберите место</span>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="m6 9 6 6 6-6"></path>
+                      </svg>
+                    </button>
+
+                    <ul
+                      class="booking__select-list"
+                      id="pickup-location-listbox"
+                      role="listbox"
+                      aria-label="Место получения"
+                      tabindex="-1"
+                      hidden
+                      data-select-list
+                    >
+                      <li class="booking__select-option" role="option" aria-selected="false" tabindex="-1" data-select-option data-value="delivery">
+                        Доставка по Пхукету
+                      </li>
+                      <li class="booking__select-option" role="option" aria-selected="false" tabindex="-1" data-select-option data-value="office">
+                        Получение в офисе
+                      </li>
+                    </ul>
                   </div>
                 </div>
 
