@@ -147,19 +147,19 @@
               </div>
               <div class="trust-grid">
                 <article class="trust-card">
-                  <span class="trust-card__icon" aria-hidden="true">฿</span>
+                  <span class="trust-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 7.5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3v-10a3 3 0 0 1 3-3h11.5"/><path d="M20 11.5h-4a2 2 0 0 0 0 4h4"/><circle cx="16" cy="13.5" r=".7"/></svg></span>
                   <h3>Депозит</h3>
                   <strong>По запросу</strong>
                   <p>Точная сумма выводится из общих условий или переопределяется для конкретного автомобиля.</p>
                 </article>
                 <article class="trust-card">
-                  <span class="trust-card__icon" aria-hidden="true">✓</span>
+                  <span class="trust-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3 19 6v5c0 4.6-2.8 8.1-7 10-4.2-1.9-7-5.4-7-10V6l7-3Z"/><path d="m8.8 12.1 2.1 2.1 4.6-5"/></svg></span>
                   <h3>Страховка</h3>
                   <strong>Условия уточняются</strong>
                   <p>На рабочем сайте здесь показываются реальные условия страхования без неподтверждённых обещаний.</p>
                 </article>
                 <article class="trust-card">
-                  <span class="trust-card__icon" aria-hidden="true">↔</span>
+                  <span class="trust-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M9 15h6M12 12v6"/></svg></span>
                   <h3>Минимальный срок</h3>
                   <strong>По запросу</strong>
                   <p>Параметр может наследоваться из общих условий и при необходимости задаваться отдельно для модели.</p>
@@ -181,9 +181,10 @@
             <div class="booking-card__head">
               <p class="single-panel__eyebrow">Заявка</p>
               <h2 id="booking-title">Проверить доступность</h2>
-              <p>Автомобиль уже выбран. Укажите даты и способ связи - менеджер проверит наличие и подтвердит детали.</p>
+              <p>Автомобиль уже выбран. Укажите даты и номер телефона - менеджер проверит наличие и подтвердит детали.</p>
             </div>
 
+            <div class="booking-card__form-shell">
             <form class="car-booking" data-car-booking-form data-demo novalidate>
               <input type="hidden" name="car" value="Toyota Fortuner" />
               <div class="car-booking__selected">
@@ -248,24 +249,10 @@
                 </div>
               </div>
 
-              <div class="car-booking__grid car-booking__grid--contact">
-                <div class="car-booking__field">
-                  <label for="contact-method-toyota-fortuner">Связаться через</label>
-                  <div class="car-booking__control car-booking__control--select">
-                    <select id="contact-method-toyota-fortuner" name="contact_method" required data-contact-method>
-                      <option value="phone">Телефон</option>
-                      <option value="whatsapp">WhatsApp</option>
-                      <option value="telegram">Telegram</option>
-                    </select>
-                    <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
-                  </div>
-                </div>
-                <div class="car-booking__field">
-                  <label for="contact-value-toyota-fortuner">Телефон или контакт</label>
-                  <div class="car-booking__control">
-                    <input id="contact-value-toyota-fortuner" name="contact_value" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" required placeholder="+код страны и номер" data-contact-value />
-                  <small class="car-booking__hint" data-contact-hint>В международном формате, например +66, +7, +44.</small>
-                  </div>
+              <div class="car-booking__field">
+                <label for="phone-toyota-fortuner">Телефон</label>
+                <div class="car-booking__control">
+                  <input id="phone-toyota-fortuner" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="22" required placeholder="+___ ___ ___ ____" data-phone-mask />
                 </div>
               </div>
 
@@ -290,11 +277,11 @@
               <p class="car-booking__status" data-car-booking-status role="status" aria-live="polite"></p>
             </form>
 
-            <div class="booking-success" data-booking-success tabindex="-1" hidden>
-              <span class="booking-success__icon" aria-hidden="true">✓</span>
-              <h3>Заявка принята</h3>
-              <p>Доступность автомобиля пока не подтверждена. Менеджер проверит даты и свяжется с вами.</p>
-              <a href="../">Вернуться в каталог</a>
+              <div class="booking-success" data-booking-success tabindex="-1" role="status" aria-live="polite" hidden>
+                <span class="booking-success__icon" aria-hidden="true">✓</span>
+                <h3>Заявка принята</h3>
+                <p>Доступность автомобиля пока не подтверждена. Менеджер проверит даты и свяжется с вами.</p>
+              </div>
             </div>
           </aside>
         </div>

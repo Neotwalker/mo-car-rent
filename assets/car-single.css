@@ -1233,3 +1233,83 @@
     margin: 0;
   }
 }
+
+/* Stage 11 car-single v3 review refinements */
+.trust-card__icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.booking-card__form-shell {
+  position: relative;
+  min-width: 0;
+}
+
+.booking-success {
+  position: absolute;
+  z-index: 5;
+  inset: -2px;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(17, 21, 23, 0.97);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(7px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 180ms var(--ease-ui),
+    visibility 180ms var(--ease-ui);
+}
+
+.booking-success[hidden] {
+  display: none;
+}
+
+.booking-success.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.booking-success__icon {
+  margin-bottom: 20px;
+}
+
+.booking-success h3 {
+  font-size: clamp(28px, 2.4vw, 34px);
+}
+
+.booking-success p {
+  max-width: 440px;
+  margin-bottom: 0;
+}
+
+.car-booking [data-phone-mask] {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 1280px) {
+  .booking-card {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-success {
+    transition: none;
+  }
+}

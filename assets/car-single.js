@@ -9,18 +9,94 @@
     return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 10);
   };
 
+  const groups = (value, sizes, separators = ' ') => {
+    const chunks = [];
+    let cursor = 0;
+    sizes.forEach((size) => {
+      if (cursor >= value.length) return;
+      chunks.push(value.slice(cursor, cursor + size));
+      cursor += size;
+    });
+    if (cursor < value.length) chunks.push(value.slice(cursor));
+    return chunks.join(separators);
+  };
+
+  const PHONE_RULES = [
+    { prefix: '971', max: 12, format: (rest) => `+971${rest ? ` ${groups(rest, [2, 3, 4])}` : ''}` },
+    { prefix: '66', max: 11, format: (rest) => `+66${rest ? ` ${groups(rest, [2, 3, 4])}` : ''}` },
+    { prefix: '44', max: 12, format: (rest) => `+44${rest ? ` ${groups(rest, [4, 6])}` : ''}` },
+    { prefix: '49', max: 15, format: (rest) => `+49${rest ? ` ${groups(rest, [3, 4, 4])}` : ''}` },
+    { prefix: '33', max: 11, format: (rest) => `+33${rest ? ` ${groups(rest, [1, 2, 2, 2, 2])}` : ''}` },
+    { prefix: '39', max: 12, format: (rest) => `+39${rest ? ` ${groups(rest, [3, 3, 4])}` : ''}` },
+    { prefix: '34', max: 11, format: (rest) => `+34${rest ? ` ${groups(rest, [3, 3, 3])}` : ''}` },
+    { prefix: '31', max: 11, format: (rest) => `+31${rest ? ` ${groups(rest, [1, 2, 2, 2, 2])}` : ''}` },
+    { prefix: '90', max: 12, format: (rest) => `+90${rest ? ` ${groups(rest, [3, 3, 2, 2])}` : ''}` },
+    { prefix: '62', max: 15, format: (rest) => `+62${rest ? ` ${groups(rest, [3, 4, 4])}` : ''}` },
+    { prefix: '65', max: 10, format: (rest) => `+65${rest ? ` ${groups(rest, [4, 4])}` : ''}` },
+    { prefix: '86', max: 13, format: (rest) => `+86${rest ? ` ${groups(rest, [3, 4, 4])}` : ''}` },
+    { prefix: '81', max: 12, format: (rest) => `+81${rest ? ` ${groups(rest, [2, 4, 4])}` : ''}` },
+    { prefix: '82', max: 12, format: (rest) => `+82${rest ? ` ${groups(rest, [2, 4, 4])}` : ''}` },
+    {
+      prefix: '7',
+      max: 11,
+      format: (rest) => {
+        if (!rest) return '+7';
+        const area = rest.slice(0, 3);
+        const tail = rest.slice(3);
+        let output = `+7 (${area}`;
+        if (area.length === 3) output += ')';
+        if (tail) output += ` ${groups(tail, [3, 2, 2], '-')}`;
+        return output;
+      },
+    },
+    {
+      prefix: '1',
+      max: 11,
+      format: (rest) => {
+        if (!rest) return '+1';
+        const area = rest.slice(0, 3);
+        const tail = rest.slice(3);
+        let output = `+1 (${area}`;
+        if (area.length === 3) output += ')';
+        if (tail) {
+          const first = tail.slice(0, 3);
+          const last = tail.slice(3, 7);
+          output += ` ${first}${last ? `-${last}` : ''}`;
+        }
+        return output;
+      },
+    },
+  ];
+
+  const getPhoneRule = (digits) => PHONE_RULES.find((rule) => digits.startsWith(rule.prefix));
+
+  const normalizePhoneDigits = (value) => value.replace(/\D/g, '').slice(0, 15);
+
+  const formatPhone = (value) => {
+    let digits = normalizePhoneDigits(value);
+    if (!digits) return '';
+
+    const rule = getPhoneRule(digits);
+    if (!rule) return `+${groups(digits, [3, 3, 3, 3, 3])}`;
+
+    digits = digits.slice(0, rule.max);
+    return rule.format(digits.slice(rule.prefix.length));
+  };
+
   forms.forEach((form) => {
     const pickupDate = form.querySelector('[data-car-pickup-date]');
     const returnDate = form.querySelector('[data-car-return-date]');
     const pickupMethod = form.querySelector('[data-car-pickup-method]');
     const addressField = form.querySelector('[data-delivery-address-field]');
     const addressInput = addressField?.querySelector('input');
-    const contactMethod = form.querySelector('[data-contact-method]');
-    const contactValue = form.querySelector('[data-contact-value]');
+    const phone = form.querySelector('[data-phone-mask]');
     const status = form.querySelector('[data-car-booking-status]');
-    const success = form.closest('.booking-card')?.querySelector('[data-booking-success]');
-    const contactHint = form.querySelector('[data-contact-hint]');
+    const shell = form.closest('.booking-card__form-shell');
+    const success = shell?.querySelector('[data-booking-success]');
     const dateControls = [...form.querySelectorAll('[data-car-date-control]')];
+    const submit = form.querySelector('.car-booking__submit');
+    let successTimer = 0;
+    let hideTimer = 0;
 
     const today = toLocalIsoDate(new Date());
     if (pickupDate) pickupDate.min = today;
@@ -41,37 +117,23 @@
       if (!requiresAddress) addressInput.value = '';
     };
 
-    const syncContact = () => {
-      if (!contactMethod || !contactValue) return;
-      const method = contactMethod.value;
-      contactValue.setCustomValidity('');
-
-      if (method === 'telegram') {
-        contactValue.type = 'text';
-        contactValue.placeholder = '@username или номер';
-        contactValue.inputMode = 'text';
-        contactValue.autocomplete = 'off';
-        contactValue.removeAttribute('pattern');
-        if (contactHint) contactHint.textContent = 'Укажите @username или номер, привязанный к Telegram.';
-      } else {
-        contactValue.type = 'tel';
-        contactValue.placeholder = '+код страны и номер';
-        contactValue.inputMode = 'tel';
-        contactValue.autocomplete = 'tel';
-        contactValue.setAttribute('pattern', '[+0-9() .\\-]{7,24}');
-        if (contactHint) contactHint.textContent = 'В международном формате, например +66, +7, +44.';
-      }
+    const validatePhone = () => {
+      if (!phone) return;
+      const digits = normalizePhoneDigits(phone.value);
+      const valid = digits.length >= 8 && digits.length <= 15;
+      phone.setCustomValidity(valid || !phone.value ? '' : 'Введите номер телефона целиком.');
     };
 
-    const validateInternationalPhone = () => {
-      if (!contactMethod || !contactValue || contactMethod.value === 'telegram') {
-        contactValue?.setCustomValidity('');
-        return;
+    const syncPhoneMask = () => {
+      if (!phone) return;
+      const formatted = formatPhone(phone.value);
+      phone.value = formatted;
+      validatePhone();
+      try {
+        phone.setSelectionRange(formatted.length, formatted.length);
+      } catch {
+        // Some mobile browsers may not support selection on tel inputs.
       }
-
-      const digits = contactValue.value.replace(/\D/g, '');
-      const valid = digits.length >= 7 && digits.length <= 15;
-      contactValue.setCustomValidity(valid || !contactValue.value ? '' : 'Введите номер в международном формате: код страны и номер.');
     };
 
     const openDatePicker = (input) => {
@@ -84,6 +146,30 @@
       }
     };
 
+    const hideSuccess = () => {
+      if (!success) return;
+      success.classList.remove('is-visible');
+      hideTimer = window.setTimeout(() => {
+        success.hidden = true;
+        form.reset();
+        syncDates();
+        syncDelivery();
+        syncPhoneMask();
+        if (status) status.textContent = '';
+        submit?.focus({ preventScroll: true });
+      }, 180);
+    };
+
+    const showSuccess = () => {
+      if (!success) return;
+      window.clearTimeout(successTimer);
+      window.clearTimeout(hideTimer);
+      success.hidden = false;
+      window.requestAnimationFrame(() => success.classList.add('is-visible'));
+      success.focus({ preventScroll: true });
+      successTimer = window.setTimeout(hideSuccess, 6000);
+    };
+
     dateControls.forEach((control) => {
       const input = control.querySelector('input[type="date"]');
       const trigger = control.querySelector('[data-car-date-trigger]');
@@ -92,17 +178,17 @@
 
     pickupDate?.addEventListener('change', syncDates);
     pickupMethod?.addEventListener('change', syncDelivery);
-    contactMethod?.addEventListener('change', () => { syncContact(); validateInternationalPhone(); });
-    contactValue?.addEventListener('input', validateInternationalPhone);
+    phone?.addEventListener('input', syncPhoneMask);
+    phone?.addEventListener('blur', validatePhone);
 
     syncDates();
     syncDelivery();
-    syncContact();
-    validateInternationalPhone();
+    syncPhoneMask();
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       if (status) status.textContent = '';
+      validatePhone();
 
       const requiredFields = [...form.querySelectorAll('[required]')];
       requiredFields.forEach((field) => field.removeAttribute('aria-invalid'));
@@ -119,11 +205,7 @@
       const detail = Object.fromEntries(new FormData(form).entries());
       document.dispatchEvent(new CustomEvent('mocar:booking_submit', { detail }));
 
-      if (form.hasAttribute('data-demo')) {
-        form.hidden = true;
-        if (success) success.hidden = false;
-        success?.focus?.({ preventScroll: true });
-      }
+      if (form.hasAttribute('data-demo')) showSuccess();
     });
   });
 })();
