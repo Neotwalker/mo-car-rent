@@ -19,6 +19,172 @@
 
   if (!form || !grid || !count || !label || !chips || !empty || !sort) return;
 
+  const selectInstances = new Map();
+
+  const initCatalogSelect = (selectRoot) => {
+    const nativeSelect = selectRoot.querySelector('select');
+    if (!nativeSelect) return null;
+
+    const ui = document.createElement('div');
+    ui.className = 'catalog-select__ui';
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'catalog-select__trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    const triggerText = document.createElement('span');
+    triggerText.className = 'catalog-select__trigger-text';
+
+    const chevron = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    chevron.setAttribute('class', 'catalog-select__chevron');
+    chevron.setAttribute('viewBox', '0 0 20 20');
+    chevron.setAttribute('aria-hidden', 'true');
+    const chevronPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    chevronPath.setAttribute('d', 'm5.5 7.5 4.5 4.5 4.5-4.5');
+    chevron.append(chevronPath);
+    trigger.append(triggerText, chevron);
+
+    const list = document.createElement('ul');
+    const listId = `${nativeSelect.id || nativeSelect.name || 'catalog-select'}-listbox`;
+    list.id = listId;
+    list.className = 'catalog-select__list';
+    list.setAttribute('role', 'listbox');
+    list.setAttribute('aria-label', nativeSelect.labels?.[0]?.textContent?.trim() || 'Выберите значение');
+    list.tabIndex = -1;
+    list.hidden = true;
+    trigger.setAttribute('aria-controls', listId);
+
+    const options = [...nativeSelect.options].map((nativeOption) => {
+      const option = document.createElement('li');
+      option.className = 'catalog-select__option';
+      option.setAttribute('role', 'option');
+      option.setAttribute('aria-selected', nativeOption.selected ? 'true' : 'false');
+      option.tabIndex = -1;
+      option.dataset.value = nativeOption.value;
+      option.textContent = nativeOption.textContent.trim();
+      list.append(option);
+      return option;
+    });
+
+    ui.append(trigger, list);
+    selectRoot.append(ui);
+    selectRoot.classList.add('is-enhanced');
+    nativeSelect.tabIndex = -1;
+
+    let activeIndex = -1;
+
+    const selectedIndex = () => Math.max(0, options.findIndex((option) => option.dataset.value === nativeSelect.value));
+
+    const sync = () => {
+      const index = selectedIndex();
+      const nativeOption = nativeSelect.options[index];
+      triggerText.textContent = nativeOption?.textContent?.trim() || '';
+      options.forEach((option, optionIndex) => {
+        option.setAttribute('aria-selected', optionIndex === index ? 'true' : 'false');
+      });
+    };
+
+    const setActive = (index, focus = true) => {
+      activeIndex = (index + options.length) % options.length;
+      options.forEach((option, optionIndex) => {
+        const active = optionIndex === activeIndex;
+        option.classList.toggle('is-active', active);
+        option.tabIndex = active ? 0 : -1;
+      });
+      if (focus) options[activeIndex]?.focus({ preventScroll: true });
+    };
+
+    const close = ({ focusTrigger = false } = {}) => {
+      ui.classList.remove('is-open');
+      list.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      options.forEach((option) => {
+        option.classList.remove('is-active');
+        option.tabIndex = -1;
+      });
+      activeIndex = -1;
+      if (focusTrigger) trigger.focus({ preventScroll: true });
+    };
+
+    const open = () => {
+      // Only one catalog listbox should be open at a time.
+      selectInstances.forEach((instance) => {
+        if (instance.nativeSelect !== nativeSelect) instance.close();
+      });
+      ui.classList.add('is-open');
+      list.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      setActive(selectedIndex());
+    };
+
+    const choose = (option) => {
+      nativeSelect.value = option.dataset.value ?? '';
+      sync();
+      nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      close({ focusTrigger: true });
+    };
+
+    trigger.addEventListener('click', () => {
+      if (list.hidden) open();
+      else close();
+    });
+
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        open();
+      }
+    });
+
+    list.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close({ focusTrigger: true });
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setActive(activeIndex + 1);
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setActive(activeIndex - 1);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        setActive(0);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        setActive(options.length - 1);
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        if (activeIndex >= 0) choose(options[activeIndex]);
+      } else if (event.key === 'Tab') {
+        close();
+      }
+    });
+
+    options.forEach((option) => option.addEventListener('click', () => choose(option)));
+
+    const instance = {
+      nativeSelect,
+      trigger,
+      close,
+      sync,
+      focus: () => trigger.focus({ preventScroll: true }),
+    };
+    selectInstances.set(nativeSelect, instance);
+    sync();
+    return instance;
+  };
+
+  root.querySelectorAll('[data-catalog-select]').forEach(initCatalogSelect);
+
+  document.addEventListener('pointerdown', (event) => {
+    selectInstances.forEach((instance, nativeSelect) => {
+      const selectRoot = nativeSelect.closest('[data-catalog-select]');
+      if (selectRoot && !selectRoot.contains(event.target)) instance.close();
+    });
+  });
+
   const fields = Object.fromEntries(filterControls.map((control) => [control.dataset.filter, control]));
   const filterLabels = {
     type: 'Тип',
@@ -127,9 +293,12 @@
     document.dispatchEvent(new CustomEvent('mocar:catalog:filter_change', { detail: { ...state, results: visible } }));
   };
 
+  const syncSelectUis = () => selectInstances.forEach((instance) => instance.sync());
+
   const reset = () => {
     filterControls.forEach((control) => { control.value = ''; });
     sort.value = 'default';
+    syncSelectUis();
     apply();
   };
 
@@ -159,8 +328,11 @@
     const control = fields[button.dataset.removeFilter];
     if (!control) return;
     control.value = '';
+    selectInstances.get(control)?.sync();
     apply();
-    control.focus({ preventScroll: true });
+    const instance = selectInstances.get(control);
+    if (instance) instance.focus();
+    else control.focus({ preventScroll: true });
   });
 
   resetButtons.forEach((button) => button.addEventListener('click', reset));
@@ -180,5 +352,6 @@
   }
 
   loadFromUrl();
+  syncSelectUis();
   apply({ updateUrl: false });
 })();

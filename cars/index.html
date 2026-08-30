@@ -57,10 +57,8 @@
         </nav>
 
         <div class="catalog-page__head">
-          <div>
-            <p class="catalog-page__eyebrow">Каталог</p>
-            <h1 class="catalog-page__title" id="catalog-title">Автомобили и цены</h1>
-          </div>
+          <p class="catalog-page__eyebrow">Каталог</p>
+          <h1 class="catalog-page__title" id="catalog-title">Автомобили и цены</h1>
           <p class="catalog-page__lead">Выберите подходящую модель по типу автомобиля, количеству мест, топливу и ориентировочному демо-тарифу.</p>
         </div>
 
@@ -70,7 +68,7 @@
             <button class="catalog-tools__mobile-toggle" type="button" data-filter-toggle aria-controls="catalog-filter-panel" aria-expanded="false">
               <span>Фильтры</span>
               <span class="catalog-tools__filter-count" data-filter-count hidden>0</span>
-              <span aria-hidden="true">⌄</span>
+              <svg class="catalog-tools__mobile-chevron" aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
             </button>
           </div>
 
@@ -78,7 +76,7 @@
             <div class="catalog-filter__grid">
               <div class="catalog-filter__field">
                 <label for="catalog-type">Тип автомобиля</label>
-                <div class="catalog-filter__select-wrap">
+                <div class="catalog-filter__select-wrap catalog-select" data-catalog-select>
                   <select id="catalog-type" name="type" data-filter="type">
                     <option value="">Все типы</option>
                     <option value="compact">Компактные</option>
@@ -88,38 +86,38 @@
                     <option value="minivan">Минивэны</option>
                     <option value="electric">Электромобили</option>
                   </select>
-                  <span aria-hidden="true">⌄</span>
+                  <svg class="catalog-filter__native-chevron" aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
                 </div>
               </div>
 
               <div class="catalog-filter__field">
                 <label for="catalog-seats">Количество мест</label>
-                <div class="catalog-filter__select-wrap">
+                <div class="catalog-filter__select-wrap catalog-select" data-catalog-select>
                   <select id="catalog-seats" name="seats" data-filter="seats">
                     <option value="">Любое</option>
                     <option value="5">5 мест</option>
                     <option value="7">7 мест</option>
                   </select>
-                  <span aria-hidden="true">⌄</span>
+                  <svg class="catalog-filter__native-chevron" aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
                 </div>
               </div>
 
               <div class="catalog-filter__field">
                 <label for="catalog-fuel">Топливо</label>
-                <div class="catalog-filter__select-wrap">
+                <div class="catalog-filter__select-wrap catalog-select" data-catalog-select>
                   <select id="catalog-fuel" name="fuel" data-filter="fuel">
                     <option value="">Любое</option>
                     <option value="petrol">Бензин</option>
                     <option value="diesel">Дизель</option>
                     <option value="electric">Электро</option>
                   </select>
-                  <span aria-hidden="true">⌄</span>
+                  <svg class="catalog-filter__native-chevron" aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
                 </div>
               </div>
 
               <div class="catalog-filter__field">
                 <label for="catalog-price">Цена до</label>
-                <div class="catalog-filter__select-wrap">
+                <div class="catalog-filter__select-wrap catalog-select" data-catalog-select>
                   <select id="catalog-price" name="max_price" data-filter="price">
                     <option value="">Любая</option>
                     <option value="1300">1 300 ฿ / сутки</option>
@@ -127,20 +125,20 @@
                     <option value="1800">1 800 ฿ / сутки</option>
                     <option value="2300">2 300 ฿ / сутки</option>
                   </select>
-                  <span aria-hidden="true">⌄</span>
+                  <svg class="catalog-filter__native-chevron" aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
                 </div>
               </div>
 
               <div class="catalog-filter__field catalog-filter__field--sort">
                 <label for="catalog-sort">Сортировка</label>
-                <div class="catalog-filter__select-wrap">
+                <div class="catalog-filter__select-wrap catalog-select" data-catalog-select>
                   <select id="catalog-sort" name="sort" data-sort>
                     <option value="default">По умолчанию</option>
                     <option value="price-asc">Сначала дешевле</option>
                     <option value="price-desc">Сначала дороже</option>
                     <option value="seats-desc">Больше мест</option>
                   </select>
-                  <span aria-hidden="true">⌄</span>
+                  <svg class="catalog-filter__native-chevron" aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
                 </div>
               </div>
 
