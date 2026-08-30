@@ -191,6 +191,8 @@
     seats: 'Места',
     fuel: 'Топливо',
     price: 'Цена до',
+    brand: 'Марка',
+    year: 'Год от',
   };
 
   const pluralizeCars = (value) => {
@@ -206,10 +208,14 @@
     seats: fields.seats?.value || '',
     fuel: fields.fuel?.value || '',
     price: fields.price?.value || '',
+    brand: fields.brand?.value || '',
+    year: fields.year?.value || '',
     sort: sort.value || 'default',
   });
 
   const matches = (card, state) => {
+    if (state.brand && card.dataset.brand !== state.brand) return false;
+    if (state.year && Number(card.dataset.year) < Number(state.year)) return false;
     if (state.type && card.dataset.type !== state.type) return false;
     if (state.seats && card.dataset.seats !== state.seats) return false;
     if (state.fuel && card.dataset.fuel !== state.fuel) return false;
@@ -233,7 +239,7 @@
 
   const renderChips = (state) => {
     chips.replaceChildren();
-    const activeKeys = ['type', 'seats', 'fuel', 'price'].filter((key) => state[key]);
+    const activeKeys = ['brand', 'type', 'seats', 'fuel', 'year', 'price'].filter((key) => state[key]);
 
     activeKeys.forEach((key) => {
       const control = fields[key];
@@ -261,8 +267,10 @@
 
   const syncUrl = (state) => {
     const url = new URL(window.location.href);
-    ['type', 'seats', 'fuel', 'max_price', 'sort'].forEach((key) => url.searchParams.delete(key));
+    ['brand', 'type', 'seats', 'fuel', 'year', 'max_price', 'sort'].forEach((key) => url.searchParams.delete(key));
 
+    if (state.brand) url.searchParams.set('brand', state.brand);
+    if (state.year) url.searchParams.set('year', state.year);
     if (state.type) url.searchParams.set('type', state.type);
     if (state.seats) url.searchParams.set('seats', state.seats);
     if (state.fuel) url.searchParams.set('fuel', state.fuel);
@@ -305,6 +313,8 @@
   const loadFromUrl = () => {
     const params = new URLSearchParams(window.location.search);
     const mapping = {
+      brand: params.get('brand') || '',
+      year: params.get('year') || '',
       type: params.get('type') || '',
       seats: params.get('seats') || '',
       fuel: params.get('fuel') || '',
@@ -354,4 +364,30 @@
   loadFromUrl();
   syncSelectUis();
   apply({ updateUrl: false });
+
+
+  root.querySelectorAll('[data-quick-filter]').forEach((button) => button.addEventListener('click', () => {
+    const key=button.dataset.quickFilter;
+    if(key==='seven' && fields.seats) fields.seats.value='7';
+    if(key==='electric' && fields.fuel) fields.fuel.value='electric';
+    if(key==='budget' && fields.price) fields.price.value='1500';
+    syncSelectUis(); apply();
+  }));
+
+  const rail=document.querySelector('[data-popular-rail]');
+  if(rail){
+    const modelData=[
+      ['toyota-yaris','Toyota Yaris','../assets/img/catalog/toyota-yaris.webp','от 1 090 ฿'],
+      ['honda-city','Honda City','../assets/img/catalog/honda-city.webp','от 1 190 ฿'],
+      ['toyota-corolla-cross','Toyota Corolla Cross','../assets/img/catalog/toyota-corolla-cross.webp','от 1 490 ฿'],
+      ['mitsubishi-xpander','Mitsubishi Xpander','../assets/img/catalog/mitsubishi-xpander.webp','от 1 690 ฿'],
+      ['byd-dolphin','BYD Dolphin','../assets/img/catalog/byd-dolphin.webp','от 1 790 ฿'],
+      ['toyota-fortuner','Toyota Fortuner','../assets/img/catalog/toyota-fortuner.webp','от 2 290 ฿'],
+    ];
+    let loaded=0;
+    const sentinel=rail.querySelector('[data-popular-sentinel]');
+    const loadMore=()=>{const batch=modelData.slice(loaded,loaded+3);batch.forEach(([slug,title,img,price])=>{const a=document.createElement('a');a.className='popular-model-card';a.href=`${slug}/`;a.innerHTML=`<img src="${img}" width="180" height="101" loading="lazy" alt=""><span><strong>${title}</strong><small>${price}</small></span>`;rail.insertBefore(a,sentinel);});loaded+=batch.length;if(loaded>=modelData.length)sentinel.remove();};
+    loadMore();
+    if(sentinel){const io=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){loadMore();if(loaded>=modelData.length)io.disconnect();}},{root:rail,rootMargin:'0px 280px 0px 0px'});io.observe(sentinel);}
+  }
 })();
