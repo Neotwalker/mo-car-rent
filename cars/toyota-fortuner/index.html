@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toyota Fortuner - demo car single</title>
+  <meta name="description" content="Демонстрационная страница автомобиля Toyota Fortuner: тариф, характеристики, условия и гибридная форма заявки." />
+  <link rel="stylesheet" href="../../assets/style.css" />
+  <link rel="stylesheet" href="../../assets/catalog.css" />
+  <link rel="stylesheet" href="../../assets/car-single.css" />
+  <script defer src="../../assets/main.js"></script>
+  <script defer src="../../assets/car-single.js"></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+  <header class="site-header">
+    <div class="container site-header__container">
+      <div class="site-header__inner">
+        <a class="brand" href="../../#hero" aria-label="MO Car Rent Phuket - перейти на главную">
+          <img src="../../assets/logo.png" width="164" height="72" alt="MO Car Rent Phuket" decoding="async" />
+        </a>
+        <nav class="main-nav" id="main-navigation" data-main-nav aria-label="Основная навигация">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="../">Автомобили</a></li>
+            <li><a class="main-nav__link" href="../../#terms">Условия аренды</a></li>
+            <li><a class="main-nav__link" href="../../#delivery">Доставка и получение</a></li>
+            <li><a class="main-nav__link" href="../../#about">О компании</a></li>
+            <li><a class="main-nav__link" href="../../#contacts">Контакты</a></li>
+          </ul>
+        </nav>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-controls="main-navigation" aria-expanded="false" aria-label="Открыть меню">
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+        </button>
+        <ul class="header-contacts" aria-label="Контакты и социальные сети">
+          <li><a class="header-contacts__icon" href="https://www.instagram.com/mocarrent_phuket" target="_blank" rel="noopener" aria-label="Instagram"><img src="../../assets/icon-instagram.png" width="28" height="28" alt="" aria-hidden="true" /></a></li>
+          <li><a class="header-contacts__icon" href="https://wa.me/66618396690" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="../../assets/icon-whatsapp.png" width="30" height="30" alt="" aria-hidden="true" /></a></li>
+          <li><a class="header-contacts__phone" href="tel:+66618396690" aria-label="Позвонить: +66 61 839 6690"><img src="../../assets/icon-phone.png" width="22" height="22" alt="" aria-hidden="true" /><span>+66 61 839 6690</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="main">
+    <article class="car-single" data-car-single>
+      <div class="container">
+        <nav class="breadcrumbs car-single__breadcrumbs" aria-label="Хлебные крошки">
+          <ol class="breadcrumbs__list">
+            <li><a href="../../">Главная</a></li>
+            <li><a href="../">Автомобили</a></li>
+            <li aria-current="page">Toyota Fortuner</li>
+          </ol>
+        </nav>
+
+        <div class="car-single__hero">
+          <div class="car-single__visual">
+            <div class="car-single__media">
+              <picture>
+                <source srcset="../../assets/img/catalog/toyota-fortuner.webp" type="image/webp" />
+                <img src="../../assets/img/catalog/toyota-fortuner.jpg" width="1200" height="675" fetchpriority="high" decoding="async" alt="Toyota Fortuner 2023" />
+              </picture>
+              <span class="car-single__media-label">Демо-автомобиль</span>
+            </div>
+          </div>
+
+          <div class="car-single__summary">
+            <p class="car-single__eyebrow">Внедорожник · 7 мест · 2023</p>
+            <h1 class="car-single__title">Toyota Fortuner</h1>
+            <p class="car-single__lead">Вместительный семиместный SUV для больших компаний и маршрутов с дополнительным багажом.</p>
+
+            <ul class="car-single__quick-specs" aria-label="Основные характеристики">
+              <li><strong>7</strong><span>мест</span></li>
+              <li><strong>AT</strong><span>автомат</span></li>
+              <li><strong>Дизель</strong><span>топливо</span></li>
+            </ul>
+
+            <div class="car-single__hero-price">
+              <span>Демо-тариф от</span>
+              <div><strong>2&nbsp;290&nbsp;฿</strong><span>/ сутки</span></div>
+            </div>
+
+            <div class="car-single__hero-actions">
+              <a class="car-single__primary-cta" href="#booking">Оставить заявку <span aria-hidden="true">→</span></a>
+              <a class="car-single__secondary-cta" href="#rental-info">Условия и тарифы</a>
+            </div>
+
+            <p class="car-single__pending-note">
+              <span aria-hidden="true">✓</span>
+              Заявка не подтверждает бронь. Менеджер сначала проверит доступность автомобиля на выбранные даты.
+            </p>
+          </div>
+        </div>
+
+        <div class="car-single__content" id="rental-info">
+          <div class="car-single__details">
+            <section class="single-panel tariff-panel" aria-labelledby="tariff-title">
+              <div class="single-panel__head">
+                <div>
+                  <p class="single-panel__eyebrow">Тариф</p>
+                  <h2 id="tariff-title">Стоимость по сроку аренды</h2>
+                </div>
+                <span class="single-panel__demo">Демо-данные</span>
+              </div>
+
+              <div class="tariff-table" role="table" aria-label="Демонстрационные тарифы">
+                <div class="tariff-table__row tariff-table__row--featured" role="row">
+                  <div role="cell"><strong>1-6 дней</strong><span>Короткая аренда</span></div>
+                  <div role="cell"><strong>2&nbsp;290&nbsp;฿</strong><span>/ сутки</span></div>
+                </div>
+                <div class="tariff-table__row" role="row">
+                  <div role="cell"><strong>7-29 дней</strong><span>Недельный период</span></div>
+                  <div role="cell"><strong>По запросу</strong><span>уточнит менеджер</span></div>
+                </div>
+                <div class="tariff-table__row" role="row">
+                  <div role="cell"><strong>30+ дней</strong><span>Долгосрочная аренда</span></div>
+                  <div role="cell"><strong>Индивидуально</strong><span>после проверки дат</span></div>
+                </div>
+              </div>
+              <p class="single-panel__note">Тарифы используются для демонстрации интерфейса и заменяются через CMS при настройке сайта.</p>
+            </section>
+
+            <section class="single-panel specs-panel" aria-labelledby="specs-title">
+              <div class="single-panel__head">
+                <div>
+                  <p class="single-panel__eyebrow">Автомобиль</p>
+                  <h2 id="specs-title">Основные характеристики</h2>
+                </div>
+              </div>
+              <dl class="specs-grid">
+                <div><dt>Класс</dt><dd>Внедорожник</dd></div>
+                <div><dt>Год</dt><dd>2023</dd></div>
+                <div><dt>Мест</dt><dd>7</dd></div>
+                <div><dt>Коробка</dt><dd>AT · автомат</dd></div>
+                <div><dt>Топливо</dt><dd>Дизель</dd></div>
+                <div><dt>Статус заявки</dt><dd>После проверки менеджером</dd></div>
+              </dl>
+            </section>
+
+            <section class="single-panel trust-panel" aria-labelledby="trust-title">
+              <div class="single-panel__head">
+                <div>
+                  <p class="single-panel__eyebrow">Перед заявкой</p>
+                  <h2 id="trust-title">Условия без мелкого шрифта</h2>
+                </div>
+              </div>
+              <div class="trust-grid">
+                <article class="trust-card">
+                  <span class="trust-card__icon" aria-hidden="true">฿</span>
+                  <h3>Депозит</h3>
+                  <strong>По запросу</strong>
+                  <p>Точная сумма выводится из общих условий или переопределяется для конкретного автомобиля.</p>
+                </article>
+                <article class="trust-card">
+                  <span class="trust-card__icon" aria-hidden="true">✓</span>
+                  <h3>Страховка</h3>
+                  <strong>Условия уточняются</strong>
+                  <p>На рабочем сайте здесь показываются реальные условия страхования без неподтверждённых обещаний.</p>
+                </article>
+                <article class="trust-card">
+                  <span class="trust-card__icon" aria-hidden="true">↔</span>
+                  <h3>Минимальный срок</h3>
+                  <strong>По запросу</strong>
+                  <p>Параметр может наследоваться из общих условий и при необходимости задаваться отдельно для модели.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="single-panel pickup-panel" aria-labelledby="pickup-title">
+              <div class="pickup-panel__content">
+                <p class="single-panel__eyebrow">Получение автомобиля</p>
+                <h2 id="pickup-title">Выберите удобный вариант в форме</h2>
+                <p>Аэропорт, доставка по адресу или самовывоз могут включаться и настраиваться владельцем сайта через CMS. Если выбран вариант с доставкой, форма запросит адрес или отель.</p>
+              </div>
+              <a class="pickup-panel__link" href="#booking">Перейти к заявке <span aria-hidden="true">→</span></a>
+            </section>
+          </div>
+
+          <aside class="booking-card" id="booking" aria-labelledby="booking-title">
+            <div class="booking-card__head">
+              <p class="single-panel__eyebrow">Заявка</p>
+              <h2 id="booking-title">Проверить доступность</h2>
+              <p>Автомобиль уже выбран. Укажите даты и способ связи - менеджер проверит наличие и подтвердит детали.</p>
+            </div>
+
+            <form class="car-booking" data-car-booking-form data-demo novalidate>
+              <input type="hidden" name="car" value="Toyota Fortuner" />
+              <div class="car-booking__selected">
+                <picture>
+                  <source srcset="../../assets/img/catalog/toyota-fortuner.webp" type="image/webp" />
+                  <img src="../../assets/img/catalog/toyota-fortuner.jpg" width="240" height="135" loading="lazy" decoding="async" alt="" />
+                </picture>
+                <div><span>Выбран автомобиль</span><strong>Toyota Fortuner</strong></div>
+              </div>
+
+              <div class="car-booking__grid">
+                <div class="car-booking__field">
+                  <label for="pickup-date-toyota-fortuner">Получение</label>
+                  <div class="car-booking__control car-booking__control--date">
+                    <input id="pickup-date-toyota-fortuner" name="pickup_date" type="date" required data-car-pickup-date />
+                  </div>
+                </div>
+                <div class="car-booking__field">
+                  <label for="return-date-toyota-fortuner">Возврат</label>
+                  <div class="car-booking__control car-booking__control--date">
+                    <input id="return-date-toyota-fortuner" name="return_date" type="date" required data-car-return-date />
+                  </div>
+                </div>
+              </div>
+
+              <div class="car-booking__field">
+                <label for="pickup-method-toyota-fortuner">Место получения</label>
+                <div class="car-booking__control car-booking__control--select">
+                  <select id="pickup-method-toyota-fortuner" name="pickup_method" required data-car-pickup-method>
+                    <option value="">Выберите вариант</option>
+                    <option value="airport">Аэропорт</option>
+                    <option value="delivery">Доставка по адресу</option>
+                    <option value="office">Самовывоз</option>
+                  </select>
+                  <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
+                </div>
+              </div>
+
+              <div class="car-booking__field" data-delivery-address-field hidden>
+                <label for="delivery-address-toyota-fortuner">Адрес или отель</label>
+                <div class="car-booking__control">
+                  <input id="delivery-address-toyota-fortuner" name="delivery_address" type="text" autocomplete="street-address" placeholder="Например, название отеля" />
+                </div>
+              </div>
+
+              <div class="car-booking__field">
+                <label for="customer-name-toyota-fortuner">Имя</label>
+                <div class="car-booking__control">
+                  <input id="customer-name-toyota-fortuner" name="customer_name" type="text" autocomplete="name" required placeholder="Как к вам обращаться" />
+                </div>
+              </div>
+
+              <div class="car-booking__grid car-booking__grid--contact">
+                <div class="car-booking__field">
+                  <label for="contact-method-toyota-fortuner">Связаться через</label>
+                  <div class="car-booking__control car-booking__control--select">
+                    <select id="contact-method-toyota-fortuner" name="contact_method" required data-contact-method>
+                      <option value="phone">Телефон</option>
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="telegram">Telegram</option>
+                    </select>
+                    <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"/></svg>
+                  </div>
+                </div>
+                <div class="car-booking__field">
+                  <label for="contact-value-toyota-fortuner">Телефон или контакт</label>
+                  <div class="car-booking__control">
+                    <input id="contact-value-toyota-fortuner" name="contact_value" type="text" autocomplete="tel" inputmode="tel" required placeholder="+66..." data-contact-value />
+                  </div>
+                </div>
+              </div>
+
+              <div class="car-booking__field">
+                <label for="comment-toyota-fortuner">Комментарий <span>необязательно</span></label>
+                <div class="car-booking__control">
+                  <textarea id="comment-toyota-fortuner" name="comment" rows="3" placeholder="Рейс, детское кресло или другой вопрос"></textarea>
+                </div>
+              </div>
+
+              <label class="car-booking__consent">
+                <input type="checkbox" name="privacy" required />
+                <span>Согласен на обработку данных для ответа на заявку.</span>
+              </label>
+
+              <button class="car-booking__submit" type="submit">
+                <span>Отправить заявку</span>
+                <span aria-hidden="true">→</span>
+              </button>
+
+              <p class="car-booking__microcopy">После отправки автомобиль ещё не забронирован. Сначала менеджер проверит доступность.</p>
+              <p class="car-booking__status" data-car-booking-status role="status" aria-live="polite"></p>
+            </form>
+
+            <div class="booking-success" data-booking-success tabindex="-1" hidden>
+              <span class="booking-success__icon" aria-hidden="true">✓</span>
+              <h3>Заявка принята</h3>
+              <p>Доступность автомобиля пока не подтверждена. Менеджер проверит даты и свяжется с вами.</p>
+              <a href="../">Вернуться в каталог</a>
+            </div>
+          </aside>
+        </div>
+
+        <section class="similar-cars" aria-labelledby="similar-title">
+          <div class="similar-cars__head">
+            <div>
+              <p class="single-panel__eyebrow">Альтернативы</p>
+              <h2 id="similar-title">Похожие автомобили</h2>
+            </div>
+            <a href="../">Смотреть весь каталог <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="cars-preview__grid">
+
+          <a class="car-card" href="../toyota-yaris/" aria-labelledby="related-toyota-yaris-title">
+            <div class="car-card__media">
+              <picture class="car-card__picture">
+                <source srcset="../../assets/img/catalog/toyota-yaris.webp" type="image/webp" />
+                <img class="car-card__image" src="../../assets/img/catalog/toyota-yaris.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Toyota Yaris 2024" />
+              </picture>
+            </div>
+            <div class="car-card__body">
+              <div class="car-card__meta"><span>Компактный хэтчбек</span><span>2024</span></div>
+              <h3 class="car-card__title" id="related-toyota-yaris-title">Toyota Yaris</h3>
+              <ul class="car-card__specs" aria-label="Характеристики Toyota Yaris">
+                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+              </ul>
+              <div class="car-card__footer">
+                <div class="car-card__price">
+                  <span class="car-card__price-label">Демо-тариф от</span>
+                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;090&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+                </div>
+                <span class="car-card__action" aria-hidden="true"><span>Подробнее</span><span>→</span></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="car-card" href="../honda-city/" aria-labelledby="related-honda-city-title">
+            <div class="car-card__media">
+              <picture class="car-card__picture">
+                <source srcset="../../assets/img/catalog/honda-city.webp" type="image/webp" />
+                <img class="car-card__image" src="../../assets/img/catalog/honda-city.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Honda City 2024" />
+              </picture>
+            </div>
+            <div class="car-card__body">
+              <div class="car-card__meta"><span>Городской седан</span><span>2024</span></div>
+              <h3 class="car-card__title" id="related-honda-city-title">Honda City</h3>
+              <ul class="car-card__specs" aria-label="Характеристики Honda City">
+                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+              </ul>
+              <div class="car-card__footer">
+                <div class="car-card__price">
+                  <span class="car-card__price-label">Демо-тариф от</span>
+                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;190&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+                </div>
+                <span class="car-card__action" aria-hidden="true"><span>Подробнее</span><span>→</span></span>
+              </div>
+            </div>
+          </a>
+
+          <a class="car-card" href="../toyota-corolla-cross/" aria-labelledby="related-toyota-corolla-cross-title">
+            <div class="car-card__media">
+              <picture class="car-card__picture">
+                <source srcset="../../assets/img/catalog/toyota-corolla-cross.webp" type="image/webp" />
+                <img class="car-card__image" src="../../assets/img/catalog/toyota-corolla-cross.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Toyota Corolla Cross 2024" />
+              </picture>
+            </div>
+            <div class="car-card__body">
+              <div class="car-card__meta"><span>Компактный кроссовер</span><span>2024</span></div>
+              <h3 class="car-card__title" id="related-toyota-corolla-cross-title">Toyota Corolla Cross</h3>
+              <ul class="car-card__specs" aria-label="Характеристики Toyota Corolla Cross">
+                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+              </ul>
+              <div class="car-card__footer">
+                <div class="car-card__price">
+                  <span class="car-card__price-label">Демо-тариф от</span>
+                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;490&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+                </div>
+                <span class="car-card__action" aria-hidden="true"><span>Подробнее</span><span>→</span></span>
+              </div>
+            </div>
+          </a>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
