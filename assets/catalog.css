@@ -390,3 +390,62 @@
     width: 100%;
   }
 }
+
+/* Stage 11 review pass: component-level resilience after multi-viewport QA. */
+.car-card {
+  container-type: inline-size;
+}
+
+.car-card__price-line {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 5px;
+  row-gap: 2px;
+}
+
+.car-card__price-line .car-card__price-value {
+  margin-right: 0;
+  white-space: nowrap;
+}
+
+.car-card__price-line .car-card__price-unit {
+  white-space: nowrap;
+}
+
+@container (max-width: 370px) {
+  .car-card__body {
+    padding: 20px;
+  }
+
+  .car-card__title {
+    font-size: 24px;
+  }
+
+  .car-card__spec {
+    padding: 11px 10px;
+  }
+
+  .car-card__spec strong {
+    font-size: 14px;
+  }
+
+  .car-card__footer {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 16px;
+    padding-top: 24px;
+  }
+
+  .car-card__action {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .cars-preview__grid {
+    grid-template-columns: 1fr;
+  }
+}
