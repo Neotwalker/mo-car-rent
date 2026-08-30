@@ -1,421 +1,360 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MO Car Rent Phuket - Hero concept</title>
-  <meta name="description" content="Концепт hero-блока MO Car Rent Phuket.">
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="stylesheet" href="assets/catalog.css">
-  <script src="assets/main.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>MO Car Rent Phuket - Hero concept</title>
+<meta content="Концепт hero-блока MO Car Rent Phuket." name="description"/>
+<link href="assets/style.css" rel="stylesheet"/>
+<link href="assets/catalog.css" rel="stylesheet"/>
+<script defer="" src="assets/main.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Перейти к содержимому</a>
-
-  <header class="site-header">
-    <div class="container site-header__container">
-      <div class="site-header__inner">
-        <a class="brand" href="#hero" aria-label="MO Car Rent Phuket - перейти к началу страницы">
-          <img src="assets/logo.png" alt="MO Car Rent Phuket" width="164" height="72" decoding="async">
-        </a>
-
-        <nav class="main-nav" id="main-navigation" aria-label="Основная навигация" data-main-nav>
-          <ul class="main-nav__list">
-            <li><a class="main-nav__link" href="#cars">Автомобили</a></li>
-            <li><a class="main-nav__link" href="#terms">Условия аренды</a></li>
-            <li><a class="main-nav__link" href="#delivery">Доставка и получение</a></li>
-            <li><a class="main-nav__link" href="#about">О компании</a></li>
-            <li><a class="main-nav__link" href="#contacts">Контакты</a></li>
-          </ul>
-        </nav>
-
-        <button
-          class="menu-toggle"
-          type="button"
-          aria-label="Открыть меню"
-          aria-controls="main-navigation"
-          aria-expanded="false"
-          data-menu-toggle
-        >
-          <span class="menu-toggle__line" aria-hidden="true"></span>
-          <span class="menu-toggle__line" aria-hidden="true"></span>
-          <span class="menu-toggle__line" aria-hidden="true"></span>
-        </button>
-
-        <ul class="header-contacts" aria-label="Контакты и социальные сети">
-          <li>
-            <a class="header-contacts__icon" href="https://www.instagram.com/mocarrent_phuket" target="_blank" rel="noopener" aria-label="MO Car Rent Phuket в Instagram">
-              <img src="assets/icon-instagram.png" alt="" width="28" height="28" aria-hidden="true">
-            </a>
-          </li>
-          <li>
-            <a class="header-contacts__icon" href="https://wa.me/66618396690" target="_blank" rel="noopener" aria-label="Написать MO Car Rent Phuket в WhatsApp">
-              <img src="assets/icon-whatsapp.png" alt="" width="30" height="30" aria-hidden="true">
-            </a>
-          </li>
-          <li>
-            <a class="header-contacts__phone" href="tel:+66618396690" aria-label="Позвонить MO Car Rent Phuket: +66 61 839 6690">
-              <img src="assets/icon-phone.png" alt="" width="22" height="22" aria-hidden="true">
-              <span>+66 61 839 6690</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </header>
-
-  <main class="main" id="main-content">
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="container hero__container">
-        <div class="hero__media" aria-hidden="true">
-          <picture class="hero__scene">
-            <source media="(max-width: 700px)" srcset="assets/hero-scene-mobile.jpg">
-            <img src="assets/hero-scene-desktop.png" alt="" width="1672" height="941" decoding="async" fetchpriority="high">
-          </picture>
-
-          <img class="hero__car" src="assets/hero-car.png" alt="" width="1672" height="941" decoding="async">
-
-          <span class="hero__wash hero__wash--left"></span>
-          <span class="hero__wash hero__wash--right"></span>
-          <span class="hero__wash hero__wash--bottom"></span>
-        </div>
-
-        <div class="hero__layout">
-          <div class="hero__content">
-            <p class="hero__identity">MO CAR RENT · PHUKET</p>
-            <h1 class="hero__title" id="hero-title">Аренда авто на Пхукете</h1>
-            <p class="hero__lead">Выберите автомобиль и даты поездки. Менеджер проверит доступность и подтвердит бронь.</p>
-
-            <figure class="hero__mobile-visual" aria-hidden="true">
-              <img
-                src="assets/hero-bg-mob.png"
-                alt=""
-                width="811"
-                height="402"
-                loading="eager"
-                decoding="async"
-              >
-            </figure>
-
-            <div class="hero__actions">
-              <a class="button button--primary" href="#booking">
-                <span>Смотреть автомобили и цены</span>
-                <span class="button__arrow" aria-hidden="true">→</span>
-              </a>
-
-              <a class="button button--secondary" href="#booking">
-                <span>Подобрать другую модель</span>
-              </a>
-            </div>
-
-            <ul class="hero__proof" aria-label="Информация о сервисе">
-              <li class="hero__proof-item" data-google-rating>
-                <span class="hero__proof-icon hero__proof-icon--google" aria-hidden="true">G</span>
-                <span class="hero__proof-copy">
-                  <strong><span data-google-rating-value>5,0</span> в Google</strong>
-                  <span><span data-google-rating-count>11</span> отзывов</span>
-                </span>
-              </li>
-
-              <li class="hero__proof-item">
-                <svg class="hero__proof-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M3 6h11v10H3z"></path>
-                  <path d="M14 9h4l3 3v4h-7z"></path>
-                  <circle cx="7" cy="18" r="2"></circle>
-                  <circle cx="18" cy="18" r="2"></circle>
-                </svg>
-                <span class="hero__proof-copy">
-                  <strong>Доставка</strong>
-                  <span>по всему Пхукету</span>
-                </span>
-              </li>
-
-              <li class="hero__proof-item">
-                <svg class="hero__proof-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"></path>
-                  <circle cx="12" cy="10" r="2"></circle>
-                </svg>
-                <span class="hero__proof-copy">
-                  <strong>Получение</strong>
-                  <span>в центре острова</span>
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="hero__booking" id="booking">
-            <form class="booking" action="/cars/" method="get" data-booking-form data-demo>
-              <fieldset class="booking__fieldset">
-                <legend class="visually-hidden">Подобрать автомобиль по датам и месту получения</legend>
-
-                <div class="booking__field">
-                  <label class="booking__label" for="pickup-date">Получение</label>
-                  <div class="booking__control booking__control--date" data-date-control>
-                    <input id="pickup-date" type="date" name="pickup_date" required data-pickup-date>
-                    <button class="booking__date-trigger" type="button" aria-label="Открыть календарь даты получения" data-date-trigger>
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                        <path d="M8 3v4M16 3v4M3 10h18"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="booking__field">
-                  <label class="booking__label" for="return-date">Возврат</label>
-                  <div class="booking__control booking__control--date" data-date-control>
-                    <input id="return-date" type="date" name="return_date" required data-return-date>
-                    <button class="booking__date-trigger" type="button" aria-label="Открыть календарь даты возврата" data-date-trigger>
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
-                        <path d="M8 3v4M16 3v4M3 10h18"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="booking__field booking__field--location" data-custom-select>
-                  <label class="booking__label" for="pickup-location">Место получения</label>
-
-                  <select class="booking__native-select" id="pickup-location" name="pickup_location" required data-select-native>
-                    <option value="" selected disabled>Выберите место</option>
-                    <option value="delivery">Доставка по Пхукету</option>
-                    <option value="office">Получение в офисе</option>
-                  </select>
-
-                  <div class="booking__custom-select" data-select-ui hidden>
-                    <button
-                      class="booking__select-trigger"
-                      type="button"
-                      aria-haspopup="listbox"
-                      aria-expanded="false"
-                      aria-controls="pickup-location-listbox"
-                      data-select-trigger
-                    >
-                      <span data-select-text>Выберите место</span>
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="m6 9 6 6 6-6"></path>
-                      </svg>
-                    </button>
-
-                    <ul
-                      class="booking__select-list"
-                      id="pickup-location-listbox"
-                      role="listbox"
-                      aria-label="Место получения"
-                      tabindex="-1"
-                      hidden
-                      data-select-list
-                    >
-                      <li class="booking__select-option" role="option" aria-selected="false" tabindex="-1" data-select-option data-value="delivery">
+<a class="skip-link" href="#main-content">Перейти к содержимому</a>
+<header class="site-header">
+<div class="container site-header__container">
+<div class="site-header__inner">
+<a aria-label="MO Car Rent Phuket - перейти к началу страницы" class="brand" href="#hero">
+<img alt="MO Car Rent Phuket" decoding="async" height="72" src="assets/logo.png" width="164"/>
+</a>
+<nav aria-label="Основная навигация" class="main-nav" data-main-nav="" id="main-navigation">
+<ul class="main-nav__list">
+<li><a class="main-nav__link" href="#cars">Автомобили</a></li>
+<li><a class="main-nav__link" href="#terms">Условия аренды</a></li>
+<li><a class="main-nav__link" href="#delivery">Доставка и получение</a></li>
+<li><a class="main-nav__link" href="#about">О компании</a></li>
+<li><a class="main-nav__link" href="#contacts">Контакты</a></li>
+</ul>
+</nav>
+<button aria-controls="main-navigation" aria-expanded="false" aria-label="Открыть меню" class="menu-toggle" data-menu-toggle="" type="button">
+<span aria-hidden="true" class="menu-toggle__line"></span>
+<span aria-hidden="true" class="menu-toggle__line"></span>
+<span aria-hidden="true" class="menu-toggle__line"></span>
+</button>
+<ul aria-label="Контакты и социальные сети" class="header-contacts">
+<li>
+<a aria-label="MO Car Rent Phuket в Instagram" class="header-contacts__icon" href="https://www.instagram.com/mocarrent_phuket" rel="noopener" target="_blank">
+<img alt="" aria-hidden="true" height="28" src="assets/icon-instagram.png" width="28"/>
+</a>
+</li>
+<li>
+<a aria-label="Написать MO Car Rent Phuket в WhatsApp" class="header-contacts__icon" href="https://wa.me/66618396690" rel="noopener" target="_blank">
+<img alt="" aria-hidden="true" height="30" src="assets/icon-whatsapp.png" width="30"/>
+</a>
+</li>
+<li>
+<a aria-label="Позвонить MO Car Rent Phuket: +66 61 839 6690" class="header-contacts__phone" href="tel:+66618396690">
+<img alt="" aria-hidden="true" height="22" src="assets/icon-phone.png" width="22"/>
+<span>+66 61 839 6690</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</header>
+<main class="main" id="main-content">
+<section aria-labelledby="hero-title" class="hero" id="hero">
+<div class="container hero__container">
+<div aria-hidden="true" class="hero__media">
+<picture class="hero__scene">
+<source media="(max-width: 700px)" srcset="assets/hero-scene-mobile.jpg"/>
+<img alt="" decoding="async" fetchpriority="high" height="941" src="assets/hero-scene-desktop.png" width="1672"/>
+</picture>
+<img alt="" class="hero__car" decoding="async" height="941" src="assets/hero-car.png" width="1672"/>
+<span class="hero__wash hero__wash--left"></span>
+<span class="hero__wash hero__wash--right"></span>
+<span class="hero__wash hero__wash--bottom"></span>
+</div>
+<div class="hero__layout">
+<div class="hero__content">
+<p class="hero__identity">MO CAR RENT · PHUKET</p>
+<h1 class="hero__title" id="hero-title">Аренда авто на Пхукете</h1>
+<p class="hero__lead">Выберите автомобиль и даты поездки. Менеджер проверит доступность и подтвердит бронь.</p>
+<figure aria-hidden="true" class="hero__mobile-visual">
+<img alt="" decoding="async" height="402" loading="eager" src="assets/hero-bg-mob.png" width="811"/>
+</figure>
+<div class="hero__actions">
+<a class="button button--primary" href="#booking">
+<span>Смотреть автомобили и цены</span>
+<span aria-hidden="true" class="button__arrow">→</span>
+</a>
+<a class="button button--secondary" href="#booking">
+<span>Подобрать другую модель</span>
+</a>
+</div>
+<ul aria-label="Информация о сервисе" class="hero__proof">
+<li class="hero__proof-item" data-google-rating="">
+<span aria-hidden="true" class="hero__proof-icon hero__proof-icon--google">G</span>
+<span class="hero__proof-copy">
+<strong><span data-google-rating-value="">5,0</span> в Google</strong>
+<span><span data-google-rating-count="">11</span> отзывов</span>
+</span>
+</li>
+<li class="hero__proof-item">
+<svg aria-hidden="true" class="hero__proof-icon" focusable="false" viewbox="0 0 24 24">
+<path d="M3 6h11v10H3z"></path>
+<path d="M14 9h4l3 3v4h-7z"></path>
+<circle cx="7" cy="18" r="2"></circle>
+<circle cx="18" cy="18" r="2"></circle>
+</svg>
+<span class="hero__proof-copy">
+<strong>Доставка</strong>
+<span>по всему Пхукету</span>
+</span>
+</li>
+<li class="hero__proof-item">
+<svg aria-hidden="true" class="hero__proof-icon" focusable="false" viewbox="0 0 24 24">
+<path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"></path>
+<circle cx="12" cy="10" r="2"></circle>
+</svg>
+<span class="hero__proof-copy">
+<strong>Получение</strong>
+<span>в центре острова</span>
+</span>
+</li>
+</ul>
+</div>
+<div class="hero__booking" id="booking">
+<form action="/cars/" class="booking" data-booking-form="" data-demo="" method="get">
+<fieldset class="booking__fieldset">
+<legend class="visually-hidden">Подобрать автомобиль по датам и месту получения</legend>
+<div class="booking__field">
+<label class="booking__label" for="pickup-date">Получение</label>
+<div class="booking__control booking__control--date" data-date-control="">
+<input data-pickup-date="" id="pickup-date" name="pickup_date" required="" type="date"/>
+<button aria-label="Открыть календарь даты получения" class="booking__date-trigger" data-date-trigger="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24">
+<rect height="16" rx="2" width="18" x="3" y="5"></rect>
+<path d="M8 3v4M16 3v4M3 10h18"></path>
+</svg>
+</button>
+</div>
+</div>
+<div class="booking__field">
+<label class="booking__label" for="return-date">Возврат</label>
+<div class="booking__control booking__control--date" data-date-control="">
+<input data-return-date="" id="return-date" name="return_date" required="" type="date"/>
+<button aria-label="Открыть календарь даты возврата" class="booking__date-trigger" data-date-trigger="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24">
+<rect height="16" rx="2" width="18" x="3" y="5"></rect>
+<path d="M8 3v4M16 3v4M3 10h18"></path>
+</svg>
+</button>
+</div>
+</div>
+<div class="booking__field booking__field--location" data-custom-select="">
+<label class="booking__label" for="pickup-location">Место получения</label>
+<select class="booking__native-select" data-select-native="" id="pickup-location" name="pickup_location" required="">
+<option disabled="" selected="" value="">Выберите место</option>
+<option value="delivery">Доставка по Пхукету</option>
+<option value="office">Получение в офисе</option>
+</select>
+<div class="booking__custom-select" data-select-ui="" hidden="">
+<button aria-controls="pickup-location-listbox" aria-expanded="false" aria-haspopup="listbox" class="booking__select-trigger" data-select-trigger="" type="button">
+<span data-select-text="">Выберите место</span>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24">
+<path d="m6 9 6 6 6-6"></path>
+</svg>
+</button>
+<ul aria-label="Место получения" class="booking__select-list" data-select-list="" hidden="" id="pickup-location-listbox" role="listbox" tabindex="-1">
+<li aria-selected="false" class="booking__select-option" data-select-option="" data-value="delivery" role="option" tabindex="-1">
                         Доставка по Пхукету
                       </li>
-                      <li class="booking__select-option" role="option" aria-selected="false" tabindex="-1" data-select-option data-value="office">
+<li aria-selected="false" class="booking__select-option" data-select-option="" data-value="office" role="option" tabindex="-1">
                         Получение в офисе
                       </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <button class="booking__submit" type="submit">
-                  <span>Показать автомобили</span>
-                  <span aria-hidden="true">→</span>
-                </button>
-              </fieldset>
-
-              <p class="visually-hidden" role="status" aria-live="polite" data-booking-status></p>
-            </form>
-
-            <ul class="booking-notes" aria-label="Как проходит бронирование">
-              <li>
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"></path>
-                  <path d="m9 12 2 2 4-5"></path>
-                </svg>
-                <span>Сначала проверим доступность.</span>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"></path>
-                  <path d="m9 12 2 2 4-5"></path>
-                </svg>
-                <span>Оплата после подтверждения автомобиля.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="cars-preview" id="cars" aria-labelledby="cars-preview-title">
-      <div class="container">
-        <div class="cars-preview__head">
-          <div>
-            <p class="cars-preview__eyebrow">Автомобили</p>
-            <h2 class="cars-preview__title" id="cars-preview-title">Выберите автомобиль под вашу поездку</h2>
-          </div>
-          <p class="cars-preview__lead">Сравните автомобили по вместимости, коробке передач и тарифу. Выберите подходящую модель — менеджер подтвердит доступность на ваши даты.</p>
-        </div>
-
-        <div class="cars-preview__grid">
-          <article class="car-card">
-            <div class="car-card__media">
-              <picture class="car-card__picture">
-                <source srcset="assets/img/catalog/toyota-yaris.webp" type="image/webp">
-                <img class="car-card__image" src="assets/img/catalog/toyota-yaris.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Toyota Yaris 2024">
-              </picture>
-            </div>
-            <div class="car-card__body">
-              <div class="car-card__meta"><span>Компактный хэтчбек</span><span>2024</span></div>
-              <h3 class="car-card__title">Toyota Yaris</h3>
-              <ul class="car-card__specs" aria-label="Характеристики Toyota Yaris">
-                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
-                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
-                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
-              </ul>
-              <div class="car-card__footer">
-                <div class="car-card__price">
-                  <span class="car-card__price-label">Демо-тариф от</span>
-                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;090&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
-                </div>
-                <a class="car-card__action" href="#cars" aria-label="Подробнее о Toyota Yaris"><span>Подробнее</span><span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="car-card">
-            <div class="car-card__media">
-              <picture class="car-card__picture">
-                <source srcset="assets/img/catalog/honda-city.webp" type="image/webp">
-                <img class="car-card__image" src="assets/img/catalog/honda-city.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Honda City 2024">
-              </picture>
-            </div>
-            <div class="car-card__body">
-              <div class="car-card__meta"><span>Городской седан</span><span>2024</span></div>
-              <h3 class="car-card__title">Honda City</h3>
-              <ul class="car-card__specs" aria-label="Характеристики Honda City">
-                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
-                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
-                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
-              </ul>
-              <div class="car-card__footer">
-                <div class="car-card__price">
-                  <span class="car-card__price-label">Демо-тариф от</span>
-                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;190&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
-                </div>
-                <a class="car-card__action" href="#cars" aria-label="Подробнее о Honda City"><span>Подробнее</span><span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="car-card">
-            <div class="car-card__media">
-              <picture class="car-card__picture">
-                <source srcset="assets/img/catalog/toyota-corolla-cross.webp" type="image/webp">
-                <img class="car-card__image" src="assets/img/catalog/toyota-corolla-cross.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Toyota Corolla Cross 2024">
-              </picture>
-            </div>
-            <div class="car-card__body">
-              <div class="car-card__meta"><span>Компактный кроссовер</span><span>2024</span></div>
-              <h3 class="car-card__title">Toyota Corolla Cross</h3>
-              <ul class="car-card__specs" aria-label="Характеристики Toyota Corolla Cross">
-                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
-                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
-                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
-              </ul>
-              <div class="car-card__footer">
-                <div class="car-card__price">
-                  <span class="car-card__price-label">Демо-тариф от</span>
-                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;490&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
-                </div>
-                <a class="car-card__action" href="#cars" aria-label="Подробнее о Toyota Corolla Cross"><span>Подробнее</span><span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="car-card">
-            <div class="car-card__media">
-              <picture class="car-card__picture">
-                <source srcset="assets/img/catalog/toyota-fortuner.webp" type="image/webp">
-                <img class="car-card__image" src="assets/img/catalog/toyota-fortuner.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Toyota Fortuner 2023">
-              </picture>
-            </div>
-            <div class="car-card__body">
-              <div class="car-card__meta"><span>Внедорожник · 7 мест</span><span>2023</span></div>
-              <h3 class="car-card__title">Toyota Fortuner</h3>
-              <ul class="car-card__specs" aria-label="Характеристики Toyota Fortuner">
-                <li class="car-card__spec"><strong>7</strong><span>мест</span></li>
-                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
-                <li class="car-card__spec"><strong>Дизель</strong><span>топливо</span></li>
-              </ul>
-              <div class="car-card__footer">
-                <div class="car-card__price">
-                  <span class="car-card__price-label">Демо-тариф от</span>
-                  <span class="car-card__price-line"><strong class="car-card__price-value">2&nbsp;290&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
-                </div>
-                <a class="car-card__action" href="#cars" aria-label="Подробнее о Toyota Fortuner"><span>Подробнее</span><span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="car-card">
-            <div class="car-card__media">
-              <picture class="car-card__picture">
-                <source srcset="assets/img/catalog/mitsubishi-xpander.webp" type="image/webp">
-                <img class="car-card__image" src="assets/img/catalog/mitsubishi-xpander.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="Mitsubishi Xpander 2024">
-              </picture>
-            </div>
-            <div class="car-card__body">
-              <div class="car-card__meta"><span>Минивэн · 7 мест</span><span>2024</span></div>
-              <h3 class="car-card__title">Mitsubishi Xpander</h3>
-              <ul class="car-card__specs" aria-label="Характеристики Mitsubishi Xpander">
-                <li class="car-card__spec"><strong>7</strong><span>мест</span></li>
-                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
-                <li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
-              </ul>
-              <div class="car-card__footer">
-                <div class="car-card__price">
-                  <span class="car-card__price-label">Демо-тариф от</span>
-                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;690&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
-                </div>
-                <a class="car-card__action" href="#cars" aria-label="Подробнее о Mitsubishi Xpander"><span>Подробнее</span><span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="car-card">
-            <div class="car-card__media">
-              <picture class="car-card__picture">
-                <source srcset="assets/img/catalog/byd-dolphin.webp" type="image/webp">
-                <img class="car-card__image" src="assets/img/catalog/byd-dolphin.jpg" width="1200" height="675" loading="lazy" decoding="async" alt="BYD Dolphin 2024">
-              </picture>
-            </div>
-            <div class="car-card__body">
-              <div class="car-card__meta"><span>Электромобиль</span><span>2024</span></div>
-              <h3 class="car-card__title">BYD Dolphin</h3>
-              <ul class="car-card__specs" aria-label="Характеристики BYD Dolphin">
-                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
-                <li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
-                <li class="car-card__spec"><strong>EV</strong><span>электро</span></li>
-              </ul>
-              <div class="car-card__footer">
-                <div class="car-card__price">
-                  <span class="car-card__price-label">Демо-тариф от</span>
-                  <span class="car-card__price-line"><strong class="car-card__price-value">1&nbsp;790&nbsp;฿</strong><span class="car-card__price-unit">/ сутки</span></span>
-                </div>
-                <a class="car-card__action" href="#cars" aria-label="Подробнее о BYD Dolphin"><span>Подробнее</span><span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="cars-preview__footer">
-          <a class="cars-preview__all" href="/cars/"><span>Смотреть весь каталог</span><span aria-hidden="true">→</span></a>
-          <p class="cars-preview__demo-note">Модели и тарифы в блоке используются как демонстрационные данные шаблона и заменяются через CMS.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
+</ul>
+</div>
+</div>
+<button class="booking__submit" type="submit">
+<span>Показать автомобили</span>
+<span aria-hidden="true">→</span>
+</button>
+</fieldset>
+<p aria-live="polite" class="visually-hidden" data-booking-status="" role="status"></p>
+</form>
+<ul aria-label="Как проходит бронирование" class="booking-notes">
+<li>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24">
+<path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"></path>
+<path d="m9 12 2 2 4-5"></path>
+</svg>
+<span>Сначала проверим доступность.</span>
+</li>
+<li>
+<svg aria-hidden="true" focusable="false" viewbox="0 0 24 24">
+<path d="M12 3 5 6v5c0 4.7 2.8 8 7 10 4.2-2 7-5.3 7-10V6l-7-3Z"></path>
+<path d="m9 12 2 2 4-5"></path>
+</svg>
+<span>Оплата после подтверждения автомобиля.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="cars-preview-title" class="cars-preview" id="cars">
+<div class="container">
+<div class="cars-preview__head">
+<div>
+<p class="cars-preview__eyebrow">Автомобили</p>
+<h2 class="cars-preview__title" id="cars-preview-title">Выберите автомобиль под вашу поездку</h2>
+</div>
+<p class="cars-preview__lead">Сравните автомобили по вместимости, коробке передач и тарифу. Выберите подходящую модель — менеджер подтвердит доступность на ваши даты.</p>
+</div>
+<div class="cars-preview__grid">
+<a aria-labelledby="car-toyota-yaris-title" class="car-card" href="cars/toyota-yaris/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="assets/img/catalog/toyota-yaris.webp" type="image/webp"/>
+<img alt="Toyota Yaris 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="assets/img/catalog/toyota-yaris.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Компактный хэтчбек</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-toyota-yaris-title">Toyota Yaris</h3>
+<ul aria-label="Характеристики Toyota Yaris" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 090 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-honda-city-title" class="car-card" href="cars/honda-city/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="assets/img/catalog/honda-city.webp" type="image/webp"/>
+<img alt="Honda City 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="assets/img/catalog/honda-city.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Городской седан</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-honda-city-title">Honda City</h3>
+<ul aria-label="Характеристики Honda City" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 190 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-toyota-corolla-cross-title" class="car-card" href="cars/toyota-corolla-cross/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="assets/img/catalog/toyota-corolla-cross.webp" type="image/webp"/>
+<img alt="Toyota Corolla Cross 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="assets/img/catalog/toyota-corolla-cross.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Компактный кроссовер</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-toyota-corolla-cross-title">Toyota Corolla Cross</h3>
+<ul aria-label="Характеристики Toyota Corolla Cross" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 490 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-toyota-fortuner-title" class="car-card" href="cars/toyota-fortuner/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="assets/img/catalog/toyota-fortuner.webp" type="image/webp"/>
+<img alt="Toyota Fortuner 2023" class="car-card__image" decoding="async" height="675" loading="lazy" src="assets/img/catalog/toyota-fortuner.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Внедорожник · 7 мест</span><span>2023</span></div>
+<h3 class="car-card__title" id="car-toyota-fortuner-title">Toyota Fortuner</h3>
+<ul aria-label="Характеристики Toyota Fortuner" class="car-card__specs">
+<li class="car-card__spec"><strong>7</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Дизель</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">2 290 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-mitsubishi-xpander-title" class="car-card" href="cars/mitsubishi-xpander/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="assets/img/catalog/mitsubishi-xpander.webp" type="image/webp"/>
+<img alt="Mitsubishi Xpander 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="assets/img/catalog/mitsubishi-xpander.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Минивэн · 7 мест</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-mitsubishi-xpander-title">Mitsubishi Xpander</h3>
+<ul aria-label="Характеристики Mitsubishi Xpander" class="car-card__specs">
+<li class="car-card__spec"><strong>7</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 690 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-byd-dolphin-title" class="car-card" href="cars/byd-dolphin/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="assets/img/catalog/byd-dolphin.webp" type="image/webp"/>
+<img alt="BYD Dolphin 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="assets/img/catalog/byd-dolphin.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Электромобиль</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-byd-dolphin-title">BYD Dolphin</h3>
+<ul aria-label="Характеристики BYD Dolphin" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>EV</strong><span>электро</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 790 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+</div>
+<div class="cars-preview__footer">
+<a class="cars-preview__all" href="cars/"><span>Смотреть весь каталог</span><span aria-hidden="true">→</span></a>
+<p class="cars-preview__demo-note">Модели и тарифы в блоке используются как демонстрационные данные шаблона и заменяются через CMS.</p>
+</div>
+</div>
+</section>
+</main>
 </body>
 </html>

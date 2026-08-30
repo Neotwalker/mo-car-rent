@@ -216,14 +216,6 @@
     transform var(--duration-fast) var(--ease-ui);
 }
 
-.car-card__action:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 3px;
-}
-
-.car-card__action:active {
-  transform: translateY(1px) scale(0.995);
-}
 
 .car-card__action--secondary {
   color: var(--color-ink);
@@ -282,13 +274,6 @@
     transform: scale(1.018);
   }
 
-  .car-card__action:hover {
-    color: #171816;
-    border-color: var(--color-accent);
-    background: var(--color-accent);
-  }
-
-  .car-card__action--secondary:hover,
   .cars-preview__all:hover {
     border-color: rgba(14, 20, 23, 0.74);
     background: #fff;
@@ -414,5 +399,62 @@
 @media (max-width: 760px) {
   .cars-preview__grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Stage 11 review pass v3: full-card interaction + clean media presentation. */
+.car-card {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.car-card:focus-within {
+  border-color: rgba(14, 20, 23, 0.12);
+  box-shadow: none;
+}
+
+.car-card:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+  border-color: rgba(138, 90, 0, 0.72);
+  box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.16);
+}
+
+.car-card__media {
+  background: linear-gradient(180deg, #f6f1ec 0%, #e9e2d9 100%);
+}
+
+.car-card__action {
+  pointer-events: none;
+}
+
+.cars-preview__all {
+  min-height: 66px;
+  padding-inline: 30px;
+  font-size: clamp(17px, 1vw, 18px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .car-card:hover .car-card__action {
+    color: #171816;
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+  }
+
+  .car-card:hover .car-card__action > span:last-child {
+    transform: translateX(3px);
+  }
+
+  .car-card__action > span:last-child {
+    transition: transform var(--duration-fast) var(--ease-ui);
+  }
+}
+
+@media (max-width: 700px) {
+  .cars-preview__all {
+    min-height: 58px;
+    padding-inline: 24px;
+    font-size: 16px;
   }
 }
