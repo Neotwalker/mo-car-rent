@@ -6,6 +6,7 @@
   <title>MO Car Rent Phuket - Hero concept</title>
   <meta name="description" content="Концепт hero-блока MO Car Rent Phuket.">
   <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/catalog.css">
   <script src="assets/main.js" defer></script>
 </head>
 <body>
@@ -245,6 +246,114 @@
         </div>
       </div>
     </section>
+
+    <section class="cars-preview" id="cars" aria-labelledby="cars-preview-title">
+      <div class="container">
+        <div class="cars-preview__head">
+          <div>
+            <p class="cars-preview__eyebrow">Автомобили</p>
+            <h2 class="cars-preview__title" id="cars-preview-title">Выберите автомобиль под вашу поездку</h2>
+          </div>
+          <p class="cars-preview__lead">Сравните вместимость, коробку передач и тариф. Здесь показаны демонстрационные карточки для проверки визуальной системы будущего каталога.</p>
+        </div>
+
+        <div class="cars-preview__grid">
+          <article class="car-card">
+            <div class="car-card__media car-card__media--yellow">
+              <span class="car-card__badge">Demo</span>
+              <svg class="car-card__vehicle" viewBox="0 0 760 340" aria-hidden="true" focusable="false">
+                <ellipse cx="390" cy="274" rx="270" ry="27" fill="rgba(14,20,23,.12)"/>
+                <path d="M118 225c24-62 70-94 141-101l82-9c43-5 83-1 116 15l81 39 83 11c37 5 61 30 67 71H99c2-9 8-18 19-26Z" fill="currentColor"/>
+                <path d="m290 126 55-62h114c28 0 55 13 73 34l51 65-116-19-177-18Z" fill="#d8dde0" opacity=".92"/>
+                <path d="M355 77h96c23 0 43 9 58 27l30 39-171-18-13-48Z" fill="#273033"/>
+                <circle cx="225" cy="242" r="61" fill="#151a1c"/><circle cx="225" cy="242" r="33" fill="#aeb5b8"/><circle cx="567" cy="242" r="61" fill="#151a1c"/><circle cx="567" cy="242" r="33" fill="#aeb5b8"/>
+                <path d="M123 222h54M635 204h38" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+              </svg>
+            </div>
+            <div class="car-card__body">
+              <div class="car-card__meta"><span>Кроссовер</span><span>2025</span></div>
+              <h3 class="car-card__title">Demo Vehicle 01</h3>
+              <ul class="car-card__specs" aria-label="Характеристики автомобиля">
+                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+                <li class="car-card__spec"><strong>А</strong><span>автомат</span></li>
+                <li class="car-card__spec"><strong>95</strong><span>бензин</span></li>
+              </ul>
+              <div class="car-card__footer">
+                <div class="car-card__price">
+                  <span class="car-card__price-label">Демо-тариф от</span>
+                  <strong class="car-card__price-value">1 290 ฿</strong><span class="car-card__price-unit">/ сутки</span>
+                </div>
+                <a class="car-card__action" href="#car-demo-01"><span>Подробнее</span><span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="car-card">
+            <div class="car-card__media car-card__media--stone">
+              <span class="car-card__badge">Demo</span>
+              <svg class="car-card__vehicle" viewBox="0 0 760 340" aria-hidden="true" focusable="false">
+                <ellipse cx="390" cy="274" rx="270" ry="27" fill="rgba(14,20,23,.12)"/>
+                <path d="M98 214c11-50 48-79 112-87l115-14 74-68h122c30 0 58 14 77 38l67 84 44 10c28 7 45 31 49 74H83c1-13 6-26 15-37Z" fill="currentColor"/>
+                <path d="m336 112 59-55h120c23 0 44 11 59 28l53 67-291-40Z" fill="#242b2e"/>
+                <circle cx="208" cy="239" r="64" fill="#151a1c"/><circle cx="208" cy="239" r="34" fill="#aeb5b8"/><circle cx="585" cy="239" r="64" fill="#151a1c"/><circle cx="585" cy="239" r="34" fill="#aeb5b8"/>
+                <path d="M105 211h58M658 196h38" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+              </svg>
+            </div>
+            <div class="car-card__body">
+              <div class="car-card__meta"><span>Минивэн · 7 мест</span><span>2024</span></div>
+              <h3 class="car-card__title">Demo Vehicle 02</h3>
+              <ul class="car-card__specs" aria-label="Характеристики автомобиля">
+                <li class="car-card__spec"><strong>7</strong><span>мест</span></li>
+                <li class="car-card__spec"><strong>А</strong><span>автомат</span></li>
+                <li class="car-card__spec"><strong>D</strong><span>дизель</span></li>
+              </ul>
+              <div class="car-card__footer">
+                <div class="car-card__price car-card__price--request">
+                  <span class="car-card__price-label">Стоимость</span>
+                  <strong class="car-card__price-value">По запросу</strong>
+                  <span class="car-card__price-note">уточнит менеджер</span>
+                </div>
+                <a class="car-card__action" href="#car-demo-02"><span>Подробнее</span><span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="car-card">
+            <div class="car-card__media car-card__media--dark">
+              <span class="car-card__badge car-card__badge--muted">Заявка недоступна</span>
+              <svg class="car-card__vehicle" viewBox="0 0 760 340" aria-hidden="true" focusable="false">
+                <ellipse cx="390" cy="274" rx="270" ry="27" fill="rgba(14,20,23,.12)"/>
+                <path d="M116 220c21-56 61-88 124-97l116-16 76-48h97c34 0 67 13 92 36l71 66 43 9c34 7 55 34 59 81H100c2-12 7-22 16-31Z" fill="currentColor"/>
+                <path d="m365 105 79-38h79c27 0 53 10 73 29l53 50-284-41Z" fill="#dce2e4" opacity=".9"/>
+                <circle cx="226" cy="240" r="61" fill="#151a1c"/><circle cx="226" cy="240" r="31" fill="#c8cdcf"/><circle cx="584" cy="240" r="61" fill="#151a1c"/><circle cx="584" cy="240" r="31" fill="#c8cdcf"/>
+                <path d="m449 138-34 56h34l-19 58 57-77h-36l18-37Z" fill="#f4b400"/>
+              </svg>
+            </div>
+            <div class="car-card__body">
+              <div class="car-card__meta"><span>Электромобиль</span><span>2025</span></div>
+              <h3 class="car-card__title">Demo Vehicle 03</h3>
+              <ul class="car-card__specs" aria-label="Характеристики автомобиля">
+                <li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+                <li class="car-card__spec"><strong>А</strong><span>автомат</span></li>
+                <li class="car-card__spec"><strong>EV</strong><span>электро</span></li>
+              </ul>
+              <div class="car-card__footer">
+                <div class="car-card__price">
+                  <span class="car-card__price-label">Демо-тариф от</span>
+                  <strong class="car-card__price-value">1 690 ฿</strong><span class="car-card__price-unit">/ сутки</span>
+                </div>
+                <a class="car-card__action car-card__action--secondary" href="#cars"><span>Похожая модель</span><span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="cars-preview__footer">
+          <a class="cars-preview__all" href="/cars/"><span>Смотреть весь каталог</span><span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
   </main>
 </body>
 </html>

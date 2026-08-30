@@ -26,3 +26,9 @@
 - mobile hero без desktop background;
 - mobile car image `hero-bg-mob.png` находится в HTML после lead;
 - устранён большой искусственный отступ перед hero proof на телефонах.
+
+## Stage 11 integration preview
+
+The current archive includes the approved `car-card` visual direction integrated below the existing hero as `#cars`.
+Component styles are isolated in `assets/catalog.css` and reuse the existing global design tokens without redefining `:root`, `body` or `.container`.
+The demo card data is illustrative only and must be replaced by WordPress/ACF data later.
