@@ -29,16 +29,16 @@
             <li><a class="main-nav__link" href="../../#contacts">Контакты</a></li>
           </ul>
         </nav>
-        <button class="menu-toggle" type="button" data-menu-toggle aria-controls="main-navigation" aria-expanded="false" aria-label="Открыть меню">
-          <span class="menu-toggle__line" aria-hidden="true"></span>
-          <span class="menu-toggle__line" aria-hidden="true"></span>
-          <span class="menu-toggle__line" aria-hidden="true"></span>
-        </button>
         <ul class="header-contacts" aria-label="Контакты и социальные сети">
           <li><a class="header-contacts__icon" href="https://www.instagram.com/mocarrent_phuket" target="_blank" rel="noopener" aria-label="Instagram"><img src="../../assets/icon-instagram.png" width="28" height="28" alt="" aria-hidden="true" /></a></li>
           <li><a class="header-contacts__icon" href="https://wa.me/66618396690" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="../../assets/icon-whatsapp.png" width="30" height="30" alt="" aria-hidden="true" /></a></li>
           <li><a class="header-contacts__phone" href="tel:+66618396690" aria-label="Позвонить: +66 61 839 6690"><img src="../../assets/icon-phone.png" width="22" height="22" alt="" aria-hidden="true" /><span>+66 61 839 6690</span></a></li>
         </ul>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-controls="main-navigation" aria-expanded="false" aria-label="Открыть меню">
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
   </header>
@@ -197,14 +197,26 @@
               <div class="car-booking__grid">
                 <div class="car-booking__field">
                   <label for="pickup-date-toyota-yaris">Получение</label>
-                  <div class="car-booking__control car-booking__control--date">
+                  <div class="car-booking__control car-booking__control--date" data-car-date-control>
                     <input id="pickup-date-toyota-yaris" name="pickup_date" type="date" required data-car-pickup-date />
+                    <button class="booking__date-trigger car-booking__date-trigger" type="button" data-car-date-trigger aria-label="Открыть календарь даты получения">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                        <path d="M8 3v4M16 3v4M3 10h18"></path>
+                      </svg>
+                    </button>
                   </div>
                 </div>
                 <div class="car-booking__field">
                   <label for="return-date-toyota-yaris">Возврат</label>
-                  <div class="car-booking__control car-booking__control--date">
+                  <div class="car-booking__control car-booking__control--date" data-car-date-control>
                     <input id="return-date-toyota-yaris" name="return_date" type="date" required data-car-return-date />
+                    <button class="booking__date-trigger car-booking__date-trigger" type="button" data-car-date-trigger aria-label="Открыть календарь даты возврата">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <rect height="16" rx="2" width="18" x="3" y="5"></rect>
+                        <path d="M8 3v4M16 3v4M3 10h18"></path>
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -251,7 +263,8 @@
                 <div class="car-booking__field">
                   <label for="contact-value-toyota-yaris">Телефон или контакт</label>
                   <div class="car-booking__control">
-                    <input id="contact-value-toyota-yaris" name="contact_value" type="text" autocomplete="tel" inputmode="tel" required placeholder="+66..." data-contact-value />
+                    <input id="contact-value-toyota-yaris" name="contact_value" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" required placeholder="+код страны и номер" data-contact-value />
+                  <small class="car-booking__hint" data-contact-hint>В международном формате, например +66, +7, +44.</small>
                   </div>
                 </div>
               </div>
@@ -265,7 +278,7 @@
 
               <label class="car-booking__consent">
                 <input type="checkbox" name="privacy" required />
-                <span>Согласен на обработку данных для ответа на заявку.</span>
+                <span>Согласен на обработку данных для ответа на заявку согласно <a href="../../privacy-policy/" target="_blank" rel="noopener">политике конфиденциальности</a>.</span>
               </label>
 
               <button class="car-booking__submit" type="submit">

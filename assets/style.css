@@ -1340,3 +1340,21 @@ fieldset {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* Header order refinement: contacts before burger at responsive widths. */
+@media (max-width: 1200px) {
+  .site-header__inner > .header-contacts {
+    margin-left: auto;
+  }
+
+  .site-header__inner > .menu-toggle {
+    margin-left: 4px;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header__inner > .menu-toggle {
+    margin-left: 2px;
+  }
+}
