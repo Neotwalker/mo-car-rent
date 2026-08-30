@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Автомобили и цены - demo catalog</title>
+  <meta name="description" content="Демонстрационный каталог автомобилей с фильтрами и сортировкой." />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../assets/catalog.css" />
+  <link rel="stylesheet" href="../assets/catalog-page.css" />
+  <script defer src="../assets/main.js"></script>
+  <script defer src="../assets/catalog-page.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container site-header__container">
+      <div class="site-header__inner">
+        <a class="brand" href="../#hero" aria-label="MO Car Rent Phuket - перейти на главную">
+          <img src="../assets/logo.png" width="164" height="72" alt="MO Car Rent Phuket" decoding="async" />
+        </a>
+
+        <nav class="main-nav" id="main-navigation" data-main-nav aria-label="Основная навигация">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="./" aria-current="page">Автомобили</a></li>
+            <li><a class="main-nav__link" href="../#terms">Условия аренды</a></li>
+            <li><a class="main-nav__link" href="../#delivery">Доставка и получение</a></li>
+            <li><a class="main-nav__link" href="../#about">О компании</a></li>
+            <li><a class="main-nav__link" href="../#contacts">Контакты</a></li>
+          </ul>
+        </nav>
+
+        <button class="menu-toggle" type="button" data-menu-toggle aria-controls="main-navigation" aria-expanded="false" aria-label="Открыть меню">
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+          <span class="menu-toggle__line" aria-hidden="true"></span>
+        </button>
+
+        <ul class="header-contacts" aria-label="Контакты и социальные сети">
+          <li><a class="header-contacts__icon" href="https://www.instagram.com/mocarrent_phuket" target="_blank" rel="noopener" aria-label="Instagram"><img src="../assets/icon-instagram.png" width="28" height="28" alt="" aria-hidden="true" /></a></li>
+          <li><a class="header-contacts__icon" href="https://wa.me/66618396690" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="../assets/icon-whatsapp.png" width="30" height="30" alt="" aria-hidden="true" /></a></li>
+          <li><a class="header-contacts__phone" href="tel:+66618396690" aria-label="Позвонить: +66 61 839 6690"><img src="../assets/icon-phone.png" width="22" height="22" alt="" aria-hidden="true" /><span>+66 61 839 6690</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="main">
+    <section class="catalog-page" aria-labelledby="catalog-title">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+          <ol class="breadcrumbs__list">
+            <li><a href="../">Главная</a></li>
+            <li aria-current="page">Автомобили</li>
+          </ol>
+        </nav>
+
+        <div class="catalog-page__head">
+          <div>
+            <p class="catalog-page__eyebrow">Каталог</p>
+            <h1 class="catalog-page__title" id="catalog-title">Автомобили и цены</h1>
+          </div>
+          <p class="catalog-page__lead">Выберите подходящую модель по типу автомобиля, количеству мест, топливу и ориентировочному демо-тарифу.</p>
+        </div>
+
+        <div class="catalog-tools" data-catalog-root>
+          <div class="catalog-tools__summary">
+            <p class="catalog-tools__result" aria-live="polite"><strong data-result-count>6</strong> <span data-result-label>автомобилей</span></p>
+            <button class="catalog-tools__mobile-toggle" type="button" data-filter-toggle aria-controls="catalog-filter-panel" aria-expanded="false">
+              <span>Фильтры</span>
+              <span class="catalog-tools__filter-count" data-filter-count hidden>0</span>
+              <span aria-hidden="true">⌄</span>
+            </button>
+          </div>
+
+          <form class="catalog-filter" id="catalog-filter-panel" data-filter-form>
+            <div class="catalog-filter__grid">
+              <div class="catalog-filter__field">
+                <label for="catalog-type">Тип автомобиля</label>
+                <div class="catalog-filter__select-wrap">
+                  <select id="catalog-type" name="type" data-filter="type">
+                    <option value="">Все типы</option>
+                    <option value="compact">Компактные</option>
+                    <option value="sedan">Седаны</option>
+                    <option value="crossover">Кроссоверы</option>
+                    <option value="suv">Внедорожники</option>
+                    <option value="minivan">Минивэны</option>
+                    <option value="electric">Электромобили</option>
+                  </select>
+                  <span aria-hidden="true">⌄</span>
+                </div>
+              </div>
+
+              <div class="catalog-filter__field">
+                <label for="catalog-seats">Количество мест</label>
+                <div class="catalog-filter__select-wrap">
+                  <select id="catalog-seats" name="seats" data-filter="seats">
+                    <option value="">Любое</option>
+                    <option value="5">5 мест</option>
+                    <option value="7">7 мест</option>
+                  </select>
+                  <span aria-hidden="true">⌄</span>
+                </div>
+              </div>
+
+              <div class="catalog-filter__field">
+                <label for="catalog-fuel">Топливо</label>
+                <div class="catalog-filter__select-wrap">
+                  <select id="catalog-fuel" name="fuel" data-filter="fuel">
+                    <option value="">Любое</option>
+                    <option value="petrol">Бензин</option>
+                    <option value="diesel">Дизель</option>
+                    <option value="electric">Электро</option>
+                  </select>
+                  <span aria-hidden="true">⌄</span>
+                </div>
+              </div>
+
+              <div class="catalog-filter__field">
+                <label for="catalog-price">Цена до</label>
+                <div class="catalog-filter__select-wrap">
+                  <select id="catalog-price" name="max_price" data-filter="price">
+                    <option value="">Любая</option>
+                    <option value="1300">1 300 ฿ / сутки</option>
+                    <option value="1500">1 500 ฿ / сутки</option>
+                    <option value="1800">1 800 ฿ / сутки</option>
+                    <option value="2300">2 300 ฿ / сутки</option>
+                  </select>
+                  <span aria-hidden="true">⌄</span>
+                </div>
+              </div>
+
+              <div class="catalog-filter__field catalog-filter__field--sort">
+                <label for="catalog-sort">Сортировка</label>
+                <div class="catalog-filter__select-wrap">
+                  <select id="catalog-sort" name="sort" data-sort>
+                    <option value="default">По умолчанию</option>
+                    <option value="price-asc">Сначала дешевле</option>
+                    <option value="price-desc">Сначала дороже</option>
+                    <option value="seats-desc">Больше мест</option>
+                  </select>
+                  <span aria-hidden="true">⌄</span>
+                </div>
+              </div>
+
+              <button class="catalog-filter__reset" type="button" data-reset-filters disabled>
+                <span>Сбросить</span><span aria-hidden="true">↺</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="catalog-tools__chips" data-active-filters hidden aria-label="Активные фильтры"></div>
+
+          <div class="catalog-grid" data-catalog-grid>
+            <a aria-labelledby="car-toyota-yaris-title" class="car-card" data-car-card="" data-fuel="petrol" data-order="1" data-price="1090" data-seats="5" data-type="compact" href="toyota-yaris/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="../assets/img/catalog/toyota-yaris.webp" type="image/webp"/>
+<img alt="Toyota Yaris 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/toyota-yaris.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Компактный хэтчбек</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-toyota-yaris-title">Toyota Yaris</h3>
+<ul aria-label="Характеристики Toyota Yaris" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 090 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-honda-city-title" class="car-card" data-car-card="" data-fuel="petrol" data-order="2" data-price="1190" data-seats="5" data-type="sedan" href="honda-city/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="../assets/img/catalog/honda-city.webp" type="image/webp"/>
+<img alt="Honda City 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/honda-city.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Городской седан</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-honda-city-title">Honda City</h3>
+<ul aria-label="Характеристики Honda City" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 190 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-toyota-corolla-cross-title" class="car-card" data-car-card="" data-fuel="petrol" data-order="3" data-price="1490" data-seats="5" data-type="crossover" href="toyota-corolla-cross/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="../assets/img/catalog/toyota-corolla-cross.webp" type="image/webp"/>
+<img alt="Toyota Corolla Cross 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/toyota-corolla-cross.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Компактный кроссовер</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-toyota-corolla-cross-title">Toyota Corolla Cross</h3>
+<ul aria-label="Характеристики Toyota Corolla Cross" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 490 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-toyota-fortuner-title" class="car-card" data-car-card="" data-fuel="diesel" data-order="4" data-price="2290" data-seats="7" data-type="suv" href="toyota-fortuner/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="../assets/img/catalog/toyota-fortuner.webp" type="image/webp"/>
+<img alt="Toyota Fortuner 2023" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/toyota-fortuner.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Внедорожник · 7 мест</span><span>2023</span></div>
+<h3 class="car-card__title" id="car-toyota-fortuner-title">Toyota Fortuner</h3>
+<ul aria-label="Характеристики Toyota Fortuner" class="car-card__specs">
+<li class="car-card__spec"><strong>7</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Дизель</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">2 290 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-mitsubishi-xpander-title" class="car-card" data-car-card="" data-fuel="petrol" data-order="5" data-price="1690" data-seats="7" data-type="minivan" href="mitsubishi-xpander/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="../assets/img/catalog/mitsubishi-xpander.webp" type="image/webp"/>
+<img alt="Mitsubishi Xpander 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/mitsubishi-xpander.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Минивэн · 7 мест</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-mitsubishi-xpander-title">Mitsubishi Xpander</h3>
+<ul aria-label="Характеристики Mitsubishi Xpander" class="car-card__specs">
+<li class="car-card__spec"><strong>7</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>Бензин</strong><span>топливо</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 690 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+<a aria-labelledby="car-byd-dolphin-title" class="car-card" data-car-card="" data-fuel="electric" data-order="6" data-price="1790" data-seats="5" data-type="electric" href="byd-dolphin/">
+<div class="car-card__media">
+<picture class="car-card__picture">
+<source srcset="../assets/img/catalog/byd-dolphin.webp" type="image/webp"/>
+<img alt="BYD Dolphin 2024" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/byd-dolphin.jpg" width="1200"/>
+</picture>
+</div>
+<div class="car-card__body">
+<div class="car-card__meta"><span>Электромобиль</span><span>2024</span></div>
+<h3 class="car-card__title" id="car-byd-dolphin-title">BYD Dolphin</h3>
+<ul aria-label="Характеристики BYD Dolphin" class="car-card__specs">
+<li class="car-card__spec"><strong>5</strong><span>мест</span></li>
+<li class="car-card__spec"><strong>AT</strong><span>автомат</span></li>
+<li class="car-card__spec"><strong>EV</strong><span>электро</span></li>
+</ul>
+<div class="car-card__footer">
+<div class="car-card__price">
+<span class="car-card__price-label">Демо-тариф от</span>
+<span class="car-card__price-line"><strong class="car-card__price-value">1 790 ฿</strong><span class="car-card__price-unit">/ сутки</span></span>
+</div>
+<span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
+</div>
+</div>
+</a>
+          </div>
+
+          <div class="catalog-empty" data-empty-state hidden>
+            <span class="catalog-empty__icon" aria-hidden="true">⌕</span>
+            <h2>По выбранным параметрам ничего не найдено</h2>
+            <p>Попробуйте изменить фильтры или сбросить их, чтобы увидеть все демонстрационные автомобили.</p>
+            <button type="button" class="catalog-empty__reset" data-reset-filters>Сбросить фильтры</button>
+          </div>
+
+          <p class="catalog-page__demo-note">Модели и тарифы используются как демонстрационные данные шаблона и заменяются через CMS.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
