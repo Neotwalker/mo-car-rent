@@ -701,3 +701,99 @@ body.catalog-overlay-open { overflow:hidden; }
     --popular-edge-space: 16px;
   }
 }
+
+/* Stage 11 v13 - compact mobile rental search */
+.catalog-search__submit-short { display:none; }
+
+@media (max-width:760px) {
+  .catalog-search {
+    padding:5px;
+    border-radius:12px;
+  }
+
+  .catalog-search__form {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:4px;
+  }
+
+  .catalog-search__mainrow,
+  .catalog-search__subrow {
+    display:contents;
+  }
+
+  .catalog-search__field {
+    min-width:0;
+    border-radius:8px;
+  }
+
+  .catalog-search__field[data-place-field="pickup"] { grid-column:1; }
+  .catalog-search__field[data-place-field="return"] { grid-column:2; }
+  .catalog-search__field--dates { grid-column:1 / -1; }
+  .catalog-search__filter-button { grid-column:1; }
+  .catalog-search__submit { grid-column:2; }
+
+  .catalog-search__label {
+    top:6px;
+    left:10px;
+    font-size:9px;
+    line-height:1;
+  }
+
+  .catalog-search__trigger {
+    min-height:48px;
+    gap:6px;
+    padding:17px 9px 5px;
+    border-radius:8px;
+    font-size:13px;
+    line-height:1.15;
+  }
+
+  .catalog-search__trigger svg {
+    width:16px;
+    height:16px;
+    stroke-width:1.9;
+  }
+
+  .catalog-search__field--dates .catalog-search__trigger {
+    min-height:44px;
+    padding-top:16px;
+  }
+
+  .catalog-search__filter-button,
+  .catalog-search__submit {
+    width:100%;
+    min-height:42px;
+    margin:0;
+    padding:0 10px;
+    border-radius:8px;
+    gap:7px;
+    font-size:13px;
+    line-height:1;
+  }
+
+  .catalog-search__filter-button svg {
+    width:17px;
+    height:17px;
+  }
+
+  .catalog-search__filter-count {
+    min-width:20px;
+    height:20px;
+    padding:0 5px;
+    font-size:10px;
+  }
+
+  .catalog-search__submit {
+    justify-content:space-between;
+  }
+
+  .catalog-search__subrow {
+    margin:0;
+  }
+}
+
+@media (max-width:390px) {
+  .catalog-search__submit-long { display:none; }
+  .catalog-search__submit-short { display:inline; }
+}
