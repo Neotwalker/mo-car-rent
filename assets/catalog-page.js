@@ -75,6 +75,7 @@
   /* ---------- Dropdowns / popovers ---------- */
   const syncPlaceOverlayState = () => {
     document.body.classList.toggle('catalog-place-open', Boolean(root.querySelector('.catalog-place:not([hidden])')));
+    document.body.classList.toggle('catalog-calendar-open', Boolean(root.querySelector('.catalog-calendar:not([hidden])')));
   };
 
   const closeCatalogPopovers = (except = null) => {
@@ -339,6 +340,7 @@
       datePopover.hidden = !opening;
       dateTrigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
       if (opening) renderCalendar();
+      syncPlaceOverlayState();
     });
     calendarPrev?.addEventListener('click', () => { monthOffset = Math.max(0, monthOffset - 1); renderCalendar(); });
     calendarNext?.addEventListener('click', () => { monthOffset += 1; renderCalendar(); });
@@ -349,6 +351,7 @@
       renderCalendar();
       datePopover.hidden = true;
       dateTrigger.setAttribute('aria-expanded', 'false');
+      syncPlaceOverlayState();
       syncSearchUrl();
       dateTrigger.focus({ preventScroll: true });
       updateRefineSummary();

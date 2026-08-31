@@ -1324,3 +1324,58 @@ body.catalog-overlay-open { overflow:hidden; }
     min-width: 0;
   }
 }
+
+
+/* Catalog mobile range calendar: fullscreen sheet. */
+@media (max-width: 760px) {
+  body.catalog-calendar-open {
+    overflow: hidden;
+  }
+
+  .catalog-search .catalog-popover.catalog-calendar {
+    position: fixed;
+    z-index: 1300;
+    inset: 0;
+    width: 100vw;
+    max-width: none;
+    min-width: 0;
+    max-height: none;
+    margin: 0;
+    padding: max(14px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    overflow: auto;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+    overscroll-behavior: contain;
+  }
+
+  .catalog-search .catalog-calendar__top {
+    position: sticky;
+    z-index: 3;
+    top: calc(max(14px, env(safe-area-inset-top)) * -1);
+    margin: calc(max(14px, env(safe-area-inset-top)) * -1) calc(max(16px, env(safe-area-inset-right)) * -1) 14px calc(max(16px, env(safe-area-inset-left)) * -1);
+    padding: max(14px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+    border-bottom: 1px solid rgba(14,20,23,.1);
+    background: #fff;
+  }
+
+  .catalog-search .catalog-calendar__months {
+    min-height: calc(100dvh - 190px);
+    align-content: start;
+  }
+
+  .catalog-search .catalog-calendar__months .catalog-month:nth-child(2) {
+    display: none;
+  }
+
+  .catalog-search .catalog-calendar__footer {
+    position: sticky;
+    z-index: 3;
+    bottom: calc(max(16px, env(safe-area-inset-bottom)) * -1);
+    margin: 16px calc(max(16px, env(safe-area-inset-right)) * -1) calc(max(16px, env(safe-area-inset-bottom)) * -1) calc(max(16px, env(safe-area-inset-left)) * -1);
+    padding: 14px max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    background: #fff;
+    box-shadow: 0 -10px 24px rgba(14,20,23,.06);
+  }
+}
