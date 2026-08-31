@@ -7,6 +7,7 @@
   let favorites = readSet(FAVORITES_KEY);
   let compare = readSet(COMPARE_KEY);
   const emitFavorites = () => document.dispatchEvent(new CustomEvent('mocar:favorites:change', { detail: { ids: [...favorites], count: favorites.size } }));
+  const emitCompare = () => document.dispatchEvent(new CustomEvent('mocar:compare:change', { detail: { ids: [...compare], count: compare.size } }));
 
   const syncButtons = () => {
     document.querySelectorAll('[data-favorite-car]').forEach(btn => {
@@ -23,10 +24,6 @@
       btn.setAttribute('aria-label', label); btn.dataset.tooltip = label;
       if (btn.classList.contains('vehicle-action')) { const text = btn.querySelector('span'); if (text) text.textContent = active ? 'В сравнении' : 'Сравнить'; }
     });
-    const tray = document.querySelector('[data-compare-tray]');
-    const count = document.querySelector('[data-compare-count]');
-    if (tray) tray.hidden = compare.size === 0;
-    if (count) count.textContent = String(compare.size);
   };
 
   document.addEventListener('click', (event) => {
@@ -42,7 +39,7 @@
       event.preventDefault(); event.stopPropagation();
       const id = cmp.dataset.compareCar;
       if (compare.has(id)) compare.delete(id); else if (compare.size < 4) compare.add(id);
-      writeSet(COMPARE_KEY, compare); syncButtons(); return;
+      writeSet(COMPARE_KEY, compare); syncButtons(); emitCompare(); return;
     }
   });
 
@@ -120,46 +117,10 @@
         window.setTimeout(()=>{suppressClick=false;},360);
       }
     },{passive:true});
-
-    gallery.addEventListener('click',(event)=>{
-      if(suppressClick){ event.preventDefault(); event.stopPropagation(); return; }
-      if(event.target.closest('button')) return;
-      const card=gallery.closest('[data-car-url]');
-      if(card?.dataset.carUrl){ event.preventDefault(); window.location.href=card.dataset.carUrl; }
-    });
     show(0);
   });
 
-  // compare modal
-  const modal=document.querySelector('[data-compare-modal]');
-  const CAR_META={
-    'toyota-yaris':['Toyota Yaris','1090 ฿ / сутки','5','Бензин'],
-    'honda-city':['Honda City','1190 ฿ / сутки','5','Бензин'],
-    'toyota-corolla-cross':['Toyota Corolla Cross','1490 ฿ / сутки','5','Бензин'],
-    'toyota-fortuner':['Toyota Fortuner','2290 ฿ / сутки','7','Дизель'],
-    'mitsubishi-xpander':['Mitsubishi Xpander','1690 ฿ / сутки','7','Бензин'],
-    'byd-dolphin':['BYD Dolphin','1790 ฿ / сутки','5','EV'],
-  };
-  const carHref=(id)=>window.location.pathname.match(/\/cars\/[^/]+\/?$/) ? `../${id}/` : `${id}/`;
-  const renderCompare=()=>{
-    if(!modal) return;
-    const body=modal.querySelector('[data-compare-body]'); if(!body) return;
-    body.replaceChildren();
-    [...compare].forEach(id=>{
-      const source=document.querySelector(`[data-car-id="${CSS.escape(id)}"]`);
-      const meta=CAR_META[id] || [id,'Уточняется','—','—'];
-      const title=source?.dataset.carTitle || meta[0]; const href=source?.dataset.carUrl || carHref(id);
-      const price=source?.dataset.priceLabel || meta[1];
-      const seats=source?.dataset.seats || meta[2]; const fuel=source?.dataset.fuelLabel || meta[3];
-      const item=document.createElement('article'); item.className='compare-modal__item';
-      item.innerHTML=`<h3>${title}</h3><dl><div><dt>Цена от</dt><dd>${price}</dd></div><div><dt>Мест</dt><dd>${seats}</dd></div><div><dt>Топливо</dt><dd>${fuel}</dd></div></dl><a href="${href}">Открыть автомобиль →</a>`;
-      body.append(item);
-    });
-  };
-  document.querySelector('[data-open-compare]')?.addEventListener('click',()=>{renderCompare(); if(modal){modal.hidden=false; document.body.classList.add('compare-open'); modal.querySelector('[data-close-compare]')?.focus();}});
-  document.querySelectorAll('[data-close-compare]').forEach(b=>b.addEventListener('click',()=>{if(modal){modal.hidden=true;document.body.classList.remove('compare-open');}}));
-  modal?.addEventListener('click',e=>{if(e.target===modal){modal.hidden=true;document.body.classList.remove('compare-open');}});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape' && modal && !modal.hidden){modal.hidden=true;document.body.classList.remove('compare-open');}});
+  // Comparison is rendered as a catalog-grid view on /cars/.
 
   const swipe = (node, onPrev, onNext) => {
     let startX = 0, startY = 0;
@@ -173,4 +134,5 @@
 
   syncButtons();
   emitFavorites();
+  emitCompare();
 })();

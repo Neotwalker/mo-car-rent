@@ -20,14 +20,23 @@
   const resetFilters = [...root.querySelectorAll('[data-reset-filters]')];
   const favoritesToggle = root.querySelector('[data-favorites-toggle]');
   const favoritesCount = root.querySelector('[data-favorites-count]');
+  const compareToggle = root.querySelector('[data-compare-toggle]');
+  const compareViewCount = root.querySelector('[data-compare-view-count]');
   const resultScope = root.querySelector('[data-result-scope]');
   const emptyTitle = root.querySelector('[data-empty-title]');
   const emptyText = root.querySelector('[data-empty-text]');
   const emptyReset = root.querySelector('[data-empty-reset]');
   const FAVORITES_KEY = 'mocar:favorites';
+  const COMPARE_KEY = 'mocar:compare';
+  const readSetFromStorage = (key) => {
+    try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch { return new Set(); }
+  };
+  const readCompareIds = () => readSetFromStorage(COMPARE_KEY);
   const readFavoriteIds = () => { try { return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')); } catch { return new Set(); } };
   let favoriteIds = readFavoriteIds();
+  let compareIds = readCompareIds();
   let favoritesOnly = false;
+  let compareOnly = false;
 
   const pluralizeCars = (n) => {
     const d10 = n % 10;
@@ -541,7 +550,7 @@
     return true;
   };
 
-  const viewCards = () => favoritesOnly ? cards.filter((card) => favoriteIds.has(card.dataset.carId)) : cards;
+  const viewCards = () => favoritesOnly ? cards.filter((card) => favoriteIds.has(card.dataset.carId)) : compareOnly ? cards.filter((card) => compareIds.has(card.dataset.carId)) : cards;
   const resultForState = (state) => viewCards().filter((card) => cardMatches(card, state)).length;
 
 
@@ -694,7 +703,7 @@
 
   const syncFilterUrl = () => {
     const url = new URL(window.location.href);
-    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'sort', 'favorites'].forEach((key) => url.searchParams.delete(key));
+    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'sort', 'favorites', 'compare'].forEach((key) => url.searchParams.delete(key));
     appliedState.types.forEach((v) => url.searchParams.append('type', v));
     appliedState.seats.forEach((v) => url.searchParams.append('seats', v));
     appliedState.fuels.forEach((v) => url.searchParams.append('fuel', v));
@@ -710,6 +719,7 @@
     if (appliedState.year) url.searchParams.set('year', appliedState.year);
     if (sortValue !== 'default') url.searchParams.set('sort', sortValue);
     if (favoritesOnly) url.searchParams.set('favorites', '1');
+    if (compareOnly) url.searchParams.set('compare', '1');
     window.history.replaceState({}, '', url);
   };
 
@@ -717,21 +727,25 @@
     sortCards();
     let visible = 0;
     cards.forEach((card) => {
-      const show = cardMatches(card, appliedState) && (!favoritesOnly || favoriteIds.has(card.dataset.carId));
+      const inView = favoritesOnly ? favoriteIds.has(card.dataset.carId) : compareOnly ? compareIds.has(card.dataset.carId) : true;
+      const show = cardMatches(card, appliedState) && inView;
       card.hidden = !show;
       if (show) visible += 1;
     });
     countEl.textContent = String(visible);
     labelEl.textContent = pluralizeCars(visible);
-    if (resultScope) resultScope.textContent = favoritesOnly ? 'в избранном' : 'по выбранным параметрам';
+    if (resultScope) resultScope.textContent = favoritesOnly ? 'в избранном' : compareOnly ? 'в сравнении' : 'по выбранным параметрам';
     if (favoritesToggle) { favoritesToggle.classList.toggle('is-active', favoritesOnly); favoritesToggle.setAttribute('aria-pressed', favoritesOnly ? 'true' : 'false'); }
+    if (compareToggle) { compareToggle.classList.toggle('is-active', compareOnly); compareToggle.setAttribute('aria-pressed', compareOnly ? 'true' : 'false'); }
     if (favoritesCount) favoritesCount.textContent = String([...favoriteIds].filter((id) => cards.some((card) => card.dataset.carId === id)).length);
+    if (compareViewCount) compareViewCount.textContent = String([...compareIds].filter((id) => cards.some((card) => card.dataset.carId === id)).length);
     grid.classList.toggle('is-favorites-view', favoritesOnly);
+    grid.classList.toggle('is-compare-view', compareOnly);
     grid.hidden = visible === 0;
     empty.hidden = visible !== 0;
-    if (emptyTitle) emptyTitle.textContent = favoritesOnly ? 'В избранном пока нет подходящих автомобилей' : 'По выбранным параметрам ничего не найдено';
-    if (emptyText) emptyText.textContent = favoritesOnly ? 'Добавьте автомобили сердцем в карточке или измените активные фильтры.' : 'Попробуйте изменить фильтры или сбросить их, чтобы увидеть все демонстрационные автомобили.';
-    if (emptyReset) emptyReset.textContent = favoritesOnly ? 'Показать все автомобили' : 'Сбросить фильтры';
+    if (emptyTitle) emptyTitle.textContent = favoritesOnly ? 'В избранном пока нет подходящих автомобилей' : compareOnly ? 'В сравнении пока нет подходящих автомобилей' : 'По выбранным параметрам ничего не найдено';
+    if (emptyText) emptyText.textContent = favoritesOnly ? 'Добавьте автомобили сердцем в карточке или измените активные фильтры.' : compareOnly ? 'Добавьте автомобили кнопкой сравнения в карточке или измените активные фильтры.' : 'Попробуйте изменить фильтры или сбросить их, чтобы увидеть все демонстрационные автомобили.';
+    if (emptyReset) emptyReset.textContent = (favoritesOnly || compareOnly) ? 'Показать все автомобили' : 'Сбросить фильтры';
     renderChips();
     updateRefineSummary();
     if (syncUrl) syncFilterUrl();
@@ -793,13 +807,26 @@
   });
 
 
-  /* ---------- Favorites catalog view ---------- */
+  /* ---------- Saved catalog views: favorites / comparison ---------- */
   const syncFavoritesFromStorage = (ids = null) => {
     favoriteIds = ids ? new Set(ids) : readFavoriteIds();
     if (favoritesCount) favoritesCount.textContent = String([...favoriteIds].filter((id) => cards.some((card) => card.dataset.carId === id)).length);
   };
+  const syncCompareFromStorage = (ids = null) => {
+    compareIds = ids ? new Set(ids) : readCompareIds();
+    if (compareViewCount) compareViewCount.textContent = String([...compareIds].filter((id) => cards.some((card) => card.dataset.carId === id)).length);
+  };
   favoritesToggle?.addEventListener('click', () => {
-    favoritesOnly = !favoritesOnly;
+    const next = !favoritesOnly;
+    favoritesOnly = next;
+    if (next) compareOnly = false;
+    applyCatalog();
+    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  compareToggle?.addEventListener('click', () => {
+    const next = !compareOnly;
+    compareOnly = next;
+    if (next) favoritesOnly = false;
     applyCatalog();
     grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -807,11 +834,16 @@
     syncFavoritesFromStorage(event.detail?.ids);
     if (favoritesOnly) applyCatalog();
   });
+  document.addEventListener('mocar:compare:change', (event) => {
+    syncCompareFromStorage(event.detail?.ids);
+    if (compareOnly) applyCatalog();
+  });
   emptyReset?.addEventListener('click', (event) => {
-    if (!favoritesOnly) return;
+    if (!favoritesOnly && !compareOnly) return;
     event.preventDefault();
     event.stopImmediatePropagation();
     favoritesOnly = false;
+    compareOnly = false;
     applyCatalog();
   }, true);
 
@@ -885,6 +917,9 @@
   };
   sortValue = params.get('sort') || 'default';
   favoritesOnly = params.get('favorites') === '1';
+  compareOnly = !favoritesOnly && params.get('compare') === '1';
+  syncFavoritesFromStorage();
+  syncCompareFromStorage();
   syncFavoritesFromStorage();
   const sortOption = sortMenu?.querySelector(`[data-sort-option="${CSS.escape(sortValue)}"]`);
   if (sortOption) {

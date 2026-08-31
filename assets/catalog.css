@@ -541,3 +541,21 @@
   .car-card__tools { top:9px; right:9px; gap:6px; }
   .car-card__tools button { width:38px; height:38px; border-radius:10px; }
 }
+
+
+/* Stage 11 v17 - cards are containers, not links. Only explicit controls are clickable. */
+.car-card,
+.catalog-car-card { cursor:default; transform:none; }
+.catalog-car-card .car-card__media,
+.catalog-car-card .car-card__body { pointer-events:auto; }
+.car-card-gallery { pointer-events:auto; cursor:default; }
+.car-card__action { position:relative; z-index:9; pointer-events:auto; cursor:pointer; text-decoration:none; }
+.car-card__action:focus-visible { outline:3px solid var(--color-focus); outline-offset:3px; }
+@media (hover:hover) and (pointer:fine) {
+  .car-card:hover { border-color:rgba(14,20,23,.12); box-shadow:none; transform:none; }
+  .car-card:hover .car-card__image { transform:none; }
+  .car-card:hover .car-card__action { color:#fff; border-color:var(--color-ink); background:var(--color-ink); }
+  .car-card:hover .car-card__action > span:last-child { transform:none; }
+  .car-card__action:hover { color:#171816 !important; border-color:var(--color-accent) !important; background:var(--color-accent) !important; transform:translateY(-1px); }
+  .car-card__action:hover > span:last-child { transform:translateX(3px) !important; }
+}
