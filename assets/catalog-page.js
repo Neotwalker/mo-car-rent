@@ -221,35 +221,151 @@
     });
   }
 
+  /* ---------- Custom selects inside filter modal ---------- */
+  const enhancedSelects = [...filterForm.querySelectorAll('[data-filter-select]')];
+  const closeFilterSelects = (except = null) => {
+    filterForm.querySelectorAll('.filter-custom-select.is-open').forEach((wrap) => {
+      if (wrap === except) return;
+      wrap.classList.remove('is-open');
+      wrap.querySelector('.filter-custom-select__menu').hidden = true;
+      wrap.querySelector('.filter-custom-select__trigger').setAttribute('aria-expanded', 'false');
+    });
+  };
+
+  const enhanceFilterSelect = (select, index) => {
+    select.classList.add('filter-select-native', 'is-enhanced');
+    const wrap = document.createElement('div');
+    wrap.className = 'filter-custom-select';
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'filter-custom-select__trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-label', select.getAttribute('aria-label') || 'Выберите значение');
+    trigger.innerHTML = `<span></span><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>`;
+    const menu = document.createElement('div');
+    const menuId = `filter-select-menu-${index}`;
+    menu.id = menuId;
+    menu.className = 'filter-custom-select__menu';
+    menu.setAttribute('role', 'listbox');
+    menu.hidden = true;
+    trigger.setAttribute('aria-controls', menuId);
+    [...select.options].forEach((option) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'filter-custom-select__option';
+      button.dataset.value = option.value;
+      button.setAttribute('role', 'option');
+      button.textContent = option.textContent;
+      button.addEventListener('click', () => {
+        select.value = option.value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        sync();
+        wrap.classList.remove('is-open');
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus({ preventScroll: true });
+      });
+      menu.append(button);
+    });
+    select.after(wrap);
+    wrap.append(trigger, menu);
+
+    const sync = () => {
+      const selected = select.options[select.selectedIndex] || select.options[0];
+      trigger.querySelector('span').textContent = selected?.textContent || '';
+      menu.querySelectorAll('.filter-custom-select__option').forEach((option) => {
+        const active = option.dataset.value === select.value;
+        option.classList.toggle('is-selected', active);
+        option.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    };
+    select._syncCustomSelect = sync;
+    sync();
+
+    trigger.addEventListener('click', () => {
+      const opening = menu.hidden;
+      closeFilterSelects(opening ? wrap : null);
+      wrap.classList.toggle('is-open', opening);
+      menu.hidden = !opening;
+      trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      if (opening) menu.querySelector('.is-selected')?.scrollIntoView({ block: 'nearest' });
+    });
+    trigger.addEventListener('keydown', (event) => {
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      if (menu.hidden) trigger.click();
+      const options = [...menu.querySelectorAll('.filter-custom-select__option')];
+      let current = options.findIndex((option) => option.classList.contains('is-selected'));
+      if (event.key === 'Home') current = 0;
+      else if (event.key === 'End') current = options.length - 1;
+      else if (event.key === 'ArrowDown') current = Math.min(options.length - 1, current + 1);
+      else current = Math.max(0, current - 1);
+      options[current]?.focus();
+    });
+    menu.addEventListener('keydown', (event) => {
+      const options = [...menu.querySelectorAll('.filter-custom-select__option')];
+      const current = options.indexOf(document.activeElement);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        wrap.classList.remove('is-open'); menu.hidden = true; trigger.setAttribute('aria-expanded', 'false'); trigger.focus();
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        const next = event.key === 'ArrowDown' ? Math.min(options.length - 1, current + 1) : Math.max(0, current - 1);
+        options[next]?.focus();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault(); document.activeElement?.click();
+      }
+    });
+  };
+  enhancedSelects.forEach(enhanceFilterSelect);
+  document.addEventListener('pointerdown', (event) => {
+    if (!event.target.closest('.filter-custom-select')) closeFilterSelects();
+  });
+  const syncEnhancedSelects = () => enhancedSelects.forEach((select) => select._syncCustomSelect?.());
+
   /* ---------- Filter state ---------- */
   const readFilterForm = () => {
     const selected = (name) => [...filterForm.querySelectorAll(`[name="${name}"]:checked`)].map((el) => el.value).filter(Boolean);
-    const features = selected('feature');
+    const singleArray = (name) => {
+      const value = filterForm.elements[name]?.value || '';
+      return value ? [value] : [];
+    };
     return {
       types: selected('type'),
-      seats: selected('seats'),
+      seats: singleArray('seats'),
       fuels: selected('fuel'),
-      brands: selected('brand'),
+      brands: singleArray('brand'),
       priceMin: Number(filterForm.elements.price_min?.value || 0),
       priceMax: Number(filterForm.elements.price_max?.value || 0),
-      year: filterForm.querySelector('[name="year"]:checked')?.value || '',
-      features,
+      engineMin: Number(filterForm.elements.engine_min?.value || 0),
+      engineMax: Number(filterForm.elements.engine_max?.value || 0),
+      consumptionMin: Number(filterForm.elements.consumption_min?.value || 0),
+      consumptionMax: Number(filterForm.elements.consumption_max?.value || 0),
+      year: filterForm.elements.year?.value || '',
+      features: [...appliedState.features],
     };
   };
 
-  let appliedState = { types: [], seats: [], fuels: [], brands: [], priceMin: 0, priceMax: 0, year: '', features: [] };
+  let appliedState = { types: [], seats: [], fuels: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
   let sortValue = 'default';
 
   const cardMatches = (card, state) => {
     const price = Number(card.dataset.price || 0);
     const seats = card.dataset.seats || '';
     const fuel = card.dataset.fuel || '';
+    const engine = Number(card.dataset.engine || 0);
+    const consumption = Number(card.dataset.consumption || 0);
     if (state.types.length && !state.types.includes(card.dataset.type)) return false;
     if (state.seats.length && !state.seats.includes(seats)) return false;
     if (state.fuels.length && !state.fuels.includes(fuel)) return false;
     if (state.brands.length && !state.brands.includes(card.dataset.brand)) return false;
     if (state.priceMin && price < state.priceMin) return false;
     if (state.priceMax && price > state.priceMax) return false;
+    if (state.engineMin && engine < state.engineMin) return false;
+    if (state.engineMax && engine > state.engineMax) return false;
+    if (state.consumptionMin && consumption < state.consumptionMin) return false;
+    if (state.consumptionMax && consumption > state.consumptionMax) return false;
     if (state.year && Number(card.dataset.year) < Number(state.year)) return false;
     if (state.features.includes('budget') && price > 1500) return false;
     if (state.features.includes('seven') && seats !== '7') return false;
@@ -271,8 +387,7 @@
 
   const countActiveFilters = (state) => {
     let n = state.types.length + state.seats.length + state.fuels.length + state.brands.length + state.features.length;
-    if (state.priceMin) n += 1;
-    if (state.priceMax) n += 1;
+    ['priceMin','priceMax','engineMin','engineMax','consumptionMin','consumptionMax'].forEach((key) => { if (state[key]) n += 1; });
     if (state.year) n += 1;
     return n;
   };
@@ -285,17 +400,23 @@
 
   const syncModalToState = (state) => {
     filterForm.querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach((input) => { input.checked = false; });
-    ['type', 'seats', 'fuel', 'brand', 'feature'].forEach((name) => {
-      const values = name === 'type' ? state.types : name === 'seats' ? state.seats : name === 'fuel' ? state.fuels : name === 'brand' ? state.brands : state.features;
+    ['type', 'fuel'].forEach((name) => {
+      const values = name === 'type' ? state.types : state.fuels;
       values.forEach((value) => {
         const input = filterForm.querySelector(`[name="${name}"][value="${CSS.escape(value)}"]`);
         if (input) input.checked = true;
       });
     });
+    filterForm.elements.seats.value = state.seats[0] || '';
+    filterForm.elements.brand.value = state.brands[0] || '';
     filterForm.elements.price_min.value = state.priceMin || '';
     filterForm.elements.price_max.value = state.priceMax || '';
-    const year = filterForm.querySelector(`[name="year"][value="${CSS.escape(state.year || '')}"]`);
-    if (year) year.checked = true;
+    filterForm.elements.engine_min.value = state.engineMin || '';
+    filterForm.elements.engine_max.value = state.engineMax || '';
+    filterForm.elements.consumption_min.value = state.consumptionMin || '';
+    filterForm.elements.consumption_max.value = state.consumptionMax || '';
+    filterForm.elements.year.value = state.year || '';
+    syncEnhancedSelects();
   };
 
   const updatePending = () => {
@@ -315,6 +436,10 @@
     appliedState.features.forEach((v) => chips.push(['features', v, filterLabels[v] || v]));
     if (appliedState.priceMin) chips.push(['priceMin', String(appliedState.priceMin), `от ${appliedState.priceMin} ฿`]);
     if (appliedState.priceMax) chips.push(['priceMax', String(appliedState.priceMax), `до ${appliedState.priceMax} ฿`]);
+    if (appliedState.engineMin) chips.push(['engineMin', String(appliedState.engineMin), `двигатель от ${appliedState.engineMin} л`]);
+    if (appliedState.engineMax) chips.push(['engineMax', String(appliedState.engineMax), `двигатель до ${appliedState.engineMax} л`]);
+    if (appliedState.consumptionMin) chips.push(['consumptionMin', String(appliedState.consumptionMin), `расход от ${appliedState.consumptionMin}`]);
+    if (appliedState.consumptionMax) chips.push(['consumptionMax', String(appliedState.consumptionMax), `расход до ${appliedState.consumptionMax}`]);
     if (appliedState.year) chips.push(['year', appliedState.year, `${appliedState.year}+`]);
 
     chips.forEach(([key, value, label]) => {
@@ -346,7 +471,7 @@
 
   const syncFilterUrl = () => {
     const url = new URL(window.location.href);
-    ['type', 'seats', 'fuel', 'brand', 'price_min', 'price_max', 'year', 'feature', 'sort'].forEach((key) => url.searchParams.delete(key));
+    ['type', 'seats', 'fuel', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'feature', 'sort'].forEach((key) => url.searchParams.delete(key));
     appliedState.types.forEach((v) => url.searchParams.append('type', v));
     appliedState.seats.forEach((v) => url.searchParams.append('seats', v));
     appliedState.fuels.forEach((v) => url.searchParams.append('fuel', v));
@@ -354,6 +479,10 @@
     appliedState.features.forEach((v) => url.searchParams.append('feature', v));
     if (appliedState.priceMin) url.searchParams.set('price_min', appliedState.priceMin);
     if (appliedState.priceMax) url.searchParams.set('price_max', appliedState.priceMax);
+    if (appliedState.engineMin) url.searchParams.set('engine_min', appliedState.engineMin);
+    if (appliedState.engineMax) url.searchParams.set('engine_max', appliedState.engineMax);
+    if (appliedState.consumptionMin) url.searchParams.set('consumption_min', appliedState.consumptionMin);
+    if (appliedState.consumptionMax) url.searchParams.set('consumption_max', appliedState.consumptionMax);
     if (appliedState.year) url.searchParams.set('year', appliedState.year);
     if (sortValue !== 'default') url.searchParams.set('sort', sortValue);
     window.history.replaceState({}, '', url);
@@ -384,6 +513,7 @@
     filterModal.querySelector('.catalog-filter-modal__close')?.focus({ preventScroll: true });
   };
   const closeFilterModal = () => {
+    closeFilterSelects();
     filterModal.hidden = true;
     document.body.classList.remove('catalog-overlay-open');
     openFilters?.focus({ preventScroll: true });
@@ -400,7 +530,7 @@
   });
 
   resetFilters.forEach((button) => button.addEventListener('click', () => {
-    appliedState = { types: [], seats: [], fuels: [], brands: [], priceMin: 0, priceMax: 0, year: '', features: [] };
+    appliedState = { types: [], seats: [], fuels: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
     syncModalToState(appliedState);
     updatePending();
     applyCatalog();
@@ -414,6 +544,10 @@
     if (['types', 'seats', 'fuels', 'brands', 'features'].includes(key)) appliedState[key] = appliedState[key].filter((v) => v !== value);
     else if (key === 'priceMin') appliedState.priceMin = 0;
     else if (key === 'priceMax') appliedState.priceMax = 0;
+    else if (key === 'engineMin') appliedState.engineMin = 0;
+    else if (key === 'engineMax') appliedState.engineMax = 0;
+    else if (key === 'consumptionMin') appliedState.consumptionMin = 0;
+    else if (key === 'consumptionMax') appliedState.consumptionMax = 0;
     else if (key === 'year') appliedState.year = '';
     applyCatalog();
   });
@@ -425,7 +559,7 @@
     if (facet === 'seven') appliedState.features = toggleValue(appliedState.features, 'seven');
     if (facet === 'electric') appliedState.features = toggleValue(appliedState.features, 'electric');
     if (facet === 'crossover') appliedState.types = toggleValue(appliedState.types, 'crossover');
-    if (facet === 'toyota') appliedState.brands = toggleValue(appliedState.brands, 'toyota');
+    if (facet === 'toyota') appliedState.brands = appliedState.brands.includes('toyota') ? [] : ['toyota'];
     if (facet === 'year') appliedState.year = appliedState.year === '2024' ? '' : '2024';
     applyCatalog();
   }));
@@ -485,11 +619,15 @@
   const multi = (key) => params.getAll(key).filter(Boolean);
   appliedState = {
     types: multi('type'),
-    seats: multi('seats'),
+    seats: multi('seats').slice(0, 1),
     fuels: multi('fuel'),
-    brands: multi('brand'),
+    brands: multi('brand').slice(0, 1),
     priceMin: Number(params.get('price_min') || 0),
     priceMax: Number(params.get('price_max') || 0),
+    engineMin: Number(params.get('engine_min') || 0),
+    engineMax: Number(params.get('engine_max') || 0),
+    consumptionMin: Number(params.get('consumption_min') || 0),
+    consumptionMax: Number(params.get('consumption_max') || 0),
     year: params.get('year') || '',
     features: multi('feature'),
   };
