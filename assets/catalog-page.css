@@ -1103,3 +1103,96 @@ body.catalog-overlay-open { overflow:hidden; }
     justify-content: flex-start;
   }
 }
+
+/* Stage 11 v19 - compact mobile sorting + Apple control color normalization. */
+.catalog-sort__trigger,
+.catalog-sort__menu button,
+.catalog-search__trigger,
+.catalog-calendar__nav,
+.catalog-calendar__done {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.catalog-sort__trigger,
+.catalog-sort__menu button,
+.catalog-search__trigger,
+.catalog-calendar__nav {
+  color: var(--color-ink);
+  -webkit-text-fill-color: currentColor;
+}
+
+.catalog-sort__trigger svg,
+.catalog-search__trigger svg,
+.catalog-calendar__nav svg {
+  color: currentColor;
+  stroke: currentColor;
+}
+
+@media (max-width: 720px) {
+  .catalog-sort {
+    position: relative;
+    width: auto;
+    max-width: min(44vw, 150px);
+  }
+
+  .catalog-sort__trigger {
+    width: auto;
+    max-width: 150px;
+    min-height: 40px;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 0 9px 0 10px;
+    border-radius: 9px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .catalog-sort__trigger > span,
+  .catalog-sort__trigger > span[data-sort-label] {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    max-width: 105px;
+    overflow: hidden;
+    clip: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .catalog-sort__trigger svg {
+    width: 13px;
+    height: 13px;
+    flex: 0 0 13px;
+    margin-left: auto;
+    stroke-width: 2;
+  }
+
+  .catalog-sort__menu {
+    right: 0;
+    left: auto;
+    width: min(178px, calc(100vw - 24px));
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  .catalog-sort__menu button {
+    min-height: 34px;
+    padding: 7px 8px;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 390px) {
+  .catalog-sort { max-width: 126px; }
+  .catalog-sort__trigger { max-width: 126px; padding-inline: 8px; }
+  .catalog-sort__trigger > span,
+  .catalog-sort__trigger > span[data-sort-label] { max-width: 86px; }
+  .catalog-sort__menu { width: 166px; }
+}

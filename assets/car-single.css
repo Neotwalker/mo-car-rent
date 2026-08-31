@@ -1323,3 +1323,34 @@
 .car-booking__control--date input[type="date"]{-webkit-appearance:none;appearance:none;text-align:left;padding:0 50px 0 14px}.car-booking__control--date input[type="date"]::-webkit-date-and-time-value{text-align:left;margin:0;min-width:0}.car-booking__control--date input[type="date"]::-webkit-datetime-edit{padding:0}.car-booking__control--date input[type="date"]::-webkit-datetime-edit-fields-wrapper{padding:0}
 @media(max-width:1280px){.booking-card{max-width:none}.car-single__content{grid-template-columns:1fr}.booking-card{position:static}.booking-card__form-shell{min-height:420px}.extra-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.vehicle-gallery__stage{margin-inline:calc(var(--container-gutter)*-1);border-inline:0;border-radius:0}.vehicle-gallery__thumbs{margin-inline:calc(var(--container-gutter)*-1);padding-inline:var(--container-gutter)}.vehicle-gallery__nav{width:40px;height:40px}.vehicle-actions{flex-wrap:wrap}.advantages-grid{grid-template-columns:1fr}.booking-card{padding:20px}.phone-composer{grid-template-columns:110px minmax(0,1fr)}.extra-options{grid-template-columns:1fr}.quiz-step__nav{align-items:stretch}.quiz-next,.car-booking__submit{flex:1}.car-booking__grid{grid-template-columns:1fr}.car-booking__control--date input[type="date"]{min-height:54px;padding-left:14px!important}.car-booking__control--date input[type="date"]::-webkit-date-and-time-value{text-align:left!important}}
+
+/* Stage 11 v19 - prevent Safari/iOS system-blue tint on gallery/date controls. */
+.vehicle-gallery__nav,
+.car-booking__date-trigger {
+  -webkit-appearance: none;
+  appearance: none;
+  color: var(--color-ink);
+  -webkit-text-fill-color: currentColor;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vehicle-gallery__nav svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.car-booking__date-trigger {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.car-booking__date-trigger svg {
+  color: currentColor;
+  stroke: currentColor;
+}
