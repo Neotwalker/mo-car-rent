@@ -18,6 +18,16 @@
   const closeFilters = [...root.querySelectorAll('[data-close-filters]')];
   const applyFilters = root.querySelector('[data-apply-filters]');
   const resetFilters = [...root.querySelectorAll('[data-reset-filters]')];
+  const favoritesToggle = root.querySelector('[data-favorites-toggle]');
+  const favoritesCount = root.querySelector('[data-favorites-count]');
+  const resultScope = root.querySelector('[data-result-scope]');
+  const emptyTitle = root.querySelector('[data-empty-title]');
+  const emptyText = root.querySelector('[data-empty-text]');
+  const emptyReset = root.querySelector('[data-empty-reset]');
+  const FAVORITES_KEY = 'mocar:favorites';
+  const readFavoriteIds = () => { try { return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')); } catch { return new Set(); } };
+  let favoriteIds = readFavoriteIds();
+  let favoritesOnly = false;
 
   const pluralizeCars = (n) => {
     const d10 = n % 10;
@@ -531,7 +541,8 @@
     return true;
   };
 
-  const resultForState = (state) => cards.filter((card) => cardMatches(card, state)).length;
+  const viewCards = () => favoritesOnly ? cards.filter((card) => favoriteIds.has(card.dataset.carId)) : cards;
+  const resultForState = (state) => viewCards().filter((card) => cardMatches(card, state)).length;
 
 
   const cloneFilterState = (state) => ({
@@ -557,7 +568,7 @@
     return state;
   };
 
-  const candidateCount = (base, name, value) => cards.filter((card) => cardMatches(card, stateWithCandidate(base, name, value))).length;
+  const candidateCount = (base, name, value) => viewCards().filter((card) => cardMatches(card, stateWithCandidate(base, name, value))).length;
 
   const updateFacetAvailability = (state) => {
     // Multi-choice groups: each candidate is tested against all other active groups.
@@ -683,7 +694,7 @@
 
   const syncFilterUrl = () => {
     const url = new URL(window.location.href);
-    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'sort'].forEach((key) => url.searchParams.delete(key));
+    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'sort', 'favorites'].forEach((key) => url.searchParams.delete(key));
     appliedState.types.forEach((v) => url.searchParams.append('type', v));
     appliedState.seats.forEach((v) => url.searchParams.append('seats', v));
     appliedState.fuels.forEach((v) => url.searchParams.append('fuel', v));
@@ -698,6 +709,7 @@
     if (appliedState.consumptionMax) url.searchParams.set('consumption_max', appliedState.consumptionMax);
     if (appliedState.year) url.searchParams.set('year', appliedState.year);
     if (sortValue !== 'default') url.searchParams.set('sort', sortValue);
+    if (favoritesOnly) url.searchParams.set('favorites', '1');
     window.history.replaceState({}, '', url);
   };
 
@@ -705,14 +717,21 @@
     sortCards();
     let visible = 0;
     cards.forEach((card) => {
-      const show = cardMatches(card, appliedState);
+      const show = cardMatches(card, appliedState) && (!favoritesOnly || favoriteIds.has(card.dataset.carId));
       card.hidden = !show;
       if (show) visible += 1;
     });
     countEl.textContent = String(visible);
     labelEl.textContent = pluralizeCars(visible);
+    if (resultScope) resultScope.textContent = favoritesOnly ? 'в избранном' : 'по выбранным параметрам';
+    if (favoritesToggle) { favoritesToggle.classList.toggle('is-active', favoritesOnly); favoritesToggle.setAttribute('aria-pressed', favoritesOnly ? 'true' : 'false'); }
+    if (favoritesCount) favoritesCount.textContent = String([...favoriteIds].filter((id) => cards.some((card) => card.dataset.carId === id)).length);
+    grid.classList.toggle('is-favorites-view', favoritesOnly);
     grid.hidden = visible === 0;
     empty.hidden = visible !== 0;
+    if (emptyTitle) emptyTitle.textContent = favoritesOnly ? 'В избранном пока нет подходящих автомобилей' : 'По выбранным параметрам ничего не найдено';
+    if (emptyText) emptyText.textContent = favoritesOnly ? 'Добавьте автомобили сердцем в карточке или измените активные фильтры.' : 'Попробуйте изменить фильтры или сбросить их, чтобы увидеть все демонстрационные автомобили.';
+    if (emptyReset) emptyReset.textContent = favoritesOnly ? 'Показать все автомобили' : 'Сбросить фильтры';
     renderChips();
     updateRefineSummary();
     if (syncUrl) syncFilterUrl();
@@ -773,6 +792,28 @@
     applyCatalog();
   });
 
+
+  /* ---------- Favorites catalog view ---------- */
+  const syncFavoritesFromStorage = (ids = null) => {
+    favoriteIds = ids ? new Set(ids) : readFavoriteIds();
+    if (favoritesCount) favoritesCount.textContent = String([...favoriteIds].filter((id) => cards.some((card) => card.dataset.carId === id)).length);
+  };
+  favoritesToggle?.addEventListener('click', () => {
+    favoritesOnly = !favoritesOnly;
+    applyCatalog();
+    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  document.addEventListener('mocar:favorites:change', (event) => {
+    syncFavoritesFromStorage(event.detail?.ids);
+    if (favoritesOnly) applyCatalog();
+  });
+  emptyReset?.addEventListener('click', (event) => {
+    if (!favoritesOnly) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    favoritesOnly = false;
+    applyCatalog();
+  }, true);
 
   /* ---------- Sort ---------- */
   const sortRoot = root.querySelector('[data-sort-root]');
@@ -843,6 +884,8 @@
     year: params.get('year') || '',
   };
   sortValue = params.get('sort') || 'default';
+  favoritesOnly = params.get('favorites') === '1';
+  syncFavoritesFromStorage();
   const sortOption = sortMenu?.querySelector(`[data-sort-option="${CSS.escape(sortValue)}"]`);
   if (sortOption) {
     sortLabel.textContent = sortOption.textContent.trim();

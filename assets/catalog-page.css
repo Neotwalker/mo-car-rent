@@ -991,3 +991,34 @@ body.catalog-overlay-open { overflow:hidden; }
     margin-right:0;
   }
 }
+
+
+/* Stage 11 v16 - favorites are a catalog view, not a separate modal/page. */
+.catalog-results-actions { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+.catalog-favorites-toggle { min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 13px; border:1px solid rgba(14,20,23,.12); border-radius:10px; color:var(--color-ink); background:rgba(255,255,255,.72); font:inherit; font-size:13px; font-weight:800; cursor:pointer; transition:border-color var(--duration-fast) var(--ease-ui), background-color var(--duration-fast) var(--ease-ui), color var(--duration-fast) var(--ease-ui), transform var(--duration-fast) var(--ease-ui); }
+.catalog-favorites-toggle svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.catalog-favorites-toggle small { min-width:22px; height:22px; display:grid; place-items:center; padding:0 6px; border-radius:999px; color:#646a6c; background:#f0eeeb; font-size:10px; }
+.catalog-favorites-toggle[aria-pressed="true"] { border-color:#e4aa00; color:#714b00; background:#fff2c3; box-shadow:0 0 0 2px rgba(244,180,0,.08); }
+.catalog-favorites-toggle[aria-pressed="true"] svg { fill:var(--color-accent); stroke:#9a6700; }
+.catalog-favorites-toggle[aria-pressed="true"] small { color:#161a1b; background:var(--color-accent); }
+.catalog-grid.is-favorites-view { scroll-margin-top:18px; }
+@media (hover:hover) and (pointer:fine) {
+  .catalog-favorites-toggle:hover { transform:translateY(-1px); border-color:rgba(244,180,0,.62); background:#fff5d4; }
+}
+@media (max-width:760px) {
+  .catalog-results-actions { flex:0 0 auto; gap:7px; }
+  .catalog-favorites-toggle { min-width:44px; padding:0 10px; }
+  .catalog-favorites-toggle span { display:none; }
+  .catalog-favorites-toggle svg { width:20px; height:20px; }
+}
+@media (max-width:430px) {
+  .catalog-results-head { flex-direction:row; align-items:center; gap:10px; }
+  .catalog-results-head > div:first-child { min-width:0; flex:1 1 auto; }
+  .catalog-results-head > div:first-child > span { display:none; }
+  .catalog-results-actions { flex:0 0 auto; }
+  .catalog-sort { width:auto; }
+  .catalog-sort__trigger { width:44px; max-width:44px; justify-content:center; padding:0; }
+  .catalog-sort__trigger > span { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+  .catalog-sort__trigger svg { width:18px; height:18px; }
+  .catalog-sort__menu { right:0; }
+}

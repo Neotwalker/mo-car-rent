@@ -6,17 +6,22 @@
   const writeSet = (key, set) => localStorage.setItem(key, JSON.stringify([...set]));
   let favorites = readSet(FAVORITES_KEY);
   let compare = readSet(COMPARE_KEY);
+  const emitFavorites = () => document.dispatchEvent(new CustomEvent('mocar:favorites:change', { detail: { ids: [...favorites], count: favorites.size } }));
 
   const syncButtons = () => {
     document.querySelectorAll('[data-favorite-car]').forEach(btn => {
       const active = favorites.has(btn.dataset.favoriteCar);
       btn.classList.toggle('is-active', active); btn.setAttribute('aria-pressed', active ? 'true':'false');
-      btn.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
+      const label = active ? 'Убрать из избранного' : 'Добавить в избранное';
+      btn.setAttribute('aria-label', label); btn.dataset.tooltip = label;
+      if (btn.classList.contains('vehicle-action')) { const text = btn.querySelector('span'); if (text) text.textContent = active ? 'В избранном' : 'В избранное'; }
     });
     document.querySelectorAll('[data-compare-car]').forEach(btn => {
       const active = compare.has(btn.dataset.compareCar);
       btn.classList.toggle('is-active', active); btn.setAttribute('aria-pressed', active ? 'true':'false');
-      btn.setAttribute('aria-label', active ? 'Убрать из сравнения' : 'Добавить к сравнению');
+      const label = active ? 'Убрать из сравнения' : 'Добавить к сравнению';
+      btn.setAttribute('aria-label', label); btn.dataset.tooltip = label;
+      if (btn.classList.contains('vehicle-action')) { const text = btn.querySelector('span'); if (text) text.textContent = active ? 'В сравнении' : 'Сравнить'; }
     });
     const tray = document.querySelector('[data-compare-tray]');
     const count = document.querySelector('[data-compare-count]');
@@ -30,7 +35,7 @@
       event.preventDefault(); event.stopPropagation();
       const id = fav.dataset.favoriteCar;
       favorites.has(id) ? favorites.delete(id) : favorites.add(id);
-      writeSet(FAVORITES_KEY, favorites); syncButtons(); return;
+      writeSet(FAVORITES_KEY, favorites); syncButtons(); emitFavorites(); return;
     }
     const cmp = event.target.closest('[data-compare-car]');
     if (cmp) {
@@ -167,4 +172,5 @@
   });
 
   syncButtons();
+  emitFavorites();
 })();
