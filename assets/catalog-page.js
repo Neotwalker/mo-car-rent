@@ -376,6 +376,7 @@
       button.setAttribute('role', 'option');
       button.textContent = option.textContent;
       button.addEventListener('click', () => {
+        if (button.disabled || option.disabled) return;
         select.value = option.value;
         select.dispatchEvent(new Event('change', { bubbles: true }));
         sync();
@@ -395,10 +396,16 @@
     const sync = () => {
       const selected = select.options[select.selectedIndex] || select.options[0];
       trigger.querySelector('span').textContent = selected?.textContent || '';
-      menu.querySelectorAll('.filter-custom-select__option').forEach((option) => {
-        const active = option.dataset.value === select.value;
-        option.classList.toggle('is-selected', active);
-        option.setAttribute('aria-selected', active ? 'true' : 'false');
+      trigger.disabled = Boolean(select.disabled);
+      menu.querySelectorAll('.filter-custom-select__option').forEach((customOption) => {
+        const nativeOption = [...select.options].find((item) => item.value === customOption.dataset.value);
+        const active = customOption.dataset.value === select.value;
+        const disabled = Boolean(nativeOption?.disabled);
+        customOption.classList.toggle('is-selected', active);
+        customOption.classList.toggle('is-disabled', disabled);
+        customOption.disabled = disabled;
+        customOption.setAttribute('aria-selected', active ? 'true' : 'false');
+        customOption.setAttribute('aria-disabled', disabled ? 'true' : 'false');
       });
     };
     select._syncCustomSelect = sync;
@@ -420,7 +427,7 @@
       if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
       if (menu.hidden) trigger.click();
-      const options = [...menu.querySelectorAll('.filter-custom-select__option')];
+      const options = [...menu.querySelectorAll('.filter-custom-select__option:not(:disabled)')];
       let current = options.findIndex((option) => option.classList.contains('is-selected'));
       if (event.key === 'Home') current = 0;
       else if (event.key === 'End') current = options.length - 1;
@@ -430,7 +437,7 @@
     });
 
     menu.addEventListener('keydown', (event) => {
-      const options = [...menu.querySelectorAll('.filter-custom-select__option')];
+      const options = [...menu.querySelectorAll('.filter-custom-select__option:not(:disabled)')];
       const current = options.indexOf(document.activeElement);
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -507,6 +514,59 @@
 
   const resultForState = (state) => cards.filter((card) => cardMatches(card, state)).length;
 
+
+  const cloneFilterState = (state) => ({
+    types: [...state.types], seats: [...state.seats], fuels: [...state.fuels], transmissions: [...state.transmissions],
+    drives: [...state.drives], brands: [...state.brands], priceMin: state.priceMin, priceMax: state.priceMax,
+    engineMin: state.engineMin, engineMax: state.engineMax, consumptionMin: state.consumptionMin,
+    consumptionMax: state.consumptionMax, year: state.year,
+  });
+
+  const stateWithCandidate = (base, name, value) => {
+    const state = cloneFilterState(base);
+    if (name === 'type') state.types = value ? [value] : [];
+    else if (name === 'fuel') state.fuels = value ? [value] : [];
+    else if (name === 'transmission') state.transmissions = value ? [value] : [];
+    else if (name === 'drive') state.drives = value ? [value] : [];
+    else if (name === 'brand') state.brands = value ? [value] : [];
+    else if (name === 'seats') state.seats = value ? [value] : [];
+    else if (name === 'year') state.year = value || '';
+    else if (name === 'engine_min') state.engineMin = Number(value || 0);
+    else if (name === 'engine_max') state.engineMax = Number(value || 0);
+    else if (name === 'consumption_min') state.consumptionMin = Number(value || 0);
+    else if (name === 'consumption_max') state.consumptionMax = Number(value || 0);
+    return state;
+  };
+
+  const candidateCount = (base, name, value) => cards.filter((card) => cardMatches(card, stateWithCandidate(base, name, value))).length;
+
+  const updateFacetAvailability = (state) => {
+    // Multi-choice groups: each candidate is tested against all other active groups.
+    ['type', 'fuel', 'transmission', 'drive'].forEach((name) => {
+      filterForm.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
+        const count = candidateCount(state, name, input.value);
+        input.disabled = !input.checked && count === 0;
+        const label = input.closest('label');
+        label?.classList.toggle('is-disabled', input.disabled);
+        const countNode = label?.querySelector('small');
+        if (countNode) countNode.textContent = String(count);
+      });
+    });
+
+    // Single-value and numeric selects. Keep the neutral option available at all times.
+    ['brand', 'seats', 'year', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max'].forEach((name) => {
+      const select = filterForm.elements[name];
+      if (!select?.options) return;
+      [...select.options].forEach((option) => {
+        if (!option.value) { option.disabled = false; return; }
+        const count = candidateCount(state, name, option.value);
+        option.disabled = option.value !== select.value && count === 0;
+      });
+    });
+
+    syncEnhancedSelects();
+  };
+
   const sortCards = () => {
     const sorted = [...cards];
     const order = (card) => Number(card.dataset.order || 0);
@@ -548,11 +608,14 @@
     filterForm.elements.consumption_max.value = state.consumptionMax || '';
     filterForm.elements.year.value = state.year || '';
     syncEnhancedSelects();
+    updateFacetAvailability(readFilterForm());
   };
 
   const updatePending = () => {
     const pending = readFilterForm();
-    const amount = resultForState(pending);
+    updateFacetAvailability(pending);
+    const refreshed = readFilterForm();
+    const amount = resultForState(refreshed);
     pendingCount.textContent = String(amount);
     applyFilters.disabled = amount === 0;
   };

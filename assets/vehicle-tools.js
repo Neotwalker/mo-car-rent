@@ -61,9 +61,22 @@
   // Marketplace-like photo preview inside vehicle cards.
   // Desktop: horizontal pointer position selects a photo. Touch: swipe.
   document.querySelectorAll('[data-card-gallery]').forEach(gallery => {
-    const slides=[...gallery.querySelectorAll('[data-card-slide]')];
+    const allSlides=[...gallery.querySelectorAll('[data-card-slide]')];
+    const totalPhotos=Math.max(allSlides.length, Number(gallery.dataset.totalPhotos || 0));
+    const slides=allSlides.slice(0,5);
     const dots=[...gallery.querySelectorAll('[data-card-dot]')];
+    allSlides.slice(5).forEach((slide)=>{ slide.hidden=true; });
+    dots.forEach((dot,i)=>{ dot.hidden=i>=slides.length; });
     if(slides.length < 2) return;
+    let more=gallery.querySelector('.car-card-gallery__more');
+    if(totalPhotos>5 && slides.length===5){
+      more=document.createElement('div');
+      more.className='car-card-gallery__more';
+      more.hidden=true;
+      more.setAttribute('aria-hidden','true');
+      more.innerHTML=`<svg viewBox="0 0 48 48"><path d="M16 14l3-5h10l3 5h6a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4h6Z"></path><circle cx="24" cy="27" r="8"></circle></svg><span>Ещё ${totalPhotos-5} фото</span>`;
+      gallery.append(more);
+    }
     let index=0;
     let touchStartX=0, touchStartY=0;
     let suppressClick=false;
@@ -72,6 +85,7 @@
       index=Math.max(0,Math.min(slides.length-1,next));
       slides.forEach((el,i)=>{ el.hidden=i!==index; });
       dots.forEach((dot,i)=>dot.classList.toggle('is-active',i===index));
+      if(more) more.hidden=index!==4;
     };
 
     const fromPointer=(event)=>{
