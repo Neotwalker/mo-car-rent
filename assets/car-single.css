@@ -1760,3 +1760,87 @@
     line-height: 1.2;
   }
 }
+
+
+/* Shared rental context inside the car booking quiz. */
+.car-rental-search.catalog-search {
+  z-index: 40;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.car-rental-search .catalog-search__mainrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 8px;
+}
+
+.car-rental-search .catalog-search__field {
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: #fff;
+}
+
+.car-rental-search .catalog-search__field.has-error {
+  border-color: #ef766d;
+  box-shadow: 0 0 0 2px rgba(239, 118, 109, .14);
+}
+
+.car-rental-search__error {
+  margin: 7px 2px 0;
+  color: #ff9c95;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.car-rental-search .catalog-calendar {
+  color: var(--color-ink);
+}
+
+.car-rental-search .catalog-search__trigger,
+.car-rental-search .catalog-calendar__nav,
+.car-rental-search .catalog-calendar__done,
+.car-rental-search .catalog-place__close,
+.car-rental-search .catalog-place > button {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  -webkit-text-fill-color: currentColor;
+}
+
+@media (max-width: 760px) {
+  .car-rental-search .catalog-search__mainrow {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .car-rental-search .catalog-search__field[data-place-field="pickup"] { grid-column: 1; }
+  .car-rental-search .catalog-search__field[data-place-field="return"] { grid-column: 2; }
+  .car-rental-search .catalog-search__field--dates { grid-column: 1 / -1; }
+
+  .car-rental-search .catalog-search__trigger {
+    min-height: 48px;
+    padding: 17px 9px 5px;
+    font-size: 12px;
+  }
+
+  .car-rental-search .catalog-search__label {
+    top: 6px;
+    left: 10px;
+    font-size: 9px;
+  }
+
+  .car-rental-search .catalog-search__trigger svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .car-rental-search .catalog-calendar {
+    right: 0;
+    left: auto;
+    width: min(100%, calc(100vw - 24px));
+  }
+}

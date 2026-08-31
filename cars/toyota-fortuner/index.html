@@ -8,7 +8,7 @@
 <meta content="Демонстрационная страница автомобиля Toyota Fortuner: тариф, характеристики, условия и гибридная форма заявки." name="description"/>
 <link href="../../assets/style.css" rel="stylesheet"/>
 <link href="../../assets/catalog.css" rel="stylesheet"/>
-<link href="../../assets/car-single.css" rel="stylesheet"/>
+<link href="../../assets/catalog-page.css" rel="stylesheet"/><link href="../../assets/car-single.css" rel="stylesheet"/>
 <script defer="" src="../../assets/main.js"></script>
 <script defer="" src="../../assets/car-single.js"></script>
 </head>
@@ -56,13 +56,13 @@
 <div class="car-single__visual">
 <div class="vehicle-gallery" data-vehicle-gallery="">
 <div class="vehicle-gallery__stage">
-<button aria-label="Предыдущее фото" class="vehicle-gallery__nav vehicle-gallery__nav--prev" data-gallery-prev="" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+<button aria-label="Предыдущее фото" class="vehicle-gallery__nav vehicle-gallery__nav--prev" data-gallery-prev="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></button>
 <div class="vehicle-gallery__slides">
 <picture data-gallery-slide=""><source srcset="../../assets/img/catalog/toyota-fortuner-01.webp" type="image/webp"/><img alt="Toyota Fortuner - фото 1" decoding="async" fetchpriority="high" height="675" src="../../assets/img/catalog/toyota-fortuner-01.jpg" width="1200"/></picture>
 <picture data-gallery-slide="" hidden=""><source srcset="../../assets/img/catalog/toyota-fortuner-02.webp" type="image/webp"/><img alt="Toyota Fortuner - фото 2" decoding="async" height="675" loading="lazy" src="../../assets/img/catalog/toyota-fortuner-02.jpg" width="1200"/></picture>
 <picture data-gallery-slide="" hidden=""><source srcset="../../assets/img/catalog/toyota-fortuner-03.webp" type="image/webp"/><img alt="Toyota Fortuner - фото 3" decoding="async" height="675" loading="lazy" src="../../assets/img/catalog/toyota-fortuner-03.jpg" width="1200"/></picture>
 </div>
-<button aria-label="Следующее фото" class="vehicle-gallery__nav vehicle-gallery__nav--next" data-gallery-next="" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+<button aria-label="Следующее фото" class="vehicle-gallery__nav vehicle-gallery__nav--next" data-gallery-next="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg></button>
 <span class="vehicle-gallery__counter" data-gallery-counter="">1/3</span>
 </div>
 <div aria-label="Фотографии автомобиля" class="vehicle-gallery__thumbs">
@@ -191,10 +191,69 @@
 <div class="car-booking__selected"><picture><source srcset="../../assets/img/catalog/toyota-fortuner.webp" type="image/webp"/><img alt="" decoding="async" height="135" loading="lazy" src="../../assets/img/catalog/toyota-fortuner.jpg" width="240"/></picture><div><span>Выбран автомобиль</span><strong>Toyota Fortuner</strong></div></div>
 <div aria-label="Шаги заявки" class="quiz-progress"><span class="is-active" data-quiz-progress="">1</span><span data-quiz-progress="">2</span><span data-quiz-progress="">3</span><span data-quiz-progress="">4</span></div>
 <section class="quiz-step" data-quiz-step="">
-<div class="quiz-step__head"><span>Шаг 1 из 4</span><h3>Даты и получение</h3></div>
-<div class="car-booking__grid"><div class="car-booking__field"><label>Получение</label><div class="car-booking__control car-booking__control--date" data-car-date-control=""><input data-car-pickup-date="" name="pickup_date" required="" type="date"/><button aria-label="Открыть календарь" class="booking__date-trigger car-booking__date-trigger" data-car-date-trigger="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg></button></div></div><div class="car-booking__field"><label>Возврат</label><div class="car-booking__control car-booking__control--date" data-car-date-control=""><input data-car-return-date="" name="return_date" required="" type="date"/><button aria-label="Открыть календарь" class="booking__date-trigger car-booking__date-trigger" data-car-date-trigger="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg></button></div></div></div>
-<div class="car-booking__field"><label>Место получения</label><div class="car-booking__control car-booking__control--select"><select data-car-pickup-method="" name="pickup_method" required=""><option value="">Выберите вариант</option><option value="airport">Аэропорт</option><option value="delivery">Доставка по адресу</option><option value="office">Самовывоз</option></select><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg></div></div>
-<div class="car-booking__field" data-delivery-address-field="" hidden=""><label>Адрес или отель</label><div class="car-booking__control"><input autocomplete="street-address" name="delivery_address" placeholder="Название отеля или адрес" type="text"/></div></div>
+<div class="quiz-step__head"><span>Шаг 1 из 4</span><h3>Получение, возврат и даты</h3></div>
+<div class="car-rental-search catalog-search" data-rental-search="">
+<div class="catalog-search__mainrow">
+<div class="catalog-search__field" data-place-field="pickup">
+<span class="catalog-search__label">Получение</span>
+<button aria-expanded="false" aria-haspopup="listbox" class="catalog-search__trigger" data-place-trigger="pickup" type="button">
+<span data-place-value="pickup">По всему Пхукету</span>
+<svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+</button>
+<div class="catalog-popover catalog-place" data-place-popover="pickup" hidden="">
+<div class="catalog-place__mobile-head">
+<div><span>Получение</span><strong>Выберите место</strong></div>
+<button aria-label="Закрыть выбор места получения" class="catalog-place__close" data-close-place="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<div class="catalog-place__title">Где получить автомобиль?</div>
+<button data-label="По всему Пхукету" data-place-option="pickup" data-value="all" type="button">По всему Пхукету</button><button data-label="Доставка по Пхукету" data-place-option="pickup" data-value="delivery" type="button">Доставка по Пхукету</button><button data-label="Получение в офисе" data-place-option="pickup" data-value="office" type="button">Получение в офисе</button><button data-label="Аэропорт Пхукета" data-place-option="pickup" data-value="airport" type="button">Аэропорт Пхукета</button><button data-label="Патонг" data-place-option="pickup" data-value="patong" type="button">Патонг</button><button data-label="Ката / Карон" data-place-option="pickup" data-value="kata-karon" type="button">Ката / Карон</button><button data-label="Раваи / Най Харн" data-place-option="pickup" data-value="rawai" type="button">Раваи / Най Харн</button>
+</div>
+<input data-place-input="pickup" name="pickup" type="hidden" value="all"/>
+</div>
+<div class="catalog-search__field" data-place-field="return">
+<span class="catalog-search__label">Возврат</span>
+<button aria-expanded="false" aria-haspopup="listbox" class="catalog-search__trigger" data-place-trigger="return" type="button">
+<span data-place-value="return">Там же</span>
+<svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+</button>
+<div class="catalog-popover catalog-place" data-place-popover="return" hidden="">
+<div class="catalog-place__mobile-head">
+<div><span>Возврат</span><strong>Выберите место</strong></div>
+<button aria-label="Закрыть выбор места возврата" class="catalog-place__close" data-close-place="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<div class="catalog-place__title">Где вернуть автомобиль?</div>
+<button data-label="Там же" data-place-option="return" data-value="same" type="button">Там же</button><button data-label="Аэропорт Пхукета" data-place-option="return" data-value="airport" type="button">Аэропорт Пхукета</button><button data-label="Патонг" data-place-option="return" data-value="patong" type="button">Патонг</button><button data-label="Ката / Карон" data-place-option="return" data-value="kata-karon" type="button">Ката / Карон</button><button data-label="Раваи / Най Харн" data-place-option="return" data-value="rawai" type="button">Раваи / Най Харн</button>
+</div>
+<input data-place-input="return" name="return" type="hidden" value="same"/>
+</div>
+<div class="catalog-search__field catalog-search__field--dates" data-rental-date-field="">
+<span class="catalog-search__label">Даты аренды</span>
+<button aria-expanded="false" aria-haspopup="dialog" class="catalog-search__trigger" data-date-range-trigger="" type="button">
+<span data-date-range-value="">Выберите даты</span>
+<svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"></path></svg>
+</button>
+<div class="catalog-popover catalog-calendar" data-date-popover="" hidden="">
+<div class="catalog-calendar__top">
+<button aria-label="Предыдущий месяц" class="catalog-calendar__nav" data-calendar-prev="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></button>
+<strong>Выберите даты аренды</strong>
+<button aria-label="Следующий месяц" class="catalog-calendar__nav" data-calendar-next="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9 6 6 6-6 6"></path></svg></button>
+</div>
+<div class="catalog-calendar__months" data-calendar-months=""></div>
+<div class="catalog-calendar__footer">
+<div><span>Период</span><strong data-calendar-summary="">Дата получения → дата возврата</strong></div>
+<button class="catalog-calendar__done" data-calendar-done="" type="button">Готово</button>
+</div>
+</div>
+<input data-pickup-date="" name="pickup_date" type="hidden"/>
+<input data-return-date="" name="return_date" type="hidden"/>
+</div>
+</div>
+<p class="car-rental-search__error" data-rental-search-error="" hidden="">Выберите даты аренды.</p>
+</div>
+<div class="car-booking__field" data-delivery-address-field="" hidden="">
+<label>Адрес или отель</label>
+<div class="car-booking__control"><input autocomplete="street-address" name="delivery_address" placeholder="Название отеля или адрес" type="text"/></div>
+</div>
 <div class="quiz-step__nav"><button class="quiz-next" data-quiz-next="" type="button">Далее <span>→</span></button></div>
 </section>
 <section class="quiz-step" data-quiz-step="" hidden="">
