@@ -520,3 +520,72 @@ body.catalog-overlay-open { overflow:hidden; }
   .filter-type-card strong { padding:0 20px; font-size:11px; }
   .filter-type-card__icon { width:28px; height:28px; }
 }
+
+/* Stage 11 v10 - corrected compact vehicle type cards.
+   Higher specificity intentionally overrides legacy .filter-types label > span. */
+.filter-types .filter-type-card > span {
+  min-height:78px;
+  display:grid;
+  grid-template-columns:auto auto;
+  grid-template-rows:auto 28px;
+  justify-content:center;
+  align-content:center;
+  align-items:center;
+  column-gap:8px;
+  row-gap:7px;
+  padding:9px 12px 8px;
+}
+.filter-types .filter-type-card strong {
+  grid-column:1 / -1;
+  grid-row:1;
+  align-self:center;
+  justify-self:center;
+  padding:0 22px;
+  text-align:center;
+  font-size:12px;
+  line-height:1.15;
+}
+.filter-types .filter-type-card__icon {
+  grid-column:1;
+  grid-row:2;
+  width:auto;
+  max-width:58px;
+  height:28px;
+  object-fit:contain;
+  object-position:center;
+  justify-self:end;
+}
+.filter-types .filter-type-card small {
+  grid-column:2;
+  grid-row:2;
+  align-self:center;
+  justify-self:start;
+  min-width:22px;
+  padding:2px 6px;
+  border-radius:999px;
+  background:#fff;
+  color:#656b6e;
+  text-align:center;
+  font-size:10px;
+  line-height:1.2;
+}
+.filter-types .filter-type-card__check {
+  top:7px;
+  right:7px;
+}
+
+@media (max-width:720px) {
+  .filter-types .filter-type-card > span {
+    min-height:74px;
+    padding:8px 9px 7px;
+    row-gap:6px;
+  }
+  .filter-types .filter-type-card strong {
+    padding:0 18px;
+    font-size:11px;
+  }
+  .filter-types .filter-type-card__icon {
+    height:28px;
+    max-width:54px;
+  }
+}
