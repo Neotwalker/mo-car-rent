@@ -282,7 +282,8 @@
 
 .tariff-panel,
 .specs-panel,
-.trust-panel {
+.trust-panel,
+.advantages-panel {
   padding: clamp(26px, 3vw, 40px);
 }
 
@@ -1928,4 +1929,34 @@
     background: #fff;
     box-shadow: 0 -10px 24px rgba(14, 20, 23, .06);
   }
+}
+
+
+/* Stage 11 v27 - gallery navigation interaction and desktop/tablet advantages spacing. */
+@media (hover: hover) and (pointer: fine) {
+  .vehicle-gallery__nav {
+    transition:
+      background-color var(--duration-fast) var(--ease-ui),
+      border-color var(--duration-fast) var(--ease-ui),
+      color var(--duration-fast) var(--ease-ui),
+      box-shadow var(--duration-fast) var(--ease-ui),
+      transform var(--duration-fast) var(--ease-ui);
+  }
+
+  .vehicle-gallery__nav:hover {
+    border-color: rgba(244, 180, 0, .72);
+    background: var(--color-accent);
+    color: var(--color-ink);
+    box-shadow: 0 8px 22px rgba(90, 62, 0, .18);
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+.vehicle-gallery__nav:focus-visible {
+  outline: 3px solid rgba(244, 180, 0, .45);
+  outline-offset: 3px;
+}
+
+.vehicle-gallery__nav:active {
+  transform: translateY(-50%) scale(.96);
 }
