@@ -54,6 +54,10 @@
   }
 
   /* ---------- Dropdowns / popovers ---------- */
+  const syncPlaceOverlayState = () => {
+    document.body.classList.toggle('catalog-place-open', Boolean(root.querySelector('.catalog-place:not([hidden])')));
+  };
+
   const closeCatalogPopovers = (except = null) => {
     root.querySelectorAll('.catalog-popover:not([hidden])').forEach((popover) => {
       if (popover === except) return;
@@ -62,6 +66,7 @@
       const trigger = field?.querySelector('[aria-expanded="true"]');
       trigger?.setAttribute('aria-expanded', 'false');
     });
+    syncPlaceOverlayState();
   };
 
   ['pickup', 'return'].forEach((kind) => {
@@ -76,6 +81,7 @@
       closeCatalogPopovers(opening ? popover : null);
       popover.hidden = !opening;
       trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      syncPlaceOverlayState();
     });
 
     popover.querySelectorAll(`[data-place-option="${kind}"]`).forEach((option) => {
@@ -84,9 +90,22 @@
         value.textContent = option.dataset.label || option.textContent.trim();
         popover.hidden = true;
         trigger.setAttribute('aria-expanded', 'false');
+        syncPlaceOverlayState();
         syncSearchUrl();
         trigger.focus({ preventScroll: true });
       });
+    });
+  });
+
+  root.querySelectorAll('[data-close-place]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const popover = button.closest('.catalog-place');
+      const field = popover?.closest('.catalog-search__field');
+      const trigger = field?.querySelector('[data-place-trigger]');
+      if (popover) popover.hidden = true;
+      trigger?.setAttribute('aria-expanded', 'false');
+      syncPlaceOverlayState();
+      trigger?.focus({ preventScroll: true });
     });
   });
 

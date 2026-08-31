@@ -92,6 +92,10 @@
 <span data-place-value="pickup">По всему Пхукету</span><svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
 </button>
 <div class="catalog-popover catalog-place" data-place-popover="pickup" hidden="">
+<div class="catalog-place__mobile-head">
+<div><span>Получение</span><strong>Выберите место</strong></div>
+<button aria-label="Закрыть выбор места получения" class="catalog-place__close" data-close-place type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
 <div class="catalog-place__title">Где получить автомобиль?</div>
 <button data-label="По всему Пхукету" data-place-option="pickup" data-value="all" type="button">По всему Пхукету</button>
 <button data-label="Доставка по Пхукету" data-place-option="pickup" data-value="delivery" type="button">Доставка по Пхукету</button>
@@ -110,6 +114,10 @@
 <span data-place-value="return">Там же</span><svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
 </button>
 <div class="catalog-popover catalog-place" data-place-popover="return" hidden="">
+<div class="catalog-place__mobile-head">
+<div><span>Возврат</span><strong>Выберите место</strong></div>
+<button aria-label="Закрыть выбор места возврата" class="catalog-place__close" data-close-place type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
 <div class="catalog-place__title">Где вернуть автомобиль?</div>
 <button data-label="Там же" data-place-option="return" data-value="same" type="button">Там же</button>
 <button data-label="Аэропорт Пхукета" data-place-option="return" data-value="airport" type="button">Аэропорт Пхукета</button>
@@ -267,7 +275,7 @@
 </div><p class="catalog-page__demo-note">Модели и тарифы используются как демонстрационные данные шаблона и заменяются через CMS.</p><div class="catalog-filter-modal" data-filter-modal="" hidden="">
 <div class="catalog-filter-modal__backdrop" data-close-filters=""></div>
 <section aria-labelledby="filter-modal-title" aria-modal="true" class="catalog-filter-modal__dialog" role="dialog">
-<header class="catalog-filter-modal__header"><div><span>Фильтры каталога</span><h2 id="filter-modal-title">Подберите автомобиль</h2></div><button aria-label="Закрыть фильтры" class="catalog-filter-modal__close" data-close-filters="" type="button">×</button></header>
+<header class="catalog-filter-modal__header"><div><span>Фильтры каталога</span><h2 id="filter-modal-title">Подберите автомобиль</h2></div><button aria-label="Закрыть фильтры" class="catalog-filter-modal__close" data-close-filters="" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></button></header>
 <form class="catalog-filter-modal__form" data-filter-form="">
 <fieldset class="filter-types"><legend>Тип автомобиля</legend><div class="filter-types__grid"><label class="filter-type-card"><input name="type" type="checkbox" value="compact"/><span><img alt="" aria-hidden="true" class="filter-type-card__icon" src="../assets/img/ui/car-types/compact.svg"/><strong>Компактные</strong><small data-type-count="compact">2</small><span aria-hidden="true" class="filter-type-card__check">✓</span></span></label><label class="filter-type-card"><input name="type" type="checkbox" value="sedan"/><span><img alt="" aria-hidden="true" class="filter-type-card__icon" src="../assets/img/ui/car-types/mid-class.svg"/><strong>Средний класс</strong><small data-type-count="sedan">1</small><span aria-hidden="true" class="filter-type-card__check">✓</span></span></label><label class="filter-type-card"><input name="type" type="checkbox" value="crossover"/><span><img alt="" aria-hidden="true" class="filter-type-card__icon" src="../assets/img/ui/car-types/crossover.svg"/><strong>Кроссоверы</strong><small data-type-count="crossover">2</small><span aria-hidden="true" class="filter-type-card__check">✓</span></span></label><label class="filter-type-card"><input name="type" type="checkbox" value="luxury"/><span><img alt="" aria-hidden="true" class="filter-type-card__icon" src="../assets/img/ui/car-types/lux.svg"/><strong>Люкс</strong><small data-type-count="luxury">0</small><span aria-hidden="true" class="filter-type-card__check">✓</span></span></label><label class="filter-type-card"><input name="type" type="checkbox" value="cabriolet"/><span><img alt="" aria-hidden="true" class="filter-type-card__icon" src="../assets/img/ui/car-types/cabriolet.svg"/><strong>Кабриолеты</strong><small data-type-count="cabriolet">0</small><span aria-hidden="true" class="filter-type-card__check">✓</span></span></label><label class="filter-type-card"><input name="type" type="checkbox" value="minivan"/><span><img alt="" aria-hidden="true" class="filter-type-card__icon" src="../assets/img/ui/car-types/minivan.svg"/><strong>Минивэны</strong><small data-type-count="minivan">1</small><span aria-hidden="true" class="filter-type-card__check">✓</span></span></label></div></fieldset>
 <div class="filter-groups filter-groups--primary"><fieldset><legend>Топливо</legend>
