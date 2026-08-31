@@ -341,3 +341,40 @@ body.catalog-overlay-open { overflow:hidden; }
   .catalog-facets::-webkit-scrollbar { display:none; }
   .catalog-facets button { flex:0 0 178px; min-height:104px; }
 }
+
+
+/* Stage 11 v7 - filter overflow fix, supplied body-type icons, drivetrain filters, marketplace gallery */
+.catalog-filter-modal__form { padding-bottom:48px; }
+.filter-groups--primary { grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start; }
+.filter-metrics-row, .filter-select-row { align-items:start; }
+.filter-select-pair { align-items:start; }
+.filter-custom-select { align-self:start; }
+/* Dropdown participates in scrollable form flow, so it can never disappear behind the fixed modal footer. */
+.filter-custom-select__menu { position:relative; z-index:5; top:auto; left:auto; width:100%; margin-top:6px; }
+.filter-select-pair .filter-custom-select__menu { min-width:100%; }
+.filter-check:has(input:checked) span { font-weight:800; color:#111719; }
+.filter-check input:focus-visible { outline:3px solid rgba(244,180,0,.42); outline-offset:2px; }
+.filter-type-card__icon { height:48px; filter:none; }
+
+/* Catalog card preview: marketplace-style segmented hover navigation. */
+.car-card-gallery { cursor:pointer; }
+.catalog-car-card .car-card-gallery { pointer-events:auto; }
+.car-card-gallery__slides { width:100%; height:100%; }
+.car-card-gallery__slides > picture { width:100%; height:100%; }
+.car-card-gallery__slides > picture[hidden] { display:none; }
+.car-card-gallery__progress { position:absolute; z-index:5; left:14px; right:14px; bottom:10px; display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:5px; pointer-events:none; }
+.car-card-gallery__progress > span { height:3px; border-radius:999px; background:rgba(255,255,255,.74); box-shadow:0 1px 4px rgba(0,0,0,.16); transition:background-color .16s ease, transform .16s ease; }
+.car-card-gallery__progress > span.is-active { background:var(--color-accent); transform:scaleY(1.25); }
+.car-card-gallery__nav { display:none !important; }
+@media (hover:hover) and (pointer:fine) {
+  .car-card-gallery:hover .car-card-gallery__progress > span { background:rgba(255,255,255,.92); }
+  .car-card-gallery:hover .car-card-gallery__progress > span.is-active { background:var(--color-accent); }
+}
+@media (max-width:1180px) {
+  .filter-groups--primary { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media (max-width:720px) {
+  .filter-groups--primary { grid-template-columns:1fr; }
+  .filter-custom-select__menu { max-height:190px; }
+  .car-card-gallery__progress { left:10px; right:10px; bottom:8px; }
+}

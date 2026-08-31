@@ -58,16 +58,55 @@
     show(0);
   });
 
-  // lightweight catalog card sliders
+  // Marketplace-like photo preview inside vehicle cards.
+  // Desktop: horizontal pointer position selects a photo. Touch: swipe.
   document.querySelectorAll('[data-card-gallery]').forEach(gallery => {
-    const imgs=[...gallery.querySelectorAll('[data-card-slide]')]; let index=0;
-    const show=(next)=>{index=(next+imgs.length)%imgs.length; imgs.forEach((el,i)=>el.hidden=i!==index); const dots=[...gallery.querySelectorAll('[data-card-dot]')]; dots.forEach((d,i)=>d.classList.toggle('is-active',i===index));};
-    gallery.querySelector('[data-card-prev]')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();show(index-1)});
-    gallery.querySelector('[data-card-next]')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();show(index+1)});
-    gallery.addEventListener('click', (e) => {
-      if (e.target.closest('button')) return;
+    const slides=[...gallery.querySelectorAll('[data-card-slide]')];
+    const dots=[...gallery.querySelectorAll('[data-card-dot]')];
+    if(slides.length < 2) return;
+    let index=0;
+    let touchStartX=0, touchStartY=0;
+    let suppressClick=false;
+
+    const show=(next)=>{
+      index=Math.max(0,Math.min(slides.length-1,next));
+      slides.forEach((el,i)=>{ el.hidden=i!==index; });
+      dots.forEach((dot,i)=>dot.classList.toggle('is-active',i===index));
+    };
+
+    const fromPointer=(event)=>{
+      if(event.pointerType==='touch' || event.target.closest('.car-card__tools')) return;
+      const rect=gallery.getBoundingClientRect();
+      if(!rect.width) return;
+      const ratio=Math.max(0,Math.min(.999,(event.clientX-rect.left)/rect.width));
+      show(Math.floor(ratio*slides.length));
+    };
+
+    gallery.addEventListener('pointerenter',fromPointer);
+    gallery.addEventListener('pointermove',fromPointer);
+    gallery.addEventListener('pointerleave',(event)=>{
+      if(event.pointerType!=='touch') show(0);
+    });
+
+    gallery.addEventListener('touchstart',(event)=>{
+      const touch=event.touches[0];
+      touchStartX=touch.clientX; touchStartY=touch.clientY;
+    },{passive:true});
+    gallery.addEventListener('touchend',(event)=>{
+      const touch=event.changedTouches[0];
+      const dx=touch.clientX-touchStartX, dy=touch.clientY-touchStartY;
+      if(Math.abs(dx)>42 && Math.abs(dx)>Math.abs(dy)*1.2){
+        show(index+(dx<0?1:-1));
+        suppressClick=true;
+        window.setTimeout(()=>{suppressClick=false;},360);
+      }
+    },{passive:true});
+
+    gallery.addEventListener('click',(event)=>{
+      if(suppressClick){ event.preventDefault(); event.stopPropagation(); return; }
+      if(event.target.closest('button')) return;
       const card=gallery.closest('[data-car-url]');
-      if(card?.dataset.carUrl) window.location.href=card.dataset.carUrl;
+      if(card?.dataset.carUrl){ event.preventDefault(); window.location.href=card.dataset.carUrl; }
     });
     show(0);
   });
@@ -110,10 +149,6 @@
   };
   document.querySelectorAll('[data-vehicle-gallery]').forEach(gallery => {
     const prev=gallery.querySelector('[data-gallery-prev]'), next=gallery.querySelector('[data-gallery-next]');
-    swipe(gallery, ()=>prev?.click(), ()=>next?.click());
-  });
-  document.querySelectorAll('[data-card-gallery]').forEach(gallery => {
-    const prev=gallery.querySelector('[data-card-prev]'), next=gallery.querySelector('[data-card-next]');
     swipe(gallery, ()=>prev?.click(), ()=>next?.click());
   });
 

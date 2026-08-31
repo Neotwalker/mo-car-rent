@@ -289,7 +289,7 @@
       wrap.classList.toggle('is-open', opening);
       menu.hidden = !opening;
       trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
-      if (opening) menu.querySelector('.is-selected')?.scrollIntoView({ block: 'nearest' });
+      if (opening) requestAnimationFrame(() => { menu.scrollIntoView({ block: 'nearest' }); menu.querySelector('.is-selected')?.scrollIntoView({ block: 'nearest' }); });
     });
     trigger.addEventListener('keydown', (event) => {
       if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
@@ -335,6 +335,8 @@
       types: selected('type'),
       seats: singleArray('seats'),
       fuels: selected('fuel'),
+      transmissions: selected('transmission'),
+      drives: selected('drive'),
       brands: singleArray('brand'),
       priceMin: Number(filterForm.elements.price_min?.value || 0),
       priceMax: Number(filterForm.elements.price_max?.value || 0),
@@ -347,18 +349,22 @@
     };
   };
 
-  let appliedState = { types: [], seats: [], fuels: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
+  let appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
   let sortValue = 'default';
 
   const cardMatches = (card, state) => {
     const price = Number(card.dataset.price || 0);
     const seats = card.dataset.seats || '';
     const fuel = card.dataset.fuel || '';
+    const transmission = card.dataset.transmission || '';
+    const drive = card.dataset.drive || '';
     const engine = Number(card.dataset.engine || 0);
     const consumption = Number(card.dataset.consumption || 0);
     if (state.types.length && !state.types.includes(card.dataset.type)) return false;
     if (state.seats.length && !state.seats.includes(seats)) return false;
     if (state.fuels.length && !state.fuels.includes(fuel)) return false;
+    if (state.transmissions.length && !state.transmissions.includes(transmission)) return false;
+    if (state.drives.length && !state.drives.includes(drive)) return false;
     if (state.brands.length && !state.brands.includes(card.dataset.brand)) return false;
     if (state.priceMin && price < state.priceMin) return false;
     if (state.priceMax && price > state.priceMax) return false;
@@ -386,22 +392,22 @@
   };
 
   const countActiveFilters = (state) => {
-    let n = state.types.length + state.seats.length + state.fuels.length + state.brands.length + state.features.length;
+    let n = state.types.length + state.seats.length + state.fuels.length + state.transmissions.length + state.drives.length + state.brands.length + state.features.length;
     ['priceMin','priceMax','engineMin','engineMax','consumptionMin','consumptionMax'].forEach((key) => { if (state[key]) n += 1; });
     if (state.year) n += 1;
     return n;
   };
 
   const filterLabels = {
-    compact: 'Компактные', sedan: 'Седаны', crossover: 'Кроссоверы', suv: 'Внедорожники', minivan: 'Минивэны', electric: 'Электро',
-    '5': '5 мест', '7': '7 мест', petrol: 'Бензин', diesel: 'Дизель', toyota: 'Toyota', honda: 'Honda', mitsubishi: 'Mitsubishi', byd: 'BYD',
+    compact: 'Компактные', sedan: 'Средний класс', crossover: 'Кроссоверы', luxury: 'Люкс', cabriolet: 'Кабриолеты', minivan: 'Минивэны',
+    '5': '5 мест', '7': '7 мест', petrol: 'Бензин', diesel: 'Дизель', electric: 'Электро', automatic: 'Автомат', manual: 'Механика', cvt: 'Вариатор', front: 'Передний привод', awd: 'Полный привод', rear: 'Задний привод', toyota: 'Toyota', honda: 'Honda', mitsubishi: 'Mitsubishi', byd: 'BYD',
     budget: 'До 1 500 ฿', seven: '7 мест',
   };
 
   const syncModalToState = (state) => {
     filterForm.querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach((input) => { input.checked = false; });
-    ['type', 'fuel'].forEach((name) => {
-      const values = name === 'type' ? state.types : state.fuels;
+    const checkboxGroups = { type: state.types, fuel: state.fuels, transmission: state.transmissions, drive: state.drives };
+    Object.entries(checkboxGroups).forEach(([name, values]) => {
       values.forEach((value) => {
         const input = filterForm.querySelector(`[name="${name}"][value="${CSS.escape(value)}"]`);
         if (input) input.checked = true;
@@ -432,6 +438,8 @@
     appliedState.types.forEach((v) => chips.push(['types', v, filterLabels[v] || v]));
     appliedState.seats.forEach((v) => chips.push(['seats', v, filterLabels[v] || v]));
     appliedState.fuels.forEach((v) => chips.push(['fuels', v, filterLabels[v] || v]));
+    appliedState.transmissions.forEach((v) => chips.push(['transmissions', v, filterLabels[v] || v]));
+    appliedState.drives.forEach((v) => chips.push(['drives', v, filterLabels[v] || v]));
     appliedState.brands.forEach((v) => chips.push(['brands', v, filterLabels[v] || v]));
     appliedState.features.forEach((v) => chips.push(['features', v, filterLabels[v] || v]));
     if (appliedState.priceMin) chips.push(['priceMin', String(appliedState.priceMin), `от ${appliedState.priceMin} ฿`]);
@@ -471,10 +479,12 @@
 
   const syncFilterUrl = () => {
     const url = new URL(window.location.href);
-    ['type', 'seats', 'fuel', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'feature', 'sort'].forEach((key) => url.searchParams.delete(key));
+    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'feature', 'sort'].forEach((key) => url.searchParams.delete(key));
     appliedState.types.forEach((v) => url.searchParams.append('type', v));
     appliedState.seats.forEach((v) => url.searchParams.append('seats', v));
     appliedState.fuels.forEach((v) => url.searchParams.append('fuel', v));
+    appliedState.transmissions.forEach((v) => url.searchParams.append('transmission', v));
+    appliedState.drives.forEach((v) => url.searchParams.append('drive', v));
     appliedState.brands.forEach((v) => url.searchParams.append('brand', v));
     appliedState.features.forEach((v) => url.searchParams.append('feature', v));
     if (appliedState.priceMin) url.searchParams.set('price_min', appliedState.priceMin);
@@ -530,7 +540,7 @@
   });
 
   resetFilters.forEach((button) => button.addEventListener('click', () => {
-    appliedState = { types: [], seats: [], fuels: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
+    appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
     syncModalToState(appliedState);
     updatePending();
     applyCatalog();
@@ -541,7 +551,7 @@
     if (!button) return;
     const key = button.dataset.removeFilterKey;
     const value = button.dataset.removeFilterValue;
-    if (['types', 'seats', 'fuels', 'brands', 'features'].includes(key)) appliedState[key] = appliedState[key].filter((v) => v !== value);
+    if (['types', 'seats', 'fuels', 'transmissions', 'drives', 'brands', 'features'].includes(key)) appliedState[key] = appliedState[key].filter((v) => v !== value);
     else if (key === 'priceMin') appliedState.priceMin = 0;
     else if (key === 'priceMax') appliedState.priceMax = 0;
     else if (key === 'engineMin') appliedState.engineMin = 0;
@@ -621,6 +631,8 @@
     types: multi('type'),
     seats: multi('seats').slice(0, 1),
     fuels: multi('fuel'),
+    transmissions: multi('transmission'),
+    drives: multi('drive'),
     brands: multi('brand').slice(0, 1),
     priceMin: Number(params.get('price_min') || 0),
     priceMax: Number(params.get('price_max') || 0),
