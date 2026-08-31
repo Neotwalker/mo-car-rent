@@ -1196,3 +1196,4 @@ body.catalog-overlay-open { overflow:hidden; }
   .catalog-sort__trigger > span[data-sort-label] { max-width: 86px; }
   .catalog-sort__menu { width: 166px; }
 }
+\n\n/* Stage 11 v20 - prevent Safari/iOS from applying system link blue to calendar action. */\n.catalog-calendar__done {\n  color: var(--color-ink) !important;\n  -webkit-text-fill-color: var(--color-ink) !important;\n  -webkit-appearance: none;\n  appearance: none;\n  text-decoration: none;\n  -webkit-tap-highlight-color: transparent;\n}\n

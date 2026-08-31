@@ -26,6 +26,12 @@
 
   const EVENT_BOOKING_SUBMIT = 'mocar:booking:submit';
 
+  const isAppleDatePlatform = (() => {
+    const ua = navigator.userAgent || '';
+    const platform = navigator.platform || '';
+    return /iPad|iPhone|iPod/.test(ua) || /Macintosh/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  })();
+
 
   const initMenu = () => {
     const toggle = document.querySelector(SELECTORS.menuToggle);
@@ -95,6 +101,16 @@
     const trigger = control.querySelector(SELECTORS.dateTrigger);
 
     if (!input || !trigger) return;
+
+    const syncEmptyState = () => {
+      if (!isAppleDatePlatform) return;
+      control.classList.add('is-apple-date');
+      control.classList.toggle('is-empty', !input.value);
+    };
+
+    input.addEventListener('input', syncEmptyState);
+    input.addEventListener('change', syncEmptyState);
+    syncEmptyState();
 
     trigger.addEventListener('click', () => openDatePicker(input));
   };
