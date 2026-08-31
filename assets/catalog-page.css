@@ -658,3 +658,46 @@ body.catalog-overlay-open { overflow:hidden; }
     max-width:52px;
   }
 }
+
+
+/* Stage 11 v12 - Swiper edge breathing room + fullscreen filters on small screens. */
+.popular-models__swiper {
+  --popular-edge-space: clamp(12px, 1.25vw, 22px);
+  margin-inline: calc(var(--popular-edge-space) * -1);
+  padding-inline: var(--popular-edge-space);
+  padding-bottom: 24px;
+}
+.popular-models__scrollbar.swiper-scrollbar {
+  left: var(--popular-edge-space);
+  width: calc(100% - (var(--popular-edge-space) * 2));
+}
+
+@media (max-width: 1024px) {
+  .catalog-filter-modal {
+    padding: 0;
+    place-items: stretch;
+  }
+  .catalog-filter-modal__dialog {
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+  }
+  .catalog-filter-modal__header {
+    padding-top: max(18px, env(safe-area-inset-top));
+  }
+  .catalog-filter-modal__form {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-bottom: 36px;
+  }
+  .catalog-filter-modal__footer {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 760px) {
+  .popular-models__swiper {
+    --popular-edge-space: 16px;
+  }
+}

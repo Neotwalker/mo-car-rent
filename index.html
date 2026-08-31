@@ -116,7 +116,7 @@
 </ul>
 </div>
 <div class="hero__booking" id="booking">
-<form action="/cars/" class="booking" data-booking-form="" data-demo="" method="get">
+<form action="cars/" class="booking" data-booking-form="" method="get">
 <fieldset class="booking__fieldset">
 <legend class="visually-hidden">Подобрать автомобиль по датам и месту получения</legend>
 <div class="booking__field">
@@ -145,7 +145,7 @@
 </div>
 <div class="booking__field booking__field--location" data-custom-select="">
 <label class="booking__label" for="pickup-location">Место получения</label>
-<select class="booking__native-select" data-select-native="" id="pickup-location" name="pickup_location" required="">
+<select class="booking__native-select" data-select-native="" id="pickup-location" name="pickup" required="">
 <option disabled="" selected="" value="">Выберите место</option>
 <option value="delivery">Доставка по Пхукету</option>
 <option value="office">Получение в офисе</option>
@@ -167,6 +167,7 @@
 </ul>
 </div>
 </div>
+<input name="return" type="hidden" value="same"/>
 <button class="booking__submit" type="submit">
 <span>Показать автомобили</span>
 <span aria-hidden="true">→</span>
