@@ -559,3 +559,129 @@
   .car-card__action:hover { color:#171816 !important; border-color:var(--color-accent) !important; background:var(--color-accent) !important; transform:translateY(-1px); }
   .car-card__action:hover > span:last-child { transform:translateX(3px) !important; }
 }
+
+/* Stage 11 v18 - compact mobile car cards across homepage, catalog and related cars. */
+@media (max-width: 700px) {
+  .car-card {
+    border-radius: 16px;
+  }
+
+  .car-card__body {
+    padding: 16px;
+  }
+
+  .car-card__meta {
+    gap: 6px 10px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .car-card__title {
+    font-size: 21px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .car-card__specs {
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .car-card__spec {
+    padding: 9px 10px;
+    border-radius: 10px;
+  }
+
+  .car-card__spec strong {
+    margin-bottom: 1px;
+    font-size: 13px;
+  }
+
+  .car-card__spec span {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .car-card__footer {
+    gap: 12px;
+    padding-top: 18px;
+  }
+
+  .car-card__price-label,
+  .car-card__price-note {
+    font-size: 10.5px;
+  }
+
+  .car-card__price-value {
+    margin-top: 2px;
+    font-size: 25px;
+  }
+
+  .car-card__price-unit {
+    font-size: 11px;
+  }
+
+  .car-card__price--request .car-card__price-value {
+    font-size: 19px;
+  }
+
+  .car-card__action {
+    min-height: 50px;
+    padding-inline: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .car-card__tools {
+    top: 8px;
+    right: 8px;
+    gap: 5px;
+  }
+
+  .car-card__tools button {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+  }
+
+  .car-card__tools button svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .car-card-gallery__progress {
+    left: 9px;
+    right: 9px;
+    bottom: 7px;
+    gap: 4px;
+  }
+
+  .car-card-gallery__progress > span {
+    height: 2px;
+  }
+}
+
+@media (max-width: 390px) {
+  .car-card__body {
+    padding: 14px;
+  }
+
+  .car-card__title {
+    font-size: 20px;
+  }
+
+  .car-card__spec {
+    padding: 8px;
+  }
+
+  .car-card__footer {
+    gap: 10px;
+    padding-top: 16px;
+  }
+
+  .car-card__action {
+    min-height: 48px;
+    font-size: 13px;
+  }
+}

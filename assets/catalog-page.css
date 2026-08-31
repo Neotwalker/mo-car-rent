@@ -1044,3 +1044,62 @@ body.catalog-overlay-open { overflow:hidden; }
   .catalog-view-toggle svg { width:19px; height:19px; }
   .catalog-view-toggle small { min-width:20px; height:20px; }
 }
+
+/* Stage 11 v18 - mobile results header hierarchy. */
+@media (max-width: 720px) {
+  .catalog-results-head {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .catalog-results-head > div:first-child {
+    width: 100%;
+    min-width: 0;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .catalog-results-head strong {
+    font-size: 18px;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .catalog-results-head > div:first-child > span {
+    display: none;
+  }
+
+  .catalog-results-actions {
+    width: 100%;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    gap: 7px;
+  }
+
+  .catalog-compare-toggle { order: 1; }
+  .catalog-favorites-toggle { order: 2; }
+  .catalog-sort { order: 3; margin-left: 0; }
+}
+
+@media (max-width: 430px) {
+  .catalog-results-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+  }
+
+  .catalog-results-head > div:first-child {
+    width: 100%;
+    flex: none;
+  }
+
+  .catalog-results-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
