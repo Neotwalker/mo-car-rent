@@ -1252,3 +1252,75 @@ body.catalog-overlay-open { overflow:hidden; }
   color: inherit !important;
   -webkit-text-fill-color: currentColor !important;
 }
+
+/* Stage 11 v22 - compact filter actions/chips + Safari color normalization. */
+.catalog-chip,
+.catalog-chip *,
+.catalog-chip::before,
+.catalog-chip::after {
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+.catalog-chip {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.2;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.catalog-chip--reset,
+.catalog-chip--reset * {
+  color: #7c5700 !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+.catalog-filter-modal__reset,
+.catalog-filter-modal__apply {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+@media (max-width: 760px) {
+  .catalog-tools__chips {
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .catalog-chip {
+    min-height: 32px;
+    gap: 5px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+
+  .catalog-chip svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .catalog-chip--reset {
+    padding-inline: 5px;
+  }
+
+  .catalog-filter-modal__footer {
+    gap: 8px;
+    padding-top: 11px;
+    padding-bottom: calc(11px + env(safe-area-inset-bottom));
+  }
+
+  .catalog-filter-modal__reset,
+  .catalog-filter-modal__apply {
+    min-height: 44px;
+    padding-inline: 12px;
+    border-radius: 9px;
+    font-size: 12px;
+  }
+
+  .catalog-filter-modal__apply {
+    min-width: 0;
+  }
+}
