@@ -1196,4 +1196,59 @@ body.catalog-overlay-open { overflow:hidden; }
   .catalog-sort__trigger > span[data-sort-label] { max-width: 86px; }
   .catalog-sort__menu { width: 166px; }
 }
-\n\n/* Stage 11 v20 - prevent Safari/iOS from applying system link blue to calendar action. */\n.catalog-calendar__done {\n  color: var(--color-ink) !important;\n  -webkit-text-fill-color: var(--color-ink) !important;\n  -webkit-appearance: none;\n  appearance: none;\n  text-decoration: none;\n  -webkit-tap-highlight-color: transparent;\n}\n
+
+
+/* Stage 11 v20 - prevent Safari/iOS from applying system link blue to calendar action. */
+.catalog-calendar__done {
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: var(--color-ink) !important;
+  -webkit-appearance: none;
+  appearance: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Stage 11 v21 - hard Safari/iOS color normalization for catalog overlays. */
+.catalog-filter-modal__close,
+.catalog-filter-modal__reset,
+.catalog-filter-modal__apply,
+.catalog-calendar__done,
+.catalog-calendar__nav,
+.catalog-place__close {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+}
+
+.catalog-filter-modal__close,
+.catalog-calendar__nav,
+.catalog-place__close {
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: var(--color-ink) !important;
+}
+
+.catalog-filter-modal__close svg,
+.catalog-calendar__nav svg,
+.catalog-place__close svg {
+  color: var(--color-ink) !important;
+  stroke: var(--color-ink) !important;
+  fill: none !important;
+}
+
+.catalog-filter-modal__reset {
+  color: #626769 !important;
+  -webkit-text-fill-color: #626769 !important;
+}
+
+.catalog-filter-modal__apply,
+.catalog-calendar__done {
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: var(--color-ink) !important;
+}
+
+.catalog-filter-modal__apply *,
+.catalog-calendar__done * {
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+}

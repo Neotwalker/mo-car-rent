@@ -1354,4 +1354,108 @@
   color: currentColor;
   stroke: currentColor;
 }
-\n\n/* Stage 11 v20 - Apple/iOS date rendering normalization. */\n.car-booking__control--date { position: relative; }\n.car-booking__control--date input[type="date"] {\n  text-align: center !important;\n  padding-left: 58px !important;\n  padding-right: 58px !important;\n}\n.car-booking__control--date input[type="date"]::-webkit-date-and-time-value {\n  width: 100%;\n  min-width: 0;\n  margin: 0 !important;\n  text-align: center !important;\n}\n.car-booking__control--date input[type="date"]::-webkit-datetime-edit,\n.car-booking__control--date input[type="date"]::-webkit-datetime-edit-fields-wrapper {\n  width: 100%;\n  padding: 0 !important;\n  text-align: center !important;\n}\n.car-booking__control--date.is-apple-date.is-empty::before {\n  content: "дд.мм.гггг";\n  position: absolute;\n  z-index: 1;\n  left: 58px;\n  right: 58px;\n  top: 50%;\n  transform: translateY(-50%);\n  color: rgba(255,255,255,.68);\n  font-size: inherit;\n  font-weight: inherit;\n  line-height: 1;\n  text-align: center;\n  pointer-events: none;\n}\n.car-booking__control--date.is-apple-date.is-empty input[type="date"] {\n  color: transparent !important;\n  -webkit-text-fill-color: transparent !important;\n}\n@media (max-width:760px) {\n  .car-booking__control--date input[type="date"] {\n    padding-left: 54px !important;\n    padding-right: 54px !important;\n    text-align: center !important;\n  }\n  .car-booking__control--date input[type="date"]::-webkit-date-and-time-value { text-align:center !important; }\n  .car-booking__control--date.is-apple-date.is-empty::before { left:54px; right:54px; }\n}\n
+
+
+/* Stage 11 v20 - Apple/iOS date rendering normalization. */
+.car-booking__control--date { position: relative; }
+.car-booking__control--date input[type="date"] {
+  text-align: center !important;
+  padding-left: 58px !important;
+  padding-right: 58px !important;
+}
+.car-booking__control--date input[type="date"]::-webkit-date-and-time-value {
+  width: 100%;
+  min-width: 0;
+  margin: 0 !important;
+  text-align: center !important;
+}
+.car-booking__control--date input[type="date"]::-webkit-datetime-edit,
+.car-booking__control--date input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  width: 100%;
+  padding: 0 !important;
+  text-align: center !important;
+}
+.car-booking__control--date.is-apple-date.is-empty::before {
+  content: "дд.мм.гггг";
+  position: absolute;
+  z-index: 1;
+  left: 58px;
+  right: 58px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.68);
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+}
+.car-booking__control--date.is-apple-date.is-empty input[type="date"] {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+@media (max-width:760px) {
+  .car-booking__control--date input[type="date"] {
+    padding-left: 54px !important;
+    padding-right: 54px !important;
+    text-align: center !important;
+  }
+  .car-booking__control--date input[type="date"]::-webkit-date-and-time-value { text-align:center !important; }
+  .car-booking__control--date.is-apple-date.is-empty::before { left:54px; right:54px; }
+}
+
+/* Stage 11 v21 - Apple date inputs use a centered visual value layer.
+   Native input remains functional underneath and keeps form semantics. */
+.car-booking__control--date.is-apple-date {
+  position: relative;
+}
+
+.car-booking__control--date.is-apple-date::before {
+  content: attr(data-date-label);
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 58px;
+  right: 58px;
+  transform: translateY(-50%);
+  overflow: hidden;
+  color: #fff;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.car-booking__control--date.is-apple-date.is-empty::before {
+  color: rgba(255,255,255,.68);
+}
+
+.car-booking__control--date.is-apple-date input[type="date"] {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  caret-color: transparent !important;
+  text-align: center !important;
+}
+
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-date-and-time-value,
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit,
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-text,
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-day-field,
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-month-field,
+.car-booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-year-field {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+@media (max-width:760px) {
+  .car-booking__control--date.is-apple-date::before {
+    left: 52px;
+    right: 52px;
+    font-size: 14px;
+  }
+}

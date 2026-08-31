@@ -1383,4 +1383,85 @@ a[href], button:not(:disabled), [role="button"] {
     transition-duration: 0.01ms !important;
   }
 }
-\n\n/* Stage 11 v20 - Apple date controls: centered values + explicit empty placeholder. */\n.booking__control--date input[type="date"] {\n  text-align: center;\n  padding-left: 42px;\n  padding-right: 42px;\n}\n.booking__control--date input[type="date"]::-webkit-date-and-time-value {\n  width: 100%;\n  margin: 0;\n  text-align: center;\n}\n.booking__control--date input[type="date"]::-webkit-datetime-edit,\n.booking__control--date input[type="date"]::-webkit-datetime-edit-fields-wrapper {\n  width: 100%;\n  padding: 0;\n  text-align: center;\n}\n.booking__control--date.is-apple-date.is-empty::before {\n  content: "дд.мм.гггг";\n  position: absolute;\n  z-index: 1;\n  left: 42px;\n  right: 42px;\n  top: 50%;\n  transform: translateY(-50%);\n  color: rgba(255,255,255,.72);\n  font: inherit;\n  text-align: center;\n  pointer-events: none;\n}\n.booking__control--date.is-apple-date.is-empty input[type="date"] {\n  color: transparent;\n  -webkit-text-fill-color: transparent;\n}\n
+
+
+/* Stage 11 v20 - Apple date controls: centered values + explicit empty placeholder. */
+.booking__control--date input[type="date"] {
+  text-align: center;
+  padding-left: 42px;
+  padding-right: 42px;
+}
+.booking__control--date input[type="date"]::-webkit-date-and-time-value {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+.booking__control--date input[type="date"]::-webkit-datetime-edit,
+.booking__control--date input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  width: 100%;
+  padding: 0;
+  text-align: center;
+}
+.booking__control--date.is-apple-date.is-empty::before {
+  content: "дд.мм.гггг";
+  position: absolute;
+  z-index: 1;
+  left: 42px;
+  right: 42px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.72);
+  font: inherit;
+  text-align: center;
+  pointer-events: none;
+}
+.booking__control--date.is-apple-date.is-empty input[type="date"] {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Stage 11 v21 - Apple date inputs use a centered visual value layer. */
+.booking__control--date.is-apple-date {
+  position: relative;
+}
+
+.booking__control--date.is-apple-date::before {
+  content: attr(data-date-label);
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 42px;
+  right: 42px;
+  transform: translateY(-50%);
+  overflow: hidden;
+  color: #fff;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.booking__control--date.is-apple-date.is-empty::before {
+  color: rgba(255,255,255,.72);
+}
+
+.booking__control--date.is-apple-date input[type="date"] {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  caret-color: transparent !important;
+}
+
+.booking__control--date.is-apple-date input[type="date"]::-webkit-date-and-time-value,
+.booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit,
+.booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+.booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-text,
+.booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-day-field,
+.booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-month-field,
+.booking__control--date.is-apple-date input[type="date"]::-webkit-datetime-edit-year-field {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}

@@ -102,10 +102,18 @@
 
     if (!input || !trigger) return;
 
+    const formatAppleDateLabel = (value) => {
+      if (!value) return 'дд.мм.гггг';
+      const [year, month, day] = value.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
+    };
+
     const syncEmptyState = () => {
       if (!isAppleDatePlatform) return;
       control.classList.add('is-apple-date');
       control.classList.toggle('is-empty', !input.value);
+      control.dataset.dateLabel = formatAppleDateLabel(input.value);
     };
 
     input.addEventListener('input', syncEmptyState);
