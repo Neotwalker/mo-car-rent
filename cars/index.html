@@ -8,9 +8,9 @@
 <meta content="Демонстрационный каталог автомобилей с фильтрами и сортировкой." name="description"/>
 <link href="../assets/style.css" rel="stylesheet"/>
 <link href="../assets/catalog.css" rel="stylesheet"/>
-<link href="../assets/catalog-page.css" rel="stylesheet"/>
+<link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"/><link href="../assets/catalog-page.css" rel="stylesheet"/>
 <script defer="" src="../assets/main.js"></script>
-<script defer="" src="../assets/catalog-page.js"></script>
+<script defer="True" src="../assets/vendor/swiper/swiper-bundle.min.js"></script><script defer="" src="../assets/catalog-page.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Перейти к содержимому</a>
@@ -54,87 +54,121 @@
 <div class="catalog-page__head">
 <p class="catalog-page__eyebrow">Каталог</p>
 <h1 class="catalog-page__title" id="catalog-title">Автомобили и цены</h1>
-<p class="catalog-page__lead">Выберите подходящую модель по типу автомобиля, количеству мест, топливу и ориентировочному демо-тарифу.</p>
+<p class="catalog-page__lead">Укажите место и даты поездки, затем настройте параметры автомобиля. Демо-каталог покажет подходящие модели и ориентировочные тарифы.</p>
 </div>
-<section aria-labelledby="popular-models-title" class="popular-models"><div class="popular-models__head"><div><p class="catalog-page__eyebrow">Популярные модели</p><h2 id="popular-models-title">Быстрый выбор</h2></div><p>Первые модели загружаются сразу, остальные - по мере просмотра слайдера.</p></div><div aria-label="Популярные модели" class="popular-models__rail" data-popular-rail="" tabindex="0"><div aria-hidden="true" data-popular-sentinel=""></div></div></section><div class="catalog-tools" data-catalog-root="">
-<div class="catalog-tools__summary">
-<p aria-live="polite" class="catalog-tools__result"><strong data-result-count="">6</strong> <span data-result-label="">автомобилей</span></p>
-<button aria-controls="catalog-filter-panel" aria-expanded="false" class="catalog-tools__mobile-toggle" data-filter-toggle="" type="button">
-<span>Фильтры</span>
-<span class="catalog-tools__filter-count" data-filter-count="" hidden="">0</span>
-<svg aria-hidden="true" class="catalog-tools__mobile-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+<section aria-labelledby="popular-models-title" class="popular-models">
+<div class="popular-models__head">
+<div>
+<p class="catalog-page__eyebrow">Популярные модели</p>
+<h2 id="popular-models-title">Популярные автомобили</h2>
+</div>
+<div aria-label="Навигация популярных моделей" class="popular-models__nav">
+<button aria-label="Предыдущие модели" class="popular-models__button popular-models__button--prev" data-popular-prev="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg>
+</button>
+<button aria-label="Следующие модели" class="popular-models__button popular-models__button--next" data-popular-next="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9 6 6 6-6 6"></path></svg>
 </button>
 </div>
-<form class="catalog-filter" data-filter-form="" id="catalog-filter-panel">
-<div class="catalog-filter__grid"><div class="catalog-filter__field"><label for="catalog-brand">Марка</label><div class="catalog-filter__select-wrap catalog-select" data-catalog-select=""><select data-filter="brand" id="catalog-brand" name="brand"><option value="">Все марки</option><option value="toyota">Toyota</option><option value="honda">Honda</option><option value="mitsubishi">Mitsubishi</option><option value="byd">BYD</option></select><svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg></div></div>
-<div class="catalog-filter__field">
-<label for="catalog-type">Тип автомобиля</label>
-<div class="catalog-filter__select-wrap catalog-select" data-catalog-select="">
-<select data-filter="type" id="catalog-type" name="type">
-<option value="">Все типы</option>
-<option value="compact">Компактные</option>
-<option value="sedan">Седаны</option>
-<option value="crossover">Кроссоверы</option>
-<option value="suv">Внедорожники</option>
-<option value="minivan">Минивэны</option>
-<option value="electric">Электромобили</option>
-</select>
-<svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
 </div>
+<div class="swiper popular-models__swiper" data-popular-swiper="">
+<div class="swiper-wrapper">
+<div class="swiper-slide"><a class="popular-car" href="toyota-yaris/"><span class="popular-car__badge">Популярная модель</span><picture><source srcset="../assets/img/catalog/toyota-yaris-01.webp" type="image/webp"/><img alt="Toyota Yaris" height="675" loading="lazy" src="../assets/img/catalog/toyota-yaris-01.jpg" width="1200"/></picture><span class="popular-car__overlay"><strong>Toyota Yaris</strong><span>от 1 090 ฿ <small>/ сутки</small></span></span></a></div>
+<div class="swiper-slide"><a class="popular-car" href="honda-city/"><span class="popular-car__badge">Городской седан</span><picture><source srcset="../assets/img/catalog/honda-city-01.webp" type="image/webp"/><img alt="Honda City" height="675" loading="lazy" src="../assets/img/catalog/honda-city-01.jpg" width="1200"/></picture><span class="popular-car__overlay"><strong>Honda City</strong><span>от 1 190 ฿ <small>/ сутки</small></span></span></a></div>
+<div class="swiper-slide"><a class="popular-car" href="toyota-corolla-cross/"><span class="popular-car__badge">Кроссовер</span><picture><source srcset="../assets/img/catalog/toyota-corolla-cross-01.webp" type="image/webp"/><img alt="Toyota Corolla Cross" height="675" loading="lazy" src="../assets/img/catalog/toyota-corolla-cross-01.jpg" width="1200"/></picture><span class="popular-car__overlay"><strong>Toyota Corolla Cross</strong><span>от 1 490 ฿ <small>/ сутки</small></span></span></a></div>
+<div class="swiper-slide"><a class="popular-car" href="mitsubishi-xpander/"><span class="popular-car__badge">7 мест</span><picture><source srcset="../assets/img/catalog/mitsubishi-xpander-01.webp" type="image/webp"/><img alt="Mitsubishi Xpander" height="675" loading="lazy" src="../assets/img/catalog/mitsubishi-xpander-01.jpg" width="1200"/></picture><span class="popular-car__overlay"><strong>Mitsubishi Xpander</strong><span>от 1 690 ฿ <small>/ сутки</small></span></span></a></div>
+<div class="swiper-slide"><a class="popular-car" href="byd-dolphin/"><span class="popular-car__badge">Электромобиль</span><picture><source srcset="../assets/img/catalog/byd-dolphin-01.webp" type="image/webp"/><img alt="BYD Dolphin" height="675" loading="lazy" src="../assets/img/catalog/byd-dolphin-01.jpg" width="1200"/></picture><span class="popular-car__overlay"><strong>BYD Dolphin</strong><span>от 1 790 ฿ <small>/ сутки</small></span></span></a></div>
+<div class="swiper-slide"><a class="popular-car" href="toyota-fortuner/"><span class="popular-car__badge">7 мест</span><picture><source srcset="../assets/img/catalog/toyota-fortuner-01.webp" type="image/webp"/><img alt="Toyota Fortuner" height="675" loading="lazy" src="../assets/img/catalog/toyota-fortuner-01.jpg" width="1200"/></picture><span class="popular-car__overlay"><strong>Toyota Fortuner</strong><span>от 2 290 ฿ <small>/ сутки</small></span></span></a></div>
 </div>
-<div class="catalog-filter__field">
-<label for="catalog-seats">Количество мест</label>
-<div class="catalog-filter__select-wrap catalog-select" data-catalog-select="">
-<select data-filter="seats" id="catalog-seats" name="seats">
-<option value="">Любое</option>
-<option value="5">5 мест</option>
-<option value="7">7 мест</option>
-</select>
-<svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+<div class="swiper-scrollbar popular-models__scrollbar"></div>
 </div>
-</div>
-<div class="catalog-filter__field">
-<label for="catalog-fuel">Топливо</label>
-<div class="catalog-filter__select-wrap catalog-select" data-catalog-select="">
-<select data-filter="fuel" id="catalog-fuel" name="fuel">
-<option value="">Любое</option>
-<option value="petrol">Бензин</option>
-<option value="diesel">Дизель</option>
-<option value="electric">Электро</option>
-</select>
-<svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
-</div>
-</div>
-<div class="catalog-filter__field">
-<label for="catalog-price">Цена до</label>
-<div class="catalog-filter__select-wrap catalog-select" data-catalog-select="">
-<select data-filter="price" id="catalog-price" name="max_price">
-<option value="">Любая</option>
-<option value="1300">1 300 ฿ / сутки</option>
-<option value="1500">1 500 ฿ / сутки</option>
-<option value="1800">1 800 ฿ / сутки</option>
-<option value="2300">2 300 ฿ / сутки</option>
-</select>
-<svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
-</div>
-</div>
-<div class="catalog-filter__field"><label for="catalog-year">Год от</label><div class="catalog-filter__select-wrap catalog-select" data-catalog-select=""><select data-filter="year" id="catalog-year" name="year"><option value="">Любой</option><option value="2024">2024</option><option value="2023">2023</option></select><svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg></div></div><div class="catalog-filter__field catalog-filter__field--sort">
-<label for="catalog-sort">Сортировка</label>
-<div class="catalog-filter__select-wrap catalog-select" data-catalog-select="">
-<select data-sort="" id="catalog-sort" name="sort">
-<option value="default">По умолчанию</option>
-<option value="price-asc">Сначала дешевле</option>
-<option value="price-desc">Сначала дороже</option>
-<option value="seats-desc">Больше мест</option>
-</select>
-<svg aria-hidden="true" class="catalog-filter__native-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
-</div>
-</div>
-<button class="catalog-filter__reset" data-reset-filters="" disabled="" type="button">
-<span>Сбросить</span><span aria-hidden="true">↺</span>
+</section><div class="catalog-tools" data-catalog-root="">
+<section aria-label="Параметры аренды" class="catalog-search">
+<form class="catalog-search__form" data-search-form="">
+<div class="catalog-search__mainrow">
+<div class="catalog-search__field" data-place-field="pickup">
+<span class="catalog-search__label">Получение</span>
+<button aria-expanded="false" aria-haspopup="listbox" class="catalog-search__trigger" data-place-trigger="pickup" type="button">
+<span data-place-value="pickup">По всему Пхукету</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
 </button>
-</div><div aria-label="Быстрые фильтры" class="catalog-filter__quick"><span>Быстрый выбор</span><button data-quick-filter="seven" type="button">7 мест</button><button data-quick-filter="electric" type="button">Электро</button><button data-quick-filter="budget" type="button">До 1 500 ฿</button></div>
+<div class="catalog-popover catalog-place" data-place-popover="pickup" hidden="">
+<div class="catalog-place__title">Где получить автомобиль?</div>
+<button data-label="По всему Пхукету" data-place-option="pickup" data-value="all" type="button">По всему Пхукету</button>
+<button data-label="Аэропорт Пхукета" data-place-option="pickup" data-value="airport" type="button">Аэропорт Пхукета</button>
+<button data-label="Патонг" data-place-option="pickup" data-value="patong" type="button">Патонг</button>
+<button data-label="Ката / Карон" data-place-option="pickup" data-value="kata-karon" type="button">Ката / Карон</button>
+<button data-label="Раваи / Най Харн" data-place-option="pickup" data-value="rawai" type="button">Раваи / Най Харн</button>
+<button data-label="Указать адрес" data-place-option="pickup" data-value="address" type="button">Указать адрес</button>
+</div>
+<input data-place-input="pickup" name="pickup" type="hidden" value="all"/>
+</div>
+<div class="catalog-search__field" data-place-field="return">
+<span class="catalog-search__label">Возврат</span>
+<button aria-expanded="false" aria-haspopup="listbox" class="catalog-search__trigger" data-place-trigger="return" type="button">
+<span data-place-value="return">Там же</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+</button>
+<div class="catalog-popover catalog-place" data-place-popover="return" hidden="">
+<div class="catalog-place__title">Где вернуть автомобиль?</div>
+<button data-label="Там же" data-place-option="return" data-value="same" type="button">Там же</button>
+<button data-label="Аэропорт Пхукета" data-place-option="return" data-value="airport" type="button">Аэропорт Пхукета</button>
+<button data-label="Патонг" data-place-option="return" data-value="patong" type="button">Патонг</button>
+<button data-label="Ката / Карон" data-place-option="return" data-value="kata-karon" type="button">Ката / Карон</button>
+<button data-label="Раваи / Най Харн" data-place-option="return" data-value="rawai" type="button">Раваи / Най Харн</button>
+<button data-label="Указать адрес" data-place-option="return" data-value="address" type="button">Указать адрес</button>
+</div>
+<input data-place-input="return" name="return" type="hidden" value="same"/>
+</div>
+<div class="catalog-search__field catalog-search__field--dates">
+<span class="catalog-search__label">Даты аренды</span>
+<button aria-expanded="false" aria-haspopup="dialog" class="catalog-search__trigger" data-date-range-trigger="" type="button">
+<span data-date-range-value="">Выберите даты</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"></path></svg>
+</button>
+<div class="catalog-popover catalog-calendar" data-date-popover="" hidden="">
+<div class="catalog-calendar__top">
+<button aria-label="Предыдущий месяц" class="catalog-calendar__nav" data-calendar-prev="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></button>
+<strong>Выберите даты аренды</strong>
+<button aria-label="Следующий месяц" class="catalog-calendar__nav" data-calendar-next="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9 6 6 6-6 6"></path></svg></button>
+</div>
+<div class="catalog-calendar__months" data-calendar-months=""></div>
+<div class="catalog-calendar__footer">
+<div><span>Период</span><strong data-calendar-summary="">Дата получения → дата возврата</strong></div>
+<button class="catalog-calendar__done" data-calendar-done="" type="button">Готово</button>
+</div>
+</div>
+<input data-pickup-date="" name="pickup_date" type="hidden"/>
+<input data-return-date="" name="return_date" type="hidden"/>
+</div>
+<button aria-haspopup="dialog" class="catalog-search__filter-button" data-open-filters="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"></path></svg><span>Фильтры</span><span class="catalog-search__filter-count" data-filter-count="" hidden="">0</span>
+</button>
+</div>
+<div class="catalog-search__subrow">
+<button class="catalog-search__refine" data-refine-toggle="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21s7-5.1 7-12A7 7 0 1 0 5 9c0 6.9 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg><span>Уточнить место</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg></button>
+<div class="catalog-search__refine-panel" data-refine-panel="" hidden=""><label for="catalog-address">Отель, район или адрес</label><input id="catalog-address" name="address" placeholder="Например, название отеля" type="text"/></div>
+<button class="catalog-search__submit" type="submit">Показать автомобили <span aria-hidden="true">→</span></button>
+</div>
 </form>
+</section>
+<div aria-label="Быстрые фильтры" class="catalog-facets">
+<button data-facet="budget" type="button"><span class="catalog-facets__icon">฿</span><span><strong>До 1 500 ฿</strong><small>доступные модели</small></span></button>
+<button data-facet="seven" type="button"><span class="catalog-facets__icon">7</span><span><strong>7 мест</strong><small>для компании</small></span></button>
+<button data-facet="crossover" type="button"><span class="catalog-facets__icon">⌁</span><span><strong>Кроссоверы</strong><small>для острова</small></span></button>
+<button data-facet="electric" type="button"><span class="catalog-facets__icon">⚡</span><span><strong>Электро</strong><small>EV-модели</small></span></button>
+<button data-facet="toyota" type="button"><span class="catalog-facets__icon">T</span><span><strong>Toyota</strong><small>популярная марка</small></span></button>
+<button data-facet="year" type="button"><span class="catalog-facets__icon">24</span><span><strong>2024+</strong><small>по году выпуска</small></span></button>
+</div>
+<div class="catalog-results-head">
+<div><strong><span data-result-count="">6</span> <span data-result-label="">автомобилей</span></strong><span>по выбранным параметрам</span></div>
+<div class="catalog-sort" data-sort-root="">
+<button aria-expanded="false" aria-haspopup="listbox" class="catalog-sort__trigger" data-sort-trigger="" type="button"><span data-sort-label="">По умолчанию</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg></button>
+<div aria-label="Сортировка" class="catalog-sort__menu" data-sort-menu="" hidden="" role="listbox">
+<button aria-selected="true" data-sort-option="default" role="option" type="button">По умолчанию</button>
+<button aria-selected="false" data-sort-option="price-asc" role="option" type="button">Сначала дешевле</button>
+<button aria-selected="false" data-sort-option="price-desc" role="option" type="button">Сначала дороже</button>
+<button aria-selected="false" data-sort-option="seats-desc" role="option" type="button">Больше мест</button>
+</div>
+</div>
+</div>
 <div aria-label="Активные фильтры" class="catalog-tools__chips" data-active-filters="" hidden=""></div>
 <div class="catalog-grid" data-catalog-grid="">
 <article class="car-card catalog-car-card" data-brand="toyota" data-car-card="" data-car-id="toyota-yaris" data-car-title="Toyota Yaris" data-car-url="toyota-yaris/" data-fuel="petrol" data-fuel-label="Бензин" data-order="1" data-price="1090" data-price-label="1090 ฿ / сутки" data-seats="5" data-type="compact" data-year="2024"><a aria-label="Открыть Toyota Yaris" class="car-card__stretched-link" href="toyota-yaris/"></a><div class="car-card__media car-card-gallery" data-card-gallery=""><div class="car-card-gallery__slides"><picture data-card-slide=""><source srcset="../assets/img/catalog/toyota-yaris-01.webp" type="image/webp"/><img alt="Toyota Yaris" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/toyota-yaris-01.jpg" width="1200"/></picture><picture data-card-slide="" hidden=""><source srcset="../assets/img/catalog/toyota-yaris-02.webp" type="image/webp"/><img alt="" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/toyota-yaris-02.jpg" width="1200"/></picture><picture data-card-slide="" hidden=""><source srcset="../assets/img/catalog/toyota-yaris-03.webp" type="image/webp"/><img alt="" class="car-card__image" decoding="async" height="675" loading="lazy" src="../assets/img/catalog/toyota-yaris-03.jpg" width="1200"/></picture></div><button aria-label="Предыдущее фото" class="car-card-gallery__nav car-card-gallery__nav--prev" data-card-prev="" type="button">←</button><button aria-label="Следующее фото" class="car-card-gallery__nav car-card-gallery__nav--next" data-card-next="" type="button">→</button><div aria-hidden="true" class="car-card-gallery__dots"><span data-card-dot=""></span><span data-card-dot=""></span><span data-card-dot=""></span></div><div class="car-card__tools"><button aria-label="Сравнить" data-compare-car="toyota-yaris" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 7h11m0 0-3-3m3 3-3 3M17 17H6m0 0 3 3m-3-3 3-3"></path></svg></button><button aria-label="В избранное" data-favorite-car="toyota-yaris" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"></path></svg></button></div></div><div class="car-card__body">
@@ -233,14 +267,39 @@
 <span aria-hidden="true" class="car-card__action"><span>Подробнее</span><span aria-hidden="true">→</span></span>
 </div>
 </div></article>
-</div>
-<div class="catalog-empty" data-empty-state="" hidden="">
+</div><div class="catalog-empty" data-empty-state="" hidden="">
 <span aria-hidden="true" class="catalog-empty__icon">⌕</span>
 <h2>По выбранным параметрам ничего не найдено</h2>
 <p>Попробуйте изменить фильтры или сбросить их, чтобы увидеть все демонстрационные автомобили.</p>
 <button class="catalog-empty__reset" data-reset-filters="" type="button">Сбросить фильтры</button>
+</div><p class="catalog-page__demo-note">Модели и тарифы используются как демонстрационные данные шаблона и заменяются через CMS.</p><div class="catalog-filter-modal" data-filter-modal="" hidden="">
+<div class="catalog-filter-modal__backdrop" data-close-filters=""></div>
+<section aria-labelledby="filter-modal-title" aria-modal="true" class="catalog-filter-modal__dialog" role="dialog">
+<header class="catalog-filter-modal__header"><div><span>Фильтры каталога</span><h2 id="filter-modal-title">Подберите автомобиль</h2></div><button aria-label="Закрыть фильтры" class="catalog-filter-modal__close" data-close-filters="" type="button">×</button></header>
+<form class="catalog-filter-modal__form" data-filter-form="">
+<fieldset class="filter-types"><legend>Тип автомобиля</legend><div class="filter-types__grid">
+<label><input name="type" type="checkbox" value="compact"/><span><svg aria-hidden="true" viewbox="0 0 48 24"><path d="M5 16h38l-3-7-8-4H17L9 9l-4 7Z"></path><circle cx="14" cy="17" r="4"></circle><circle cx="36" cy="17" r="4"></circle></svg><strong>Компактные</strong><small data-type-count="compact">1</small></span></label>
+<label><input name="type" type="checkbox" value="sedan"/><span><svg aria-hidden="true" viewbox="0 0 48 24"><path d="M4 16h40l-4-7-10-4H17L8 10l-4 6Z"></path><circle cx="13" cy="17" r="4"></circle><circle cx="36" cy="17" r="4"></circle></svg><strong>Седаны</strong><small data-type-count="sedan">1</small></span></label>
+<label><input name="type" type="checkbox" value="crossover"/><span><svg aria-hidden="true" viewbox="0 0 48 24"><path d="M3 16h42l-4-9-12-3H16L7 9l-4 7Z"></path><circle cx="13" cy="17" r="4"></circle><circle cx="37" cy="17" r="4"></circle></svg><strong>Кроссоверы</strong><small data-type-count="crossover">1</small></span></label>
+<label><input name="type" type="checkbox" value="suv"/><span><svg aria-hidden="true" viewbox="0 0 48 24"><path d="M3 16h42l-3-10H13L6 10l-3 6Z"></path><circle cx="13" cy="17" r="4"></circle><circle cx="37" cy="17" r="4"></circle></svg><strong>Внедорожники</strong><small data-type-count="suv">1</small></span></label>
+<label><input name="type" type="checkbox" value="minivan"/><span><svg aria-hidden="true" viewbox="0 0 48 24"><path d="M3 16h42V7L37 4H13L6 9l-3 7Z"></path><circle cx="13" cy="17" r="4"></circle><circle cx="37" cy="17" r="4"></circle></svg><strong>Минивэны</strong><small data-type-count="minivan">1</small></span></label>
+<label><input name="type" type="checkbox" value="electric"/><span><svg aria-hidden="true" viewbox="0 0 48 24"><path d="M5 16h38l-3-8-10-4H17L9 9l-4 7Z"></path><circle cx="14" cy="17" r="4"></circle><circle cx="36" cy="17" r="4"></circle></svg><strong>Электромобили</strong><small data-type-count="electric">1</small></span></label>
+</div></fieldset>
+<div class="filter-groups">
+<fieldset><legend>Количество мест</legend><label class="filter-check"><input name="seats" type="checkbox" value="5"/><span>5 мест</span><small>4</small></label><label class="filter-check"><input name="seats" type="checkbox" value="7"/><span>7 мест</span><small>2</small></label></fieldset>
+<fieldset><legend>Топливо</legend><label class="filter-check"><input name="fuel" type="checkbox" value="petrol"/><span>Бензин</span><small>4</small></label><label class="filter-check"><input name="fuel" type="checkbox" value="diesel"/><span>Дизель</span><small>1</small></label><label class="filter-check"><input name="fuel" type="checkbox" value="electric"/><span>Электро</span><small>1</small></label></fieldset>
+<fieldset><legend>Марка</legend><label class="filter-check"><input name="brand" type="checkbox" value="toyota"/><span>Toyota</span><small>3</small></label><label class="filter-check"><input name="brand" type="checkbox" value="honda"/><span>Honda</span><small>1</small></label><label class="filter-check"><input name="brand" type="checkbox" value="mitsubishi"/><span>Mitsubishi</span><small>1</small></label><label class="filter-check"><input name="brand" type="checkbox" value="byd"/><span>BYD</span><small>1</small></label></fieldset>
+<fieldset><legend>Коробка передач</legend><label class="filter-check"><input checked="" disabled="" type="checkbox"/><span>Автомат</span><small>6</small></label><p class="filter-hint">В текущем demo-каталоге все автомобили с автоматической коробкой.</p></fieldset>
 </div>
-<p class="catalog-page__demo-note">Модели и тарифы используются как демонстрационные данные шаблона и заменяются через CMS.</p>
+<div class="filter-range-row">
+<fieldset><legend>Цена в сутки, ฿</legend><div class="filter-range"><label>от<input min="0" name="price_min" placeholder="0" step="100" type="number"/></label><label>до<input min="0" name="price_max" placeholder="Любая" step="100" type="number"/></label></div></fieldset>
+<fieldset><legend>Год выпуска</legend><div class="filter-choice-row"><label><input name="year" type="radio" value=""/><span>Любой</span></label><label><input name="year" type="radio" value="2024"/><span>2024+</span></label></div></fieldset>
+</div>
+<fieldset class="filter-options"><legend>Быстрые условия выбора</legend><div class="filter-options__grid"><label class="filter-check"><input name="feature" type="checkbox" value="budget"/><span>До 1 500 ฿ / сутки</span></label><label class="filter-check"><input name="feature" type="checkbox" value="seven"/><span>7 мест</span></label><label class="filter-check"><input name="feature" type="checkbox" value="electric"/><span>Электромобиль</span></label></div><p class="filter-hint">Здесь показаны только параметры, которые подтверждены демонстрационными данными каталога. Бизнес-условия вроде депозита или страхования добавляются из CMS конкретного сайта.</p></fieldset>
+</form>
+<footer class="catalog-filter-modal__footer"><button class="catalog-filter-modal__reset" data-reset-filters="" type="button">Сбросить все</button><button class="catalog-filter-modal__apply" data-apply-filters="" type="button">Показать <span data-pending-count="">6</span> автомобилей</button></footer>
+</section>
+</div>
 </div>
 </div>
 </section>
