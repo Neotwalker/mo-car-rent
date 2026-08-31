@@ -79,7 +79,11 @@
     let rangeEnd = null;
 
     const syncOverlayState = () => {
-      document.body.classList.toggle('catalog-place-open', Boolean(root.querySelector('.catalog-place:not([hidden])')));
+      const placeOpen = Boolean(root.querySelector('.catalog-place:not([hidden])'));
+      const calendarOpen = Boolean(datePopover && !datePopover.hidden);
+      document.body.classList.toggle('catalog-place-open', placeOpen);
+      document.body.classList.toggle('car-calendar-open', calendarOpen);
+      form.closest('.booking-card')?.classList.toggle('has-open-rental-popover', placeOpen || calendarOpen);
     };
 
     const closePopovers = (except = null) => {
@@ -222,6 +226,7 @@
       datePopover.hidden = !opening;
       dateTrigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
       if (opening) renderCalendar();
+      syncOverlayState();
     });
     calendarPrev?.addEventListener('click', () => { monthOffset = Math.max(0, monthOffset - 1); renderCalendar(); });
     calendarNext?.addEventListener('click', () => { monthOffset += 1; renderCalendar(); });
@@ -232,6 +237,7 @@
       renderCalendar();
       datePopover.hidden = true;
       dateTrigger.setAttribute('aria-expanded', 'false');
+      syncOverlayState();
       dateTrigger.focus({ preventScroll: true });
     });
 
