@@ -1741,3 +1741,22 @@
     font-size: 27px;
   }
 }
+
+/* Stage 11 v23 - empty Apple date label must use the same left alignment as a selected date. */
+.car-booking__control--date.is-apple-date.is-empty::before {
+  left: 14px;
+  right: 58px;
+  text-align: left;
+}
+
+@media (max-width: 760px) {
+  .car-booking__control--date.is-apple-date.is-empty::before {
+    left: 12px;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+}
