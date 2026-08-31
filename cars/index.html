@@ -89,7 +89,7 @@
 <div class="catalog-search__field" data-place-field="pickup">
 <span class="catalog-search__label">Получение</span>
 <button aria-expanded="false" aria-haspopup="listbox" class="catalog-search__trigger" data-place-trigger="pickup" type="button">
-<span data-place-value="pickup">По всему Пхукету</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+<span data-place-value="pickup">По всему Пхукету</span><svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
 </button>
 <div class="catalog-popover catalog-place" data-place-popover="pickup" hidden="">
 <div class="catalog-place__title">Где получить автомобиль?</div>
@@ -105,7 +105,7 @@
 <div class="catalog-search__field" data-place-field="return">
 <span class="catalog-search__label">Возврат</span>
 <button aria-expanded="false" aria-haspopup="listbox" class="catalog-search__trigger" data-place-trigger="return" type="button">
-<span data-place-value="return">Там же</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+<span data-place-value="return">Там же</span><svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
 </button>
 <div class="catalog-popover catalog-place" data-place-popover="return" hidden="">
 <div class="catalog-place__title">Где вернуть автомобиль?</div>
@@ -121,7 +121,7 @@
 <div class="catalog-search__field catalog-search__field--dates">
 <span class="catalog-search__label">Даты аренды</span>
 <button aria-expanded="false" aria-haspopup="dialog" class="catalog-search__trigger" data-date-range-trigger="" type="button">
-<span data-date-range-value="">Выберите даты</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"></path></svg>
+<span data-date-range-value="">Выберите даты</span><svg aria-hidden="true" class="catalog-search__trigger-icon" viewbox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"></path></svg>
 </button>
 <div class="catalog-popover catalog-calendar" data-date-popover="" hidden="">
 <div class="catalog-calendar__top">
@@ -143,20 +143,43 @@
 </button>
 </div>
 <div class="catalog-search__subrow">
-<button class="catalog-search__refine" data-refine-toggle="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21s7-5.1 7-12A7 7 0 1 0 5 9c0 6.9 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg><span>Уточнить место</span><svg aria-hidden="true" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg></button>
-<div class="catalog-search__refine-panel" data-refine-panel="" hidden=""><label for="catalog-address">Отель, район или адрес</label><input id="catalog-address" name="address" placeholder="Например, название отеля" type="text"/></div>
-<button class="catalog-search__submit" type="submit">Показать автомобили <span aria-hidden="true">→</span></button>
+
+
+
+<div class="catalog-search__refine-wrap">
+<button aria-controls="catalog-location-popover" aria-expanded="false" class="catalog-search__refine" data-refine-toggle="" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21s7-5.1 7-12A7 7 0 1 0 5 9c0 6.9 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+<span>Уточнить место</span>
+<svg aria-hidden="true" class="catalog-search__refine-chevron" viewbox="0 0 20 20"><path d="m5.5 7.5 4.5 4.5 4.5-4.5"></path></svg>
+</button>
+<div class="catalog-location-popover" data-refine-panel="" hidden="" id="catalog-location-popover">
+<div class="catalog-location-popover__summary">
+<div class="catalog-location-popover__summary-line"><strong>Получение:</strong><span data-refine-pickup-summary="">По всему Пхукету</span><button aria-label="О выборе места получения" class="catalog-location-popover__help" type="button">?</button></div>
+<button class="catalog-location-popover__choice" data-location-mode-trigger="pickup" type="button"><span>Любое место в городе</span><span aria-hidden="true">›</span></button>
+<label class="catalog-location-popover__same"><input checked="" data-return-same="" type="checkbox"/><span aria-hidden="true" class="catalog-location-popover__checkbox">✓</span><span>Возврат там же</span></label>
+<div class="catalog-location-popover__summary-line"><strong>Возврат:</strong><span data-refine-return-summary="">Там же</span></div>
+<button class="catalog-location-popover__choice" data-location-mode-trigger="return" type="button"><span>Там же</span><span aria-hidden="true">›</span></button>
+<div class="catalog-location-popover__actions">
+<button class="catalog-location-popover__reset" data-refine-reset="" type="button">Сбросить все</button>
+<button class="catalog-location-popover__show" data-refine-apply="" type="button">Показать <span data-refine-result-count="">6</span> автомобилей</button>
+</div>
+</div>
+<div class="catalog-location-popover__options" data-location-options="" hidden="">
+<button class="catalog-location-popover__options-reset" data-location-options-reset="" type="button"><span aria-hidden="true">×</span><span>Сбросить</span></button>
+<label class="catalog-location-option"><input data-location-delivery="" type="checkbox"/><span aria-hidden="true" class="catalog-location-option__box">✓</span><span>Доставка по адресу</span></label>
+<div class="catalog-location-popover__address" data-location-address="" hidden="">
+<label for="catalog-address">Отель, район или адрес</label>
+<input autocomplete="street-address" id="catalog-address" name="address" placeholder="Например, название отеля" type="text"/>
+</div>
+<div class="catalog-location-popover__disabled-title">Не настроено в demo</div>
+<label class="catalog-location-option is-disabled"><input disabled="" type="checkbox"/><span aria-hidden="true" class="catalog-location-option__box"></span><span>В офисе проката</span></label>
+</div>
+</div>
+</div><button class="catalog-search__submit" type="submit">Показать автомобили <span aria-hidden="true">→</span></button>
 </div>
 </form>
 </section>
-<div aria-label="Популярные фильтры" class="catalog-facets">
-<button data-facet="budget" type="button"><span class="catalog-facets__content"><strong>До 1 500 ฿</strong><small>доступные модели</small></span><picture class="catalog-facets__media"><source srcset="../assets/img/catalog/toyota-yaris-01.webp" type="image/webp"/><img alt="" aria-hidden="true" src="../assets/img/catalog/toyota-yaris-01.jpg"/></picture></button>
-<button data-facet="seven" type="button"><span class="catalog-facets__content"><strong>7 мест</strong><small>для компании</small></span><picture class="catalog-facets__media"><source srcset="../assets/img/catalog/mitsubishi-xpander-01.webp" type="image/webp"/><img alt="" aria-hidden="true" src="../assets/img/catalog/mitsubishi-xpander-01.jpg"/></picture></button>
-<button data-facet="crossover" type="button"><span class="catalog-facets__content"><strong>Кроссоверы</strong><small>для острова</small></span><picture class="catalog-facets__media"><source srcset="../assets/img/catalog/toyota-corolla-cross-01.webp" type="image/webp"/><img alt="" aria-hidden="true" src="../assets/img/catalog/toyota-corolla-cross-01.jpg"/></picture></button>
-<button data-facet="electric" type="button"><span class="catalog-facets__content"><strong>Электро</strong><small>EV-модели</small></span><picture class="catalog-facets__media"><source srcset="../assets/img/catalog/byd-dolphin-01.webp" type="image/webp"/><img alt="" aria-hidden="true" src="../assets/img/catalog/byd-dolphin-01.jpg"/></picture></button>
-<button data-facet="toyota" type="button"><span class="catalog-facets__content"><strong>Toyota</strong><small>популярная марка</small></span><picture class="catalog-facets__media"><source srcset="../assets/img/catalog/toyota-fortuner-01.webp" type="image/webp"/><img alt="" aria-hidden="true" src="../assets/img/catalog/toyota-fortuner-01.jpg"/></picture></button>
-<button data-facet="year" type="button"><span class="catalog-facets__content"><strong>2024+</strong><small>по году выпуска</small></span><picture class="catalog-facets__media"><source srcset="../assets/img/catalog/honda-city-01.webp" type="image/webp"/><img alt="" aria-hidden="true" src="../assets/img/catalog/honda-city-01.jpg"/></picture></button>
-</div>
+
 <div class="catalog-results-head">
 <div><strong><span data-result-count="">6</span> <span data-result-label="">автомобилей</span></strong><span>по выбранным параметрам</span></div>
 <div class="catalog-sort" data-sort-root="">

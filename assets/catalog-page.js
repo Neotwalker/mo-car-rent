@@ -96,11 +96,106 @@
 
   const refineToggle = root.querySelector('[data-refine-toggle]');
   const refinePanel = root.querySelector('[data-refine-panel]');
+  const refinePickupSummary = root.querySelector('[data-refine-pickup-summary]');
+  const refineReturnSummary = root.querySelector('[data-refine-return-summary]');
+  const refineResultCount = root.querySelector('[data-refine-result-count]');
+  const refineReturnSame = root.querySelector('[data-return-same]');
+  const refineDelivery = root.querySelector('[data-location-delivery]');
+  const refineAddressWrap = root.querySelector('[data-location-address]');
+  const refineOptions = root.querySelector('[data-location-options]');
+  let refineTarget = 'pickup';
+
+  function updateRefineSummary() {
+    const pickupText = root.querySelector('[data-place-value="pickup"]')?.textContent.trim() || 'По всему Пхукету';
+    const returnText = refineReturnSame?.checked ? 'Там же' : (root.querySelector('[data-place-value="return"]')?.textContent.trim() || 'Там же');
+    const pickupDateText = rangeStart ? ruShort.format(rangeStart) : 'даты не выбраны';
+    const returnDateText = rangeEnd ? ruShort.format(rangeEnd) : 'даты не выбраны';
+    if (refinePickupSummary) refinePickupSummary.textContent = `${pickupText}, ${pickupDateText}`;
+    if (refineReturnSummary) refineReturnSummary.textContent = `${returnText}, ${returnDateText}`;
+    const returnChoice = root.querySelector('[data-location-mode-trigger="return"] span:first-child');
+    if (returnChoice) returnChoice.textContent = returnText;
+    if (refineResultCount && typeof resultForState === 'function') refineResultCount.textContent = String(resultForState(appliedState));
+  }
+
+  const closeRefinePanel = () => {
+    if (!refinePanel || refinePanel.hidden) return;
+    refinePanel.hidden = true;
+    refineToggle?.setAttribute('aria-expanded', 'false');
+    refineToggle?.classList.remove('is-active');
+    if (refineOptions) refineOptions.hidden = true;
+  };
+
   if (refineToggle && refinePanel) {
     refineToggle.addEventListener('click', () => {
-      refinePanel.hidden = !refinePanel.hidden;
-      refineToggle.classList.toggle('is-active', !refinePanel.hidden);
-      if (!refinePanel.hidden) refinePanel.querySelector('input')?.focus();
+      const opening = refinePanel.hidden;
+      refinePanel.hidden = !opening;
+      refineToggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      refineToggle.classList.toggle('is-active', opening);
+      if (opening) updateRefineSummary();
+    });
+
+    root.querySelectorAll('[data-location-mode-trigger]').forEach((button) => button.addEventListener('click', () => {
+      refineTarget = button.dataset.locationModeTrigger || 'pickup';
+      if (refineOptions) refineOptions.hidden = false;
+    }));
+
+    refineReturnSame?.addEventListener('change', () => {
+      const returnTrigger = root.querySelector('[data-location-mode-trigger="return"]');
+      if (returnTrigger) returnTrigger.disabled = refineReturnSame.checked;
+      if (refineReturnSame.checked) {
+        const returnInput = root.querySelector('[data-place-input="return"]');
+        const returnValue = root.querySelector('[data-place-value="return"]');
+        if (returnInput) returnInput.value = 'same';
+        if (returnValue) returnValue.textContent = 'Там же';
+      }
+      updateRefineSummary();
+      syncSearchUrl();
+    });
+
+    refineDelivery?.addEventListener('change', () => {
+      if (refineAddressWrap) refineAddressWrap.hidden = !refineDelivery.checked;
+      if (refineDelivery.checked) {
+        const input = root.querySelector(`[data-place-input="${refineTarget}"]`);
+        const value = root.querySelector(`[data-place-value="${refineTarget}"]`);
+        if (input) input.value = 'address';
+        if (value) value.textContent = 'Доставка по адресу';
+      }
+      updateRefineSummary();
+      syncSearchUrl();
+    });
+
+    root.querySelector('[data-location-options-reset]')?.addEventListener('click', () => {
+      if (refineDelivery) refineDelivery.checked = false;
+      if (refineAddressWrap) refineAddressWrap.hidden = true;
+      if (refineOptions) refineOptions.hidden = true;
+    });
+
+    root.querySelector('[data-refine-reset]')?.addEventListener('click', () => {
+      const pickupInput = root.querySelector('[data-place-input="pickup"]');
+      const pickupValue = root.querySelector('[data-place-value="pickup"]');
+      const returnInput = root.querySelector('[data-place-input="return"]');
+      const returnValue = root.querySelector('[data-place-value="return"]');
+      if (pickupInput) pickupInput.value = 'all';
+      if (pickupValue) pickupValue.textContent = 'По всему Пхукету';
+      if (returnInput) returnInput.value = 'same';
+      if (returnValue) returnValue.textContent = 'Там же';
+      if (refineReturnSame) refineReturnSame.checked = true;
+      if (refineDelivery) refineDelivery.checked = false;
+      if (refineAddressWrap) refineAddressWrap.hidden = true;
+      const address = root.querySelector('#catalog-address');
+      if (address) address.value = '';
+      updateRefineSummary();
+      syncSearchUrl();
+    });
+
+    root.querySelector('[data-refine-apply]')?.addEventListener('click', () => {
+      syncSearchUrl();
+      closeRefinePanel();
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (!event.target.closest('.catalog-search__refine-wrap')) closeRefinePanel();
     });
   }
 
@@ -218,17 +313,39 @@
       dateTrigger.setAttribute('aria-expanded', 'false');
       syncSearchUrl();
       dateTrigger.focus({ preventScroll: true });
+      updateRefineSummary();
     });
   }
 
   /* ---------- Custom selects inside filter modal ---------- */
   const enhancedSelects = [...filterForm.querySelectorAll('[data-filter-select]')];
+  const filterSelectRegistry = new Map();
+
+  const positionFilterMenu = (wrap) => {
+    const record = filterSelectRegistry.get(wrap);
+    if (!record || record.menu.hidden) return;
+    const { trigger, menu } = record;
+    const rect = trigger.getBoundingClientRect();
+    const gap = 6;
+    menu.style.width = `${Math.max(120, rect.width)}px`;
+    menu.style.left = `${Math.max(8, Math.min(rect.left, window.innerWidth - rect.width - 8))}px`;
+    menu.style.top = `${rect.bottom + gap}px`;
+    requestAnimationFrame(() => {
+      const menuRect = menu.getBoundingClientRect();
+      const roomBelow = window.innerHeight - rect.bottom - gap - 8;
+      const roomAbove = rect.top - gap - 8;
+      if (menuRect.height > roomBelow && roomAbove > roomBelow) {
+        menu.style.top = `${Math.max(8, rect.top - menuRect.height - gap)}px`;
+      }
+    });
+  };
+
   const closeFilterSelects = (except = null) => {
-    filterForm.querySelectorAll('.filter-custom-select.is-open').forEach((wrap) => {
+    filterSelectRegistry.forEach((record, wrap) => {
       if (wrap === except) return;
       wrap.classList.remove('is-open');
-      wrap.querySelector('.filter-custom-select__menu').hidden = true;
-      wrap.querySelector('.filter-custom-select__trigger').setAttribute('aria-expanded', 'false');
+      record.menu.hidden = true;
+      record.trigger.setAttribute('aria-expanded', 'false');
     });
   };
 
@@ -250,6 +367,7 @@
     menu.setAttribute('role', 'listbox');
     menu.hidden = true;
     trigger.setAttribute('aria-controls', menuId);
+
     [...select.options].forEach((option) => {
       const button = document.createElement('button');
       button.type = 'button';
@@ -268,8 +386,11 @@
       });
       menu.append(button);
     });
+
     select.after(wrap);
-    wrap.append(trigger, menu);
+    wrap.append(trigger);
+    document.body.append(menu);
+    filterSelectRegistry.set(wrap, { trigger, menu, select });
 
     const sync = () => {
       const selected = select.options[select.selectedIndex] || select.options[0];
@@ -289,8 +410,12 @@
       wrap.classList.toggle('is-open', opening);
       menu.hidden = !opening;
       trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
-      if (opening) requestAnimationFrame(() => { menu.scrollIntoView({ block: 'nearest' }); menu.querySelector('.is-selected')?.scrollIntoView({ block: 'nearest' }); });
+      if (opening) {
+        positionFilterMenu(wrap);
+        requestAnimationFrame(() => menu.querySelector('.is-selected')?.scrollIntoView({ block: 'nearest' }));
+      }
     });
+
     trigger.addEventListener('keydown', (event) => {
       if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
@@ -303,6 +428,7 @@
       else current = Math.max(0, current - 1);
       options[current]?.focus();
     });
+
     menu.addEventListener('keydown', (event) => {
       const options = [...menu.querySelectorAll('.filter-custom-select__option')];
       const current = options.indexOf(document.activeElement);
@@ -318,10 +444,14 @@
       }
     });
   };
+
   enhancedSelects.forEach(enhanceFilterSelect);
   document.addEventListener('pointerdown', (event) => {
-    if (!event.target.closest('.filter-custom-select')) closeFilterSelects();
+    if (!event.target.closest('.filter-custom-select') && !event.target.closest('.filter-custom-select__menu')) closeFilterSelects();
   });
+  const repositionOpenFilterMenus = () => filterSelectRegistry.forEach((record, wrap) => { if (!record.menu.hidden) positionFilterMenu(wrap); });
+  filterForm.addEventListener('scroll', repositionOpenFilterMenus, { passive: true });
+  window.addEventListener('resize', repositionOpenFilterMenus, { passive: true });
   const syncEnhancedSelects = () => enhancedSelects.forEach((select) => select._syncCustomSelect?.());
 
   /* ---------- Filter state ---------- */
@@ -345,11 +475,10 @@
       consumptionMin: Number(filterForm.elements.consumption_min?.value || 0),
       consumptionMax: Number(filterForm.elements.consumption_max?.value || 0),
       year: filterForm.elements.year?.value || '',
-      features: [...appliedState.features],
     };
   };
 
-  let appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
+  let appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '' };
   let sortValue = 'default';
 
   const cardMatches = (card, state) => {
@@ -373,9 +502,6 @@
     if (state.consumptionMin && consumption < state.consumptionMin) return false;
     if (state.consumptionMax && consumption > state.consumptionMax) return false;
     if (state.year && Number(card.dataset.year) < Number(state.year)) return false;
-    if (state.features.includes('budget') && price > 1500) return false;
-    if (state.features.includes('seven') && seats !== '7') return false;
-    if (state.features.includes('electric') && fuel !== 'electric') return false;
     return true;
   };
 
@@ -392,7 +518,7 @@
   };
 
   const countActiveFilters = (state) => {
-    let n = state.types.length + state.seats.length + state.fuels.length + state.transmissions.length + state.drives.length + state.brands.length + state.features.length;
+    let n = state.types.length + state.seats.length + state.fuels.length + state.transmissions.length + state.drives.length + state.brands.length;
     ['priceMin','priceMax','engineMin','engineMax','consumptionMin','consumptionMax'].forEach((key) => { if (state[key]) n += 1; });
     if (state.year) n += 1;
     return n;
@@ -401,7 +527,6 @@
   const filterLabels = {
     compact: 'Компактные', sedan: 'Средний класс', crossover: 'Кроссоверы', luxury: 'Люкс', cabriolet: 'Кабриолеты', minivan: 'Минивэны',
     '5': '5 мест', '7': '7 мест', petrol: 'Бензин', diesel: 'Дизель', electric: 'Электро', automatic: 'Автомат', manual: 'Механика', cvt: 'Вариатор', front: 'Передний привод', awd: 'Полный привод', rear: 'Задний привод', toyota: 'Toyota', honda: 'Honda', mitsubishi: 'Mitsubishi', byd: 'BYD',
-    budget: 'До 1 500 ฿', seven: '7 мест',
   };
 
   const syncModalToState = (state) => {
@@ -441,7 +566,6 @@
     appliedState.transmissions.forEach((v) => chips.push(['transmissions', v, filterLabels[v] || v]));
     appliedState.drives.forEach((v) => chips.push(['drives', v, filterLabels[v] || v]));
     appliedState.brands.forEach((v) => chips.push(['brands', v, filterLabels[v] || v]));
-    appliedState.features.forEach((v) => chips.push(['features', v, filterLabels[v] || v]));
     if (appliedState.priceMin) chips.push(['priceMin', String(appliedState.priceMin), `от ${appliedState.priceMin} ฿`]);
     if (appliedState.priceMax) chips.push(['priceMax', String(appliedState.priceMax), `до ${appliedState.priceMax} ฿`]);
     if (appliedState.engineMin) chips.push(['engineMin', String(appliedState.engineMin), `двигатель от ${appliedState.engineMin} л`]);
@@ -460,33 +584,30 @@
       button.setAttribute('aria-label', `Убрать фильтр ${label}`);
       chipsEl.append(button);
     });
+    if (chips.length) {
+      const reset = document.createElement('button');
+      reset.type = 'button';
+      reset.className = 'catalog-chip catalog-chip--reset';
+      reset.dataset.resetActiveFilters = '';
+      reset.textContent = 'Сбросить';
+      chipsEl.append(reset);
+    }
     chipsEl.hidden = chips.length === 0;
     const total = countActiveFilters(appliedState);
     filterCount.textContent = String(total);
     filterCount.hidden = total === 0;
 
-    root.querySelectorAll('[data-facet]').forEach((button) => {
-      const facet = button.dataset.facet;
-      const active = facet === 'budget' ? appliedState.features.includes('budget')
-        : facet === 'seven' ? appliedState.features.includes('seven')
-          : facet === 'electric' ? appliedState.features.includes('electric')
-            : facet === 'crossover' ? appliedState.types.includes('crossover')
-              : facet === 'toyota' ? appliedState.brands.includes('toyota')
-                : facet === 'year' ? appliedState.year === '2024' : false;
-      button.classList.toggle('is-active', active);
-    });
   };
 
   const syncFilterUrl = () => {
     const url = new URL(window.location.href);
-    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'feature', 'sort'].forEach((key) => url.searchParams.delete(key));
+    ['type', 'seats', 'fuel', 'transmission', 'drive', 'brand', 'price_min', 'price_max', 'engine_min', 'engine_max', 'consumption_min', 'consumption_max', 'year', 'sort'].forEach((key) => url.searchParams.delete(key));
     appliedState.types.forEach((v) => url.searchParams.append('type', v));
     appliedState.seats.forEach((v) => url.searchParams.append('seats', v));
     appliedState.fuels.forEach((v) => url.searchParams.append('fuel', v));
     appliedState.transmissions.forEach((v) => url.searchParams.append('transmission', v));
     appliedState.drives.forEach((v) => url.searchParams.append('drive', v));
     appliedState.brands.forEach((v) => url.searchParams.append('brand', v));
-    appliedState.features.forEach((v) => url.searchParams.append('feature', v));
     if (appliedState.priceMin) url.searchParams.set('price_min', appliedState.priceMin);
     if (appliedState.priceMax) url.searchParams.set('price_max', appliedState.priceMax);
     if (appliedState.engineMin) url.searchParams.set('engine_min', appliedState.engineMin);
@@ -511,6 +632,7 @@
     grid.hidden = visible === 0;
     empty.hidden = visible !== 0;
     renderChips();
+    updateRefineSummary();
     if (syncUrl) syncFilterUrl();
     document.dispatchEvent(new CustomEvent('mocar:catalog:filter_change', { detail: { ...appliedState, results: visible } }));
   };
@@ -540,18 +662,25 @@
   });
 
   resetFilters.forEach((button) => button.addEventListener('click', () => {
-    appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '', features: [] };
+    appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '' };
     syncModalToState(appliedState);
     updatePending();
     applyCatalog();
   }));
 
   chipsEl?.addEventListener('click', (event) => {
+    if (event.target.closest('[data-reset-active-filters]')) {
+      appliedState = { types: [], seats: [], fuels: [], transmissions: [], drives: [], brands: [], priceMin: 0, priceMax: 0, engineMin: 0, engineMax: 0, consumptionMin: 0, consumptionMax: 0, year: '' };
+      syncModalToState(appliedState);
+      updatePending();
+      applyCatalog();
+      return;
+    }
     const button = event.target.closest('[data-remove-filter-key]');
     if (!button) return;
     const key = button.dataset.removeFilterKey;
     const value = button.dataset.removeFilterValue;
-    if (['types', 'seats', 'fuels', 'transmissions', 'drives', 'brands', 'features'].includes(key)) appliedState[key] = appliedState[key].filter((v) => v !== value);
+    if (['types', 'seats', 'fuels', 'transmissions', 'drives', 'brands'].includes(key)) appliedState[key] = appliedState[key].filter((v) => v !== value);
     else if (key === 'priceMin') appliedState.priceMin = 0;
     else if (key === 'priceMax') appliedState.priceMax = 0;
     else if (key === 'engineMin') appliedState.engineMin = 0;
@@ -562,17 +691,6 @@
     applyCatalog();
   });
 
-  root.querySelectorAll('[data-facet]').forEach((button) => button.addEventListener('click', () => {
-    const facet = button.dataset.facet;
-    const toggleValue = (array, value) => array.includes(value) ? array.filter((v) => v !== value) : [...array, value];
-    if (facet === 'budget') appliedState.features = toggleValue(appliedState.features, 'budget');
-    if (facet === 'seven') appliedState.features = toggleValue(appliedState.features, 'seven');
-    if (facet === 'electric') appliedState.features = toggleValue(appliedState.features, 'electric');
-    if (facet === 'crossover') appliedState.types = toggleValue(appliedState.types, 'crossover');
-    if (facet === 'toyota') appliedState.brands = appliedState.brands.includes('toyota') ? [] : ['toyota'];
-    if (facet === 'year') appliedState.year = appliedState.year === '2024' ? '' : '2024';
-    applyCatalog();
-  }));
 
   /* ---------- Sort ---------- */
   const sortRoot = root.querySelector('[data-sort-root]');
@@ -641,7 +759,6 @@
     consumptionMin: Number(params.get('consumption_min') || 0),
     consumptionMax: Number(params.get('consumption_max') || 0),
     year: params.get('year') || '',
-    features: multi('feature'),
   };
   sortValue = params.get('sort') || 'default';
   const sortOption = sortMenu?.querySelector(`[data-sort-option="${CSS.escape(sortValue)}"]`);
@@ -673,7 +790,7 @@
   const addressParam = params.get('address');
   if (addressParam && root.querySelector('#catalog-address')) {
     root.querySelector('#catalog-address').value = addressParam;
-    refinePanel.hidden = false;
+    if (refinePanel) { refinePanel.hidden = false; refineToggle?.setAttribute('aria-expanded', 'true'); }
   }
 
   updateDateText();
@@ -683,6 +800,7 @@
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     closeCatalogPopovers();
+    closeRefinePanel();
     if (!filterModal.hidden) closeFilterModal();
     if (sortMenu && !sortMenu.hidden) {
       sortMenu.hidden = true;
